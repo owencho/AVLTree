@@ -5,7 +5,7 @@
 #include <string.h>
 
 Node* rotateRightNode(Node * root){
-      Node * rightNode = createNode(root->left->value, root->left->left ,NULL);
+      Node * rightNode = root->left;
       if(root->left->right != NULL){
           root->left = root->left->right;
       }
@@ -17,7 +17,7 @@ Node* rotateRightNode(Node * root){
 }
 
 Node* rotateLeftNode(Node * root){
-      Node * leftNode = createNode(root->right->value,  NULL ,root->right->right);
+      Node * leftNode = root->right;
       if(root->right->left != NULL){
           root->right = root->right->left;
       }
@@ -30,12 +30,12 @@ Node* rotateLeftNode(Node * root){
 
 Node* rotateLeftRightNode(Node * root){
       Node* x = rotateLeftNode(root->left);
-      Node * y = createNode(root->value,x,NULL);
-      return rotateRightNode(y);
+      root->left = x ;
+      return rotateRightNode(root);
 }
 
 Node* rotateRightLeftNode(Node * root){
       Node* x = rotateRightNode(root->right);
-      Node * y = createNode(root->value,  NULL ,x);
-      return rotateLeftNode(y);
+      root->right = x ;
+      return rotateLeftNode(root);
 }
