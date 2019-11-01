@@ -41,10 +41,10 @@ void assertEqualNode (const Node * actualNode,
         }
         UNITY_TEST_FAIL(lineNumber,msg);
     }
-/*
+
     if(actualNode->bFactor != balanceFactor){
-        sprintf(msg,"Expected %d but encountered %d , the balanceFactor on node %d is not the same",actualNode->bFactor,balanceFactor,actualNode->value);
+        sprintf(msg,"Expected %d but encountered %d , the balanceFactor on node %d is not the same",balanceFactor,actualNode->bFactor,actualNode->value);
         UNITY_TEST_FAIL(lineNumber,msg);
     }
-*/
+
 }

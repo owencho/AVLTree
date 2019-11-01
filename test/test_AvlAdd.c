@@ -19,9 +19,9 @@ void setUp(void){
 
 void tearDown(void){}
 
-// Remark: CustomAssert has removed balanceFactor checking
+
 /**
-*            50(-1)                          50(-2)                               30(0)
+*            50(-1)                          50(-2)                             30(0)
 *           /   \                           /    \           rotate             /   \
 *         30(0)  60(0)   --->            30(-1)    60(0)     ----->          20(-1)  50(0)
 *        /  \            add  10        /    \               RIGHT           /     /     \
@@ -34,14 +34,14 @@ void tearDown(void){}
 void test_AvlAdd_given_50_30_20_40_60_add_10(void){
     initNode(&node10,&node1,&node10,77);
     initNode(&node20,NULL,NULL,0);
-    initNode(&node40,NULL,&node10,0);
+    initNode(&node40,NULL,NULL,0);
     initNode(&node30,&node20,&node40,0);
     initNode(&node60,NULL,NULL,0);
-    initNode(&node50,&node30,&node60,0);
+    initNode(&node50,&node30,&node60,-1);
 
     //Test
     root=avlAdd(&node50,&node10);
-    TEST_ASSERT_EQUAL_NODE(root,&node20,&node50,2);
+    TEST_ASSERT_EQUAL_NODE(root,&node20,&node50,0);
     TEST_ASSERT_EQUAL_NODE(&node20,&node10,NULL,-1);
     TEST_ASSERT_EQUAL_NODE(&node50,&node40,&node60,0);
     TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL,0);
@@ -66,11 +66,11 @@ void test_AvlAdd_given_80_30_10_60_90_add_70(void){
     initNode(&node10,NULL,NULL,0);
     initNode(&node30,&node10,&node60,0);
     initNode(&node90,NULL,NULL,0);
-    initNode(&node80,&node30,&node90,0);
+    initNode(&node80,&node30,&node90,-1);
 
     //Test
     root=avlAdd(&node80,&node70);
-    TEST_ASSERT_EQUAL_NODE(root,&node30,&node80,2);
+    TEST_ASSERT_EQUAL_NODE(root,&node30,&node80,0);
     TEST_ASSERT_EQUAL_NODE(&node30,&node10,NULL,-1);
     TEST_ASSERT_EQUAL_NODE(&node80,&node70,&node90,0);
     TEST_ASSERT_EQUAL_NODE(&node70,NULL,NULL,0);
@@ -97,7 +97,7 @@ void test_AvlAdd_given_50_25_75_60_85_add_80(void){
 
     //Test
     root=avlAdd(&node50,&node80);
-    TEST_ASSERT_EQUAL_NODE(root,&node50,&node85,1);
+    TEST_ASSERT_EQUAL_NODE(root,&node50,&node85,0);
     TEST_ASSERT_EQUAL_NODE(&node50,&node25,&node60,0);
     TEST_ASSERT_EQUAL_NODE(&node85,&node80,NULL,-1);
     TEST_ASSERT_EQUAL_NODE(&node25,NULL,NULL,0);
@@ -107,7 +107,7 @@ void test_AvlAdd_given_50_25_75_60_85_add_80(void){
 }
 
 /**
-*            25(0)                       25(2)                           40(0)
+*            25(1)                      25(2)                           40(0)
 *           /  \                        /  \           rotate           /   \
 *         10(0) 40(0)    ------>    10(0)   40(1)       ----->       25(0)    50(1)
 *              /  \       add 60           /  \          LEFT         /  \     \
@@ -123,13 +123,73 @@ void test_AvlAdd_given_25_10_40_30_50_add_60(void){
     initNode(&node30,NULL,NULL,0);
     initNode(&node40,&node30,&node50,0);
     initNode(&node10,NULL,NULL,0);
-    initNode(&node25,&node10,&node40,0);
+    initNode(&node25,&node10,&node40,1);
 
     //Test
     root=avlAdd(&node25,&node60);
     TEST_ASSERT_EQUAL_NODE(root,&node25,&node50,0);
     TEST_ASSERT_EQUAL_NODE(&node25,&node10,&node30,0);
-    TEST_ASSERT_EQUAL_NODE(&node50,NULL,&node60,0);
+    TEST_ASSERT_EQUAL_NODE(&node50,NULL,&node60,1);
+    TEST_ASSERT_EQUAL_NODE(&node30,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
+
+}
+
+
+/**
+*                 25(2)                           40(0)
+*                 /  \           rotate           /   \
+*             10(0)   40(1)       ----->       25(0)    50(1)
+*                     /  \          LEFT         /  \     \
+*                  30(0) 50(1)                10(0) 30(0) 60(0)
+*                           \
+*                           60(0)
+**/
+
+void test_rotateLeftAndRebalance_given_25_10_40_30_50_add_60(void){
+    //Build number tree
+    initNode(&node60,NULL,NULL,0);
+    initNode(&node50,NULL,&node60,1);
+    initNode(&node30,NULL,NULL,0);
+    initNode(&node40,&node30,&node50,1);
+    initNode(&node10,NULL,NULL,0);
+    initNode(&node25,&node10,&node40,2);
+
+    //Test
+    root=rotateLeftAndReBalance(&node25);
+    TEST_ASSERT_EQUAL_NODE(root,&node25,&node50,0);
+    TEST_ASSERT_EQUAL_NODE(&node25,&node10,&node30,0);
+    TEST_ASSERT_EQUAL_NODE(&node50,NULL,&node60,1);
+    TEST_ASSERT_EQUAL_NODE(&node30,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
+
+}
+
+/**
+*         2                            5
+*          \        rotate           /   \
+*           5       ----->         2      7
+*            \      LEFT
+*             7
+*
+**/
+
+void test_rotateLeftAndRebalance_given_25_10_40_30_50_add_60(void){
+    //Build number tree
+    initNode(&node60,NULL,NULL,0);
+    initNode(&node50,NULL,&node60,1);
+    initNode(&node30,NULL,NULL,0);
+    initNode(&node40,&node30,&node50,1);
+    initNode(&node10,NULL,NULL,0);
+    initNode(&node25,&node10,&node40,2);
+
+    //Test
+    root=rotateLeftAndReBalance(&node25);
+    TEST_ASSERT_EQUAL_NODE(root,&node25,&node50,0);
+    TEST_ASSERT_EQUAL_NODE(&node25,&node10,&node30,0);
+    TEST_ASSERT_EQUAL_NODE(&node50,NULL,&node60,1);
     TEST_ASSERT_EQUAL_NODE(&node30,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
