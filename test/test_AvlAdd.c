@@ -30,7 +30,6 @@ void tearDown(void){}
 *                                   10(0)
 **/
 
-
 void test_AvlAdd_given_50_30_20_40_60_add_10(void){
     initNode(&node10,&node1,&node10,77);
     initNode(&node20,NULL,NULL,0);
@@ -135,14 +134,127 @@ void test_AvlAdd_given_25_10_40_30_50_add_60(void){
     TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
 
 }
+/**
+*            60(-2)                            40(0)
+*           /   \          rotate             /   \
+*         40(-1)  70(0)   ----->          30(-1)  60(0)
+*        /  \             RIGHT           /     /     \
+*     30(-1)  50(0)      rebalance       20(0)  50(0)  70(0)
+*      /
+*  20(0)
+**/
 
+void test_rotateRightAndReBalance_given_50_30_20_40_60_10(void){
+    initNode(&node20,NULL,NULL,0);
+    initNode(&node30,&node20,NULL,-1);
+    initNode(&node50,NULL,NULL,0);
+    initNode(&node40,&node30,&node50,-1);
+    initNode(&node70,NULL,NULL,0);
+    initNode(&node60,&node40,&node70,-2);
+
+    //Test
+    root=rotateRightAndReBalance(&node60);
+    TEST_ASSERT_EQUAL_NODE(root,&node30,&node60,0);
+    TEST_ASSERT_EQUAL_NODE(&node30,&node20,NULL,-1);
+    TEST_ASSERT_EQUAL_NODE(&node60,&node50,&node70,0);
+    TEST_ASSERT_EQUAL_NODE(&node50,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node70,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node20,NULL,NULL,0);
+
+}
 
 /**
-*                 25(2)                           40(0)
-*                 /  \           rotate           /   \
-*             10(0)   40(1)       ----->       25(0)    50(1)
-*                     /  \          LEFT         /  \     \
-*                  30(0) 50(1)                10(0) 30(0) 60(0)
+*        80(-2)                            60(0)
+*       /     \          Rotate          /       \
+*    30(1)  90(0)        ---->         30(-1)   80(0)
+*   /     \             LEFTRIGHT     /        /    \
+* 10(0)   60(1)        rebalance   10(0)     70(0)  90(0)
+*            \
+*            70(0)
+**/
+
+void test_rotateRightAndReBalance_given_80_30_10_60_90_70(void){
+    initNode(&node70,NULL,NULL,0);
+    initNode(&node60,NULL,&node70,1);
+    initNode(&node10,NULL,NULL,0);
+    initNode(&node30,&node10,&node60,0);
+    initNode(&node90,NULL,NULL,0);
+    initNode(&node80,&node30,&node90,-2);
+
+    //Test
+    root=rotateRightAndReBalance(&node80);
+    TEST_ASSERT_EQUAL_NODE(root,&node30,&node80,0);
+    TEST_ASSERT_EQUAL_NODE(&node30,&node10,NULL,-1);
+    TEST_ASSERT_EQUAL_NODE(&node80,&node70,&node90,0);
+    TEST_ASSERT_EQUAL_NODE(&node70,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node90,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+}
+/**
+*              35(2)                           50(0)
+*              /  \           rotate           /   \
+*         20(0)   50(1)       ----->       35(0)    60(1)
+*                /  \          LEFT         /  \     \
+*            40(0) 60(1)     rebalance   20(0) 40(0) 70(0)
+*                      \
+*                     70(0)
+**/
+
+void test_rotateLeftAndReBalance_given_25_10_40_30_50_add_60(void){
+    //Build number tree
+    initNode(&node70,NULL,NULL,0);
+    initNode(&node60,NULL,&node70,1);
+    initNode(&node40,NULL,NULL,0);
+    initNode(&node50,&node40,&node60,1);
+    initNode(&node20,NULL,NULL,0);
+    initNode(&node35,&node20,&node50,2);
+
+    //Test
+    root=rotateLeftAndReBalance(&node35);
+    TEST_ASSERT_EQUAL_NODE(root,&node35,&node60,0);
+    TEST_ASSERT_EQUAL_NODE(&node35,&node20,&node40,0);
+    TEST_ASSERT_EQUAL_NODE(&node60,NULL,&node70,1);
+    TEST_ASSERT_EQUAL_NODE(&node20,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node70,NULL,NULL,0);
+
+}
+
+/**
+*            50(3)                                   75(0)
+*           /    \              rotate             /     \
+*       25(0)    75(1)          ----->          50(0)     85(-1)
+*                /    \         RIGHT           / \       /
+*             60(0)   85(-1)    LEFT      25(0)  60(0) 80(0)
+*                      /       rebalance
+*                    80(0)
+**/
+
+void test_rotateLeftAndReBalance_given_50_25_75_60_85_80(void){
+    initNode(&node85,&node80,NULL,-1);
+    initNode(&node80,NULL,NULL,0);
+    initNode(&node60,NULL,NULL,0);
+    initNode(&node75,&node60,&node85,1);
+    initNode(&node25,NULL,NULL,0);
+    initNode(&node50,&node25,&node75,3);
+
+    //Test
+    root=rotateLeftAndReBalance(&node50);
+    TEST_ASSERT_EQUAL_NODE(root,&node50,&node85,0);
+    TEST_ASSERT_EQUAL_NODE(&node50,&node25,&node60,0);
+    TEST_ASSERT_EQUAL_NODE(&node85,&node80,NULL,-1);
+    TEST_ASSERT_EQUAL_NODE(&node25,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node80,NULL,NULL,0);
+
+}
+
+/**
+*                 25(2)                            40(0)
+*                 /  \            rotate            /   \
+*             10(0)   40(1)       ----->        25(0)   50(1)
+*                     /  \         LEFT          /  \     \
+*                  30(0) 50(1)    rebalance    10(0) 30(0) 60(0)
 *                           \
 *                           60(0)
 **/
@@ -168,15 +280,15 @@ void test_rotateLeftAndRebalance_given_25_10_40_30_50_add_60(void){
 }
 
 /**
-*         2                            5
-*          \        rotate           /   \
-*           5       ----->         2      7
-*            \      LEFT
-*             7
+*         20(2)                           50(0)
+*          \           rotate             /   \
+*           50(1)       ----->         20(0)  70(0)
+*            \           LEFT
+*             70(0)      rebalance
 *
 **/
 
-void test_rotateLeftAndRebalance_given_25_10_40_30_50_add_60(void){
+void test_rotateLeftAndRebalance_given_20_50_70(void){
     //Build number tree
     initNode(&node60,NULL,NULL,0);
     initNode(&node50,NULL,&node60,1);
@@ -187,6 +299,57 @@ void test_rotateLeftAndRebalance_given_25_10_40_30_50_add_60(void){
 
     //Test
     root=rotateLeftAndReBalance(&node25);
+    TEST_ASSERT_EQUAL_NODE(root,&node25,&node50,0);
+    TEST_ASSERT_EQUAL_NODE(&node25,&node10,&node30,0);
+    TEST_ASSERT_EQUAL_NODE(&node50,NULL,&node60,1);
+    TEST_ASSERT_EQUAL_NODE(&node30,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
+
+}
+
+/**
+*                 50(1)                              50(0)
+*                /   \               --->           /   \
+*              20(2)  70(0)       rebalance      20(0)  70(0)
+*
+**/
+
+void test_reBalanceFactor_given_20_50_70(void){
+    //Build number tree
+    initNode(&node70,NULL,NULL,0);
+    initNode(&node20,NULL,NULL,2);
+    initNode(&node50,&node20,&node70,1);
+
+    //Test
+    root=reBalanceFactor(&node50);
+    TEST_ASSERT_EQUAL_NODE(root,&node20,&node70,0);
+    TEST_ASSERT_EQUAL_NODE(&node20,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node70,NULL,NULL,0);
+
+}
+
+/**
+*                 40(1)                               40(0)
+*                 /  \           rebalance            /   \
+*             25(2)   50(1)       ----->          25(0)   50(1)
+*              /  \      \                         /  \     \
+*           10(0)  30(0) 60(0)                 10(0) 30(0) 60(0)
+*
+*
+**/
+
+void test_reBalanceFactor_given_25_10_40_30_50_add_60(void){
+    //Build number tree
+    initNode(&node60,NULL,NULL,0);
+    initNode(&node30,NULL,NULL,0);
+    initNode(&node50,NULL,&node60,1);
+    initNode(&node10,NULL,NULL,0);
+    initNode(&node25,&node10,&node30,2);
+    initNode(&node40,&node25,&node50,1);
+
+    //Test
+    root=reBalanceFactor(&node40);
     TEST_ASSERT_EQUAL_NODE(root,&node25,&node50,0);
     TEST_ASSERT_EQUAL_NODE(&node25,&node10,&node30,0);
     TEST_ASSERT_EQUAL_NODE(&node50,NULL,&node60,1);

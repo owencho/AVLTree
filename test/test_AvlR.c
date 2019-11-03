@@ -9,7 +9,7 @@ void tearDown(void)
 {
 }
 
-void test_Avl_NeedToImplement(void)
+void xtest_Avl_NeedToImplement(void)
 {
     TEST_IGNORE_MESSAGE("Need to Implement Avl");
 }
