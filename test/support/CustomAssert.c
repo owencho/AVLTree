@@ -24,7 +24,7 @@ void assertEqualNode (const Node * actualNode,
             sprintf(msg,"the actual left node is NULL and not %d ",leftNode->value);
         }
         else{
-            sprintf(msg,"Expected %d but encountered %d , the left node is not the same",leftNode->value,actualNode->left->value);
+            sprintf(msg,"Expected %d but encountered %d in actualNode , the left node is not the same",leftNode->value,actualNode->left->value);
         }
         UNITY_TEST_FAIL(lineNumber,msg);
     }
@@ -37,13 +37,13 @@ void assertEqualNode (const Node * actualNode,
             sprintf(msg,"the actual right node is NULL and not %d ",rightNode->value);
         }
         else{
-            sprintf(msg,"Expected %d but encountered %d , the right node is not the same",rightNode->value,actualNode->right->value);
+            sprintf(msg,"Expected %d but encountered %d in actualNode, the right node is not the same",rightNode->value,actualNode->right->value);
         }
         UNITY_TEST_FAIL(lineNumber,msg);
     }
 
     if(actualNode->bFactor != balanceFactor){
-        sprintf(msg,"Expected %d but encountered %d , the balanceFactor on node %d is not the same",balanceFactor,actualNode->bFactor,actualNode->value);
+        sprintf(msg,"Expected %d but encountered %d in actualNode, the balanceFactor on node %d is not the same",balanceFactor,actualNode->bFactor,actualNode->value);
         UNITY_TEST_FAIL(lineNumber,msg);
     }
 
