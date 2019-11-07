@@ -6,24 +6,14 @@
 
 Node* rotateRightNode(Node * root){
       Node * rightNode = root->left;
-      if(root->left->right != NULL){
-          root->left = root->left->right;
-      }
-      else{
-          root->left = NULL;
-      }
+      root->left = root->left->right;
       rightNode->right = root;
       return rightNode;
 }
 
 Node* rotateLeftNode(Node * root){
       Node * leftNode = root->right;
-      if(root->right->left != NULL){
-          root->right = root->right->left;
-      }
-      else{
-          root->right = NULL;
-      }
+      root->right = root->right->left;
       leftNode->left = root;
       return leftNode;
 }

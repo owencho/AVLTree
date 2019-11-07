@@ -1,0 +1,8 @@
+#ifndef _ERROR_H
+#define _ERROR_H
+
+#define ERR_VALUE_IS_NON_POSITIVE 10
+#define ERR_UNKOWN_ERROR 0
+#define ERR_VALUE_IS_INVALID 20
+
+#endif // _EXCEPTION_H

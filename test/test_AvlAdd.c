@@ -132,8 +132,29 @@ void test_AvlAdd_given_25_10_40_30_50_add_60(void){
     TEST_ASSERT_EQUAL_NODE(&node30,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
+}
+    /**
+    *          30(-2)                            20(0)
+    *        /              rotate             /      \
+    *      20(-1)           ----->           10(0)    30(0)
+    *    /                  RIGHT
+    *  10(0)
+    *
+    **/
+
+void test_rotateRightAndReBalance_given_30_20_10(void){
+    initNode(&node10,NULL,NULL,0);
+    initNode(&node20,&node10,NULL,-1);
+    initNode(&node30,&node20,NULL,-2);
+
+    //Test
+    root=rotateRightAndReBalance(&node30);
+    TEST_ASSERT_EQUAL_NODE(root,&node10,&node30,0);
+    TEST_ASSERT_EQUAL_NODE(&node30,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
 
 }
+
 /**
 *            60(-2)                            40(0)
 *           /   \          rotate             /   \
