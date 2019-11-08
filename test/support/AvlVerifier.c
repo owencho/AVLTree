@@ -1,4 +1,5 @@
 #include "AvlVerifier.h"
+#include "unity.h"
 
 
 int lineNo;
@@ -9,7 +10,7 @@ void verifyAvl(Node * root,int expectedNumOfElement,UNITY_LINE_TYPE lineNumber){
     lineNo = lineNumber;
     height = _verifyAvl(root, &count);
     if(expectedNumOfElement != count){
-
+        testReportFailure(lineNumber,"height is not the same ");
     }
 
 }
@@ -29,11 +30,11 @@ int _verifyAvl(Node * root, uint32_t * countPtr){
           testReportFailure(lineNo,"right node (%d) is smaller than the root node(%d) ",root->right->value,root->value);
         }
     }
-    if(root->bFactor >= 1 || root->bFactor <= -1){
-        testReportFailure(lineNo,"balanceFactor is %d which is larger than 1 or less than -1",root->bFactor);
+    if(root->bFactor > 1 || root->bFactor < -1){
+        testReportFailure(lineNo,"balanceFactor is %d which is larger than 1 or less than -1 on %d",root->bFactor,root->value);
     }
     if(root->bFactor != rightChildHeight-leftChildHeight){
-        testReportFailure(lineNo,"balanceFactor is %d which is incorrect ",root->bFactor);
+        testReportFailure(lineNo,"balanceFactor is %d which is incorrect on %d",root->bFactor,root->value);
     }
     *countPtr = leftCount + rightCount +1;
     if(leftChildHeight >= rightChildHeight){

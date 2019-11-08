@@ -26,10 +26,7 @@ void throwException(uint32_t errorCode,char *errorMessage,...){
 
     actualLength = vsnprintf(NULL,0, errorMessage, arg);   //trick system to take actualLength
     buffer =malloc(actualLength + 1);               // allocate value to buffer
-    vsnprintf(buffer,actualLength + 1, errorMessage, arg); //
-
-  /*printf("%s \n v = %d\n", format, v); old version 1 */
-  //v = va_arg(arg, int);
+    vsnprintf(buffer,actualLength + 1, errorMessage, arg);
     va_end(arg);
 
   exceptionPtr = malloc(sizeof(Exception));

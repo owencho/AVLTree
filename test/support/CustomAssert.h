@@ -9,12 +9,12 @@ void assertEqualNode (const Node * actualNode,
                        const int balanceFactor,
                       const UNITY_LINE_TYPE lineNumber);
 
-void testReportFailure (UNITY_LINE_TYPE lineNumber,char* message ,...);
+void testReportFailure (const UNITY_LINE_TYPE lineNumber,char* message ,...);
 
 
 #define TEST_ASSERT_EQUAL_NODE(actualNode,leftNode,rightNode,balanceFactor)        \
                       assertEqualNode(actualNode,leftNode,rightNode,balanceFactor,__LINE__)
-                      
+
 
 
 #endif // CustomAssert_H

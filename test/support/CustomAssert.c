@@ -1,7 +1,7 @@
-#include <stdio.h>
-#include "unity.h"
 #include "CustomAssert.h"
+#include "unity.h"
 #include "Exception.h"
+#include <stdio.h>
 #include <stdint.h>
 #include <malloc.h>
 #include <stdarg.h>
@@ -56,16 +56,11 @@ void testReportFailure (UNITY_LINE_TYPE lineNumber,char* message ,...){
     int actualLength;
     char* buffer;
     Exception *exceptionPtr;
-
     va_list arg;
     va_start(arg, message);
-
     actualLength = vsnprintf(NULL,0, message, arg);   //trick system to take actualLength
     buffer =malloc(actualLength + 1);               // allocate value to buffer
-    vsnprintf(buffer,actualLength + 1, message, arg); //
-
-  /*printf("%s \n v = %d\n", format, v); old version 1 */
-  //v = va_arg(arg, int);
+    vsnprintf(buffer,actualLength + 1, message, arg);
     va_end(arg);
     UNITY_TEST_FAIL(lineNumber, buffer);
 }
