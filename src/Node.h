@@ -9,10 +9,10 @@ struct Node{
     int bFactor;
     int value;
 };
-
+void freeAllNodesInTree(Node *root);
 Node * createNode(int value,  Node * left ,Node * right,int balanceFactor);
 void initNode(Node * node,  Node * left ,Node * right,int balanceFactor);
 
 #define freeNode(node)                                      \
-                          do{if(node) free(node);}while(0)
+                          do{if(node) free(node);} while(0)
 #endif // _NODE_H

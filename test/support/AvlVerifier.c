@@ -21,20 +21,20 @@ int _verifyAvl(Node * root, uint32_t * countPtr){
     if(root->left != NULL){
         leftChildHeight=_verifyAvl(root->left,&leftCount);
         if(root->left->value > root->value){
-          testReportFailure(lineNo,"left node (%d) is larger than the root node(%d) ",root->left->value,root->value);
+            testReportFailure(lineNo,"left node (%d) is larger than the root node(%d) ",root->left->value,root->value);
         }
     }
     if (root->right != NULL){
         rightChildHeight=_verifyAvl(root->right,&rightCount);
         if(root->right->value < root->value){
-          testReportFailure(lineNo,"right node (%d) is smaller than the root node(%d) ",root->right->value,root->value);
+            testReportFailure(lineNo,"right node (%d) is smaller than the root node(%d) ",root->right->value,root->value);
         }
     }
     if(root->bFactor > 1 || root->bFactor < -1){
         testReportFailure(lineNo,"balanceFactor is %d which is larger than 1 or less than -1 on %d",root->bFactor,root->value);
     }
     if(root->bFactor != rightChildHeight-leftChildHeight){
-        testReportFailure(lineNo,"balanceFactor is %d which is incorrect on %d",root->bFactor,root->value);
+        testReportFailure(lineNo,"balanceFactor is %d which but expected %d is incorrect on %d",root->bFactor,rightChildHeight-leftChildHeight,root->value);
     }
     *countPtr = leftCount + rightCount +1;
     if(leftChildHeight >= rightChildHeight){

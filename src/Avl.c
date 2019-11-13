@@ -1,5 +1,8 @@
 #include "Avl.h"
 #include "Rotate.h"
+#include "Error.h"
+#include "Exception.h"
+#include "CException.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -15,7 +18,10 @@ Node *avlAdd(Node *root,Node * nodeAdd){
 Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc){
     int bfact = 0;
     Node * child;
-    if(root->value < nodeAdd->value){
+    if(root->value == nodeAdd->value){
+      throwException(ERR_SAME_NODE,"same node value detected");
+    }
+    else if(root->value < nodeAdd->value){
         child = root->right;
         if(child == NULL){
             root->bFactor++;

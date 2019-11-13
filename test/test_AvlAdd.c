@@ -3,7 +3,11 @@
 #include "Node.h"
 #include "CustomAssert.h"
 #include "Rotate.h"
+#include "Exception.h"
+#include "Error.h"
+#include "CException.h"
 
+CEXCEPTION_T ex;
 Node * root;
 Node node1, node5, node10, node15,node20,node25,node30,node35,node40,node45,node50,node55;
 Node node60,node65,node70,node75,node80,node85,node90,node95,node99;
@@ -46,7 +50,7 @@ void test_AvlAdd_given_50_30_20_40_60_add_10(void){
     TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
-
+    //freeAllNodesInTree(root);
 }
 
 /**
@@ -377,5 +381,33 @@ void test_reBalanceFactor_given_25_10_40_30_50_add_60(void){
     TEST_ASSERT_EQUAL_NODE(&node30,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
+
+}
+
+/**
+*            50(-1)
+*           /   \
+*         30(0)  60(0)
+*        /  \
+*     20(0)  40(0)
+*
+*
+**/
+
+void test_AvlAdd_given_50_30_20_40_60_add_30_expected_error(void){
+    initNode(&node10,&node1,&node10,77);
+    initNode(&node20,NULL,NULL,0);
+    initNode(&node40,NULL,NULL,0);
+    initNode(&node30,&node20,&node40,0);
+    initNode(&node60,NULL,NULL,0);
+    initNode(&node50,&node30,&node60,-1);
+
+    //Test
+    Try{
+        root=avlAdd(&node50,&node30);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_ASSERT_EQUAL(ERR_SAME_NODE, ex->errorCode);
+    }
 
 }

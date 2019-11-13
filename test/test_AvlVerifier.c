@@ -5,10 +5,11 @@
 #include "AvlVerifier.h"
 #include "Avl.h"
 #include "Node.h"
-#include "CException.h"
 #include "CustomAssert.h"
 #include "Rotate.h"
 #include "Exception.h"
+#include "Error.h"
+#include "CException.h"
 
 CEXCEPTION_T ex;
 void setUp(void){}
@@ -20,16 +21,6 @@ Node *createAvlNode(uint32_t value){
     node->bFactor = 1;
     node ->left = (Node*)1;
     node ->right = (Node*)1;
-}
-
-void freeAllNodesInTree(Node *root){
-      if(root->left != NULL){
-          freeAllNodesInTree(root->left);
-      }
-      if (root->right != NULL){
-          freeAllNodesInTree(root->right);
-      }
-      freeNode(root);
 }
 
 uint32_t getRandomNum(void){
