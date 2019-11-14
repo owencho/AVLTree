@@ -10,13 +10,13 @@ void verifyAvl(Node * root,int expectedNumOfElement,UNITY_LINE_TYPE lineNumber){
     lineNo = lineNumber;
     height = _verifyAvl(root, &count);
     if(expectedNumOfElement != count){
-        testReportFailure(lineNumber,"height is not the same ");
+      testReportFailure(lineNumber,"height is not the same at %d",count);
     }
 
 }
 
 int _verifyAvl(Node * root, uint32_t * countPtr){
-    uint32_t leftCount,rightCount;
+    uint32_t leftCount=0,rightCount=0;
     int leftChildHeight=0,rightChildHeight=0;
     if(root->left != NULL){
         leftChildHeight=_verifyAvl(root->left,&leftCount);
@@ -30,13 +30,14 @@ int _verifyAvl(Node * root, uint32_t * countPtr){
             testReportFailure(lineNo,"right node (%d) is smaller than the root node(%d) ",root->right->value,root->value);
         }
     }
+    *countPtr = leftCount + rightCount +1;
     if(root->bFactor > 1 || root->bFactor < -1){
-        testReportFailure(lineNo,"balanceFactor is %d which is larger than 1 or less than -1 on %d",root->bFactor,root->value);
+        testReportFailure(lineNo,"balanceFactor is %d which is larger than 1 or less than -1 on %d at index %d",root->bFactor,root->value,*countPtr);
     }
     if(root->bFactor != rightChildHeight-leftChildHeight){
-        testReportFailure(lineNo,"balanceFactor is %d which but expected %d is incorrect on %d",root->bFactor,rightChildHeight-leftChildHeight,root->value);
+        testReportFailure(lineNo,"balanceFactor is %d which but expected %d is incorrect on %d at index %d"
+                          ,root->bFactor,rightChildHeight-leftChildHeight,root->value,*countPtr);
     }
-    *countPtr = leftCount + rightCount +1;
     if(leftChildHeight >= rightChildHeight){
         return (leftChildHeight+1) ;
     }

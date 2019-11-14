@@ -34,12 +34,13 @@ void test_random_num(void){
         printf("random num : %d \n",getRandomNum());
 }
 
-
+//srand(2)
+//5 √ 10 x
 void test_verify_AVL_tree(void){
     Node * root;
-    int max = 1000 , i;
+    int max = 10 , i;
     int height;
-    srand(1234);
+    srand(2);
     i = max;
     root =  createNode(getRandomNum(),  NULL ,NULL,0);
     while(i--){
@@ -49,7 +50,7 @@ void test_verify_AVL_tree(void){
             printf("Exception Thrown");
             i++;
         }
-        TEST_VERIFY_AVL_TREE(root, max-i);
+        TEST_VERIFY_AVL_TREE(root, max-i+1);
     }
     freeAllNodesInTree(root);
 }

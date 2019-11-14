@@ -1,7 +1,12 @@
 #include "unity.h"
 #include "Rotate.h"
 #include "Node.h"
+#include "Avl.h"
 #include "CustomAssert.h"
+#include "Exception.h"
+#include "Error.h"
+#include "CException.h"
+
 Node * root;
 Node node1, node2,node3, node5, node10, node15,node20,node25,node30,node35,node40,node45,node50,node55;
 Node node60,node65,node70,node75,node80,node85,node90,node95,node99;
@@ -25,7 +30,7 @@ void tearDown(void){}
 *  1
 *
 **/
-/*
+
 void test_rotateRightNode(void){
     //Build number tree
     initNode(&node1,  NULL ,NULL,0);
@@ -33,12 +38,11 @@ void test_rotateRightNode(void){
     initNode(&node3,  &node2 ,NULL,0);
     //Test
     root = rotateRightNode(&node3);
-    TEST_ASSERT_EQUAL_NODE(root,node1,node3,0);
-    TEST_ASSERT_EQUAL_NODE(node1,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(node3,NULL,NULL,0);
-    freeAllNodesInTree(root);
+    TEST_ASSERT_EQUAL_NODE(root,&node1,&node3,0);
+    TEST_ASSERT_EQUAL_NODE(&node1,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node3,NULL,NULL,0);
 }
-*/
+
 /**
 *             5                             3
 *           /  \       rotate             /   \
@@ -68,13 +72,6 @@ void test_rotateRightComplexNode(void){
     TEST_ASSERT_EQUAL_NODE(node4,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(node6,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(node1,NULL,NULL,0);
-
-    freeNode(node1);
-    freeNode(node2);
-    freeNode(node3);
-    freeNode(node4);
-    freeNode(node5);
-    freeNode(node6);
 }
 ///////////////////////////////////////////
 /**
@@ -97,9 +94,6 @@ void test_rotateLeftNode(void){
     TEST_ASSERT_EQUAL_NODE(finalNode,node2,node7,0);
     TEST_ASSERT_EQUAL_NODE(node2,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(node7,NULL,NULL,0);
-    freeNode(node2);
-    freeNode(node5);
-    freeNode(node7);
 }
 /**
 *         22                            41
@@ -129,12 +123,6 @@ void test_rotateLeftComplexNode(void){
     TEST_ASSERT_EQUAL_NODE(node11,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(node33,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(node60,NULL,NULL,0);
-    freeNode(node11);
-    freeNode(node33);
-    freeNode(node51);
-    freeNode(node60);
-    freeNode(node41);
-    freeNode(node22);
 }
 
 ///////////////////////////////////////////
@@ -158,10 +146,6 @@ void test_rotateLeftRightNode(void){
     TEST_ASSERT_EQUAL_NODE(finalNode,node2,node8,0);
     TEST_ASSERT_EQUAL_NODE(node2,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(node8,NULL,NULL,0);
-
-    freeNode(node5);
-    freeNode(node2);
-    freeNode(node8);
 }
 
 
@@ -193,13 +177,6 @@ void test_rotateLeftRightComplexNode(void){
     TEST_ASSERT_EQUAL_NODE(node1,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(node8,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(node12,NULL,NULL,0);
-
-    freeNode(node12);
-    freeNode(node8);
-    freeNode(node6);
-    freeNode(node1);
-    freeNode(node10);
-    freeNode(node3);
 }
 
 ///////////////////////////////////////////
@@ -223,10 +200,6 @@ void test_rotateRightLeftNode(void){
     TEST_ASSERT_EQUAL_NODE(finalNode,node15,node32,0);
     TEST_ASSERT_EQUAL_NODE(node32,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(node15,NULL,NULL,0);
-
-    freeNode(node15);
-    freeNode(node21);
-    freeNode(node32);
 }
 
 /**
@@ -259,12 +232,4 @@ void test_rotateRightLeftComplexNode(void){
     TEST_ASSERT_EQUAL_NODE(node12,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(node15,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(node24,NULL,NULL,0);
-
-    freeNode(node15);
-    freeNode(node12);
-    freeNode(node13);
-    freeNode(node24);
-    freeNode(node16);
-    freeNode(node8);
-    freeNode(node10);
 }

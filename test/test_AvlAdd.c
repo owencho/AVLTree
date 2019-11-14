@@ -50,7 +50,32 @@ void test_AvlAdd_given_50_30_20_40_60_add_10(void){
     TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
-    //freeAllNodesInTree(root);
+}
+
+/**
+*            5(1)                            5(2)                                5(1)
+*           /   \                          /    \            rotate             /   \
+*         1(0)  60(-1)         --->     1(0)   60(-2)        ----->          1(0)  50(0)
+*              /              add  40           /             RIGHT              /     \
+*           50(0)                             50(-1)                           40(0)  60(0)
+*                                             /
+*                                           40(0)
+**/
+
+void test_AvlAdd_given_5_1_60_50_add_40(void){
+    initNode(&node40,&node20,&node10,77);
+    initNode(&node1,NULL,NULL,0);
+    initNode(&node50,NULL,NULL,0);
+    initNode(&node60,&node50,NULL,-1);
+    initNode(&node5,&node1,&node60,1);
+
+    //Test
+    root=avlAdd(&node5,&node40);
+    TEST_ASSERT_EQUAL_NODE(root,&node1,&node50,1);
+    TEST_ASSERT_EQUAL_NODE(&node50,&node40,&node60,0);
+    TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node1,NULL,NULL,0);
 }
 
 /**
@@ -80,6 +105,7 @@ void test_AvlAdd_given_80_30_10_60_90_add_70(void){
     TEST_ASSERT_EQUAL_NODE(&node90,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
 }
+
 /**
 *            50(1)                          50(3)                                   75(0)
 *           /   \                           /    \              rotate             /     \

@@ -53,8 +53,10 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc){
 
     if(root->bFactor >= 2){
         root = rotateLeftAndReBalance(root);
+        *heightInc =0;
     }else if(root->bFactor <= -2){
         root = rotateRightAndReBalance(root);
+        *heightInc =0;
     }
     return root;
 
@@ -98,4 +100,14 @@ Node* reBalanceFactor(Node * root){
     }
     root->bFactor = rightFactor-leftFactor;
     return root;
+}
+
+void freeAllNodesInTree(Node *root){
+      if(root->left != NULL){
+          freeAllNodesInTree(root->left);
+      }
+      if (root->right != NULL){
+          freeAllNodesInTree(root->right);
+      }
+      freeNode(root);
 }
