@@ -9,11 +9,11 @@
 
 
 Node *avlAdd(Node *root,Node * nodeAdd){
-  int heightInc;
-  nodeAdd->left = NULL;
-  nodeAdd->right = NULL;
-  nodeAdd->bFactor =0;
-  return _avlAdd(root,nodeAdd,&heightInc);
+    int heightInc;
+    nodeAdd->left = NULL;
+    nodeAdd->right = NULL;
+    nodeAdd->bFactor =0;
+    return _avlAdd(root,nodeAdd,&heightInc);
 }
 Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc){
     int bfact = 0;
@@ -61,16 +61,17 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc){
     return root;
 
 }
-
+//fix this for poh teach last wednes 15/11
 Node* rotateLeftAndReBalance(Node * root){
-    root->bFactor = 0;
+    int bFactor=0;
     if(root->right->bFactor >=0){
+        bFactor = root->right->right->bFactor;
         root = rotateLeftNode(root);
     }else{
+        bFactor = root->right->left->bFactor;
         root = rotateRightLeftNode(root);
     }
-    root=reBalanceFactor(root);
-
+  //fix this  root->bFactor = (0-[(rightLeftBfactor-)])
     return root;
 }
 
@@ -78,36 +79,21 @@ Node* rotateRightAndReBalance(Node * root){
     root->bFactor = 0;
     if(root->left->bFactor >=0){
         root = rotateLeftRightNode(root);
+        root->left->bFactor =0;
     }else{
         root = rotateRightNode(root);
     }
-    root=reBalanceFactor(root);
-
-    return root;
-}
-
-Node* reBalanceFactor(Node * root){
-    int leftFactor =0 ;
-    int rightFactor = 0 ;
-    root->bFactor = 0;
-    if(root->left !=NULL){
-        root->left = reBalanceFactor(root->left);
-        leftFactor++;
-    }
-    if(root->right !=NULL){
-        root->right = reBalanceFactor(root->right);
-        rightFactor++;
-    }
-    root->bFactor = rightFactor-leftFactor;
+    root->right->bFactor =0;
+    root->bFactor =0;
     return root;
 }
 
 void freeAllNodesInTree(Node *root){
-      if(root->left != NULL){
-          freeAllNodesInTree(root->left);
-      }
-      if (root->right != NULL){
-          freeAllNodesInTree(root->right);
-      }
-      freeNode(root);
+    if(root->left != NULL){
+        freeAllNodesInTree(root->left);
+    }
+    if (root->right != NULL){
+        freeAllNodesInTree(root->right);
+    }
+    freeNode(root);
 }
