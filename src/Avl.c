@@ -61,29 +61,36 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc){
     return root;
 
 }
-//fix this for poh teach last wednes 15/11
 Node* rotateLeftAndReBalance(Node * root){
     int bFactor=0;
     if(root->right->bFactor >=0){
         bFactor = root->right->right->bFactor;
         root = rotateLeftNode(root);
+        root->left->bFactor = 0;
+        root->right->bFactor = bFactor;
     }else{
         bFactor = root->right->left->bFactor;
         root = rotateRightLeftNode(root);
+        root->left->bFactor = (-1-(bFactor-1)>>1)*(bFactor&1);
+        root->right->bFactor = (0-(bFactor-1)>>1)*(bFactor&1);
     }
-  //fix this  root->bFactor = (0-[(rightLeftBfactor-)])
+    root->bFactor = 0;
     return root;
 }
 
 Node* rotateRightAndReBalance(Node * root){
-    root->bFactor = 0;
+    int bFactor=0;
     if(root->left->bFactor >=0){
+        bFactor = root->left->right->bFactor;
         root = rotateLeftRightNode(root);
-        root->left->bFactor =0;
+        root->left->bFactor = (-1-(bFactor-1)>>1)*(bFactor&1);
+        root->right->bFactor = (0-(bFactor-1)>>1)*(bFactor&1);
     }else{
+        bFactor = root->left->left->bFactor;
         root = rotateRightNode(root);
+        root->right->bFactor = 0;
+        root->left->bFactor = bFactor;
     }
-    root->right->bFactor =0;
     root->bFactor =0;
     return root;
 }
