@@ -31,8 +31,9 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc){
             root->right=_avlAdd(child,nodeAdd,&bfact);
             if(bfact ==1){
               *heightInc =1;
+              root->bFactor =root->bFactor+bfact;
             }
-            root->bFactor =root->bFactor+bfact;
+
         }
     }
     else{
@@ -45,13 +46,13 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc){
             root->left=_avlAdd(child,nodeAdd,&bfact);
             if(bfact ==1){
               *heightInc =1;
+               root->bFactor =root->bFactor-bfact;
             }
-            root->bFactor =root->bFactor-bfact;
-
         }
     }
-
-    if(root->bFactor >= 2){
+    if(root->bFactor == 0 ){
+        *heightInc =0;
+    }else if(root->bFactor >= 2){
         root = rotateLeftAndReBalance(root);
         *heightInc =0;
     }else if(root->bFactor <= -2){
@@ -61,6 +62,7 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc){
     return root;
 
 }
+
 Node* rotateLeftAndReBalance(Node * root){
     int bFactor=0;
     if(root->right->bFactor >=0){

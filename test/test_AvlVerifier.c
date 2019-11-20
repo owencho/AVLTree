@@ -35,19 +35,21 @@ void test_random_num(void){
 }
 
 //srand(2)
-//5 √ 10 x
+//5 √ 10 √ 100 √ 1000 √ 10000 √
+//time(0)
+//5 √ 10 √ 100 √ 1000 √ 10000 √
 void test_verify_AVL_tree(void){
     Node * root;
-    int max = 10 , i;
+    int max = 100000 , i;
     int height;
-    srand(2);
+    srand(time(0));
     i = max;
     root =  createNode(getRandomNum(),  NULL ,NULL,0);
     while(i--){
        Try{
             root = avlAdd(root,createAvlNode(getRandomNum()));
         }Catch(ex){
-            printf("Exception Thrown");
+            dumpException(ex);
             i++;
         }
         TEST_VERIFY_AVL_TREE(root, max-i+1);

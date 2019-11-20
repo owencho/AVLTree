@@ -21,8 +21,40 @@ void setUp(void){
     node95.value =95; node99.value =99; node10.value =10;
 }
 void tearDown(void){}
+//////////////Avl ADD without Rotate//////////////////////////////////////////////////
+/**
+*            40(-1)                               40(-1)
+*           /     \                              /     \
+*         20(1)    45(1)        --->          20(0)    45(1)
+*        /  \        \        add  1         /    \       \
+*     5(0)  30(0)    50(0)                5(-1)   30(0)   50(0)
+*           /  \                         /        /   \
+*         25(0) 35(0)                  1(0)     25(0) 35(0)
+**/
 
+void test_AvlAdd_given_5_30_20_25_35_40_45_50_add_1(void){
+    initNode(&node1,&node10,&node10,77);
+    initNode(&node50,NULL,NULL,0);
+    initNode(&node25,NULL,NULL,0);
+    initNode(&node35,NULL,NULL,0);
+    initNode(&node30,&node25,&node35,0);
+    initNode(&node5,NULL,NULL,0);
+    initNode(&node20,&node5,&node30,1);
+    initNode(&node45,NULL,&node50,1);
+    initNode(&node40,&node20,&node45,-1);
 
+    //Test
+    root=avlAdd(&node40,&node1);
+    TEST_ASSERT_EQUAL_PTR(&node40,root);
+    TEST_ASSERT_EQUAL_NODE(root,&node20,&node45,-1);
+    TEST_ASSERT_EQUAL_NODE(&node20,&node5,&node30,0);
+    TEST_ASSERT_EQUAL_NODE(&node30,&node25,&node35,0);
+    TEST_ASSERT_EQUAL_NODE(&node5,&node1,NULL,-1);
+    TEST_ASSERT_EQUAL_NODE(&node45,NULL,&node50,1);
+    TEST_ASSERT_EQUAL_NODE(&node25,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node35,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node50,NULL,NULL,0);
+}
 //////////////Avl ADD with Rotate Right//////////////////////////////////////////////////
 
 /**
@@ -80,6 +112,8 @@ void test_AvlAdd_given_5_1_60_50_add_40(void){
     TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node1,NULL,NULL,0);
 }
+
+
 //////////////Avl ADD with Rotate LEFT RIGHT//////////////////////////////////////////////////
 /**
 *         80(-1)                      80(-2)                             60(0)
@@ -170,6 +204,8 @@ void test_AvlAdd_given_25_10_40_30_50_add_60(void){
     TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
 }
+
+
 
 //////////////ROTATE RIGHT AND REBALANCE//////////////////////////////////////////////////
 
