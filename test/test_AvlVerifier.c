@@ -3,7 +3,8 @@
 #include <time.h>
 #include "unity.h"
 #include "AvlVerifier.h"
-#include "Avl.h"
+#include "AvlAdd.h"
+#include "AvlDelete.h"
 #include "Node.h"
 #include "CustomAssert.h"
 #include "Rotate.h"
@@ -38,6 +39,8 @@ void test_random_num(void){
 //5 √ 10 √ 100 √ 1000 √ 10000 √
 //time(0)
 //5 √ 10 √ 100 √ 1000 √ 10000 √
+
+//Automated Test for checking AVL add function
 void test_verify_AVL_tree(void){
     Node * root;
     int max = 100000 , i;

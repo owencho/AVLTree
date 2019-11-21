@@ -1,4 +1,4 @@
-#include "Avl.h"
+#include "AvlAdd.h"
 #include "Rotate.h"
 #include "Error.h"
 #include "Exception.h"
@@ -53,17 +53,18 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc){
     if(root->bFactor == 0 ){
         *heightInc =0;
     }else if(root->bFactor >= 2){
-        root = rotateLeftAndReBalance(root);
+        root = rotateLeftAndReBalanceAdd(root);
         *heightInc =0;
     }else if(root->bFactor <= -2){
-        root = rotateRightAndReBalance(root);
+        root = rotateRightAndReBalanceAdd(root);
         *heightInc =0;
     }
     return root;
 
 }
 
-Node* rotateLeftAndReBalance(Node * root){
+
+Node* rotateLeftAndReBalanceAdd(Node * root){
     int bFactor=0;
     if(root->right->bFactor >=0){
         bFactor = root->right->right->bFactor;
@@ -80,7 +81,7 @@ Node* rotateLeftAndReBalance(Node * root){
     return root;
 }
 
-Node* rotateRightAndReBalance(Node * root){
+Node* rotateRightAndReBalanceAdd(Node * root){
     int bFactor=0;
     if(root->left->bFactor >=0){
         bFactor = root->left->right->bFactor;
@@ -95,14 +96,4 @@ Node* rotateRightAndReBalance(Node * root){
     }
     root->bFactor =0;
     return root;
-}
-
-void freeAllNodesInTree(Node *root){
-    if(root->left != NULL){
-        freeAllNodesInTree(root->left);
-    }
-    if (root->right != NULL){
-        freeAllNodesInTree(root->right);
-    }
-    freeNode(root);
 }

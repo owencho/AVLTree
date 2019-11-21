@@ -11,6 +11,7 @@ struct Node{
 };
 Node * createNode(int value,  Node * left ,Node * right,int balanceFactor);
 void initNode(Node * node,  Node * left ,Node * right,int balanceFactor);
+void freeAllNodesInTree(Node *root);
 
 #define freeNode(node)                                      \
                           do{if(node) free(node);} while(0)
