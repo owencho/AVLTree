@@ -33,7 +33,6 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc){
               *heightInc =1;
               root->bFactor =root->bFactor+bfact;
             }
-
         }
     }
     else{
