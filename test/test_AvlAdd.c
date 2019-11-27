@@ -88,6 +88,35 @@ void test_AvlAdd_given_R_50_30_20_40_60_add_10(void){
 }
 
 /**
+*            50(-1)                          50(-2)                             30(0)
+*           /   \                           /    \           rotate             /   \
+*         30(0)  60(0)   --->            30(-1)    60(0)     ----->          20(1)  50(0)
+*        /  \            add  20        /    \               RIGHT            \     /     \
+*     20(0)  40(0)                    20(-1)   40(0)                        25(0)  40(0)  60(0)
+*                                       \
+*                                      25(0)
+**/
+
+void test_AvlAdd_given_R_50_30_20_40_60_add_25(void){
+    initNode(&node25,&node1,&node10,77);
+    initNode(&node20,NULL,NULL,0);
+    initNode(&node40,NULL,NULL,0);
+    initNode(&node30,&node20,&node40,0);
+    initNode(&node60,NULL,NULL,0);
+    initNode(&node50,&node30,&node60,-1);
+
+    //Test
+    root=avlAdd(&node50,&node25);
+    TEST_ASSERT_EQUAL_PTR(&node30,root);
+    TEST_ASSERT_EQUAL_NODE(root,&node20,&node50,0);
+    TEST_ASSERT_EQUAL_NODE(&node20,NULL,&node25,1);
+    TEST_ASSERT_EQUAL_NODE(&node50,&node40,&node60,0);
+    TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+}
+
+/**
 *            5(1)                            5(2)                                5(1)
 *           /   \                          /    \            rotate             /   \
 *         1(0)  60(-1)         --->     1(0)   60(-2)        ----->          1(0)  50(0)
@@ -114,7 +143,32 @@ void test_AvlAdd_given_R_5_1_60_50_add_40(void){
     TEST_ASSERT_EQUAL_NODE(&node1,NULL,NULL,0);
 }
 
+/**
+*      60(-1)                    60(-2)                            50(0)
+*       /                        /            rotate             /      \
+*   50(0)           --->     50(-1)           ----->           40(0)    60(0)
+*                 add 40     /                RIGHT
+*                          40(0)
+*
+**/
 
+void test_AvlAdd_given_R_60_50_add_70(void){
+    initNode(&node40,&node50,&node50,77);
+    initNode(&node50,NULL,NULL,0);
+    initNode(&node60,&node50,NULL,-1);
+
+    //Test
+    Try{
+        root=avlAdd(&node60,&node40);
+        TEST_ASSERT_EQUAL_PTR(&node50,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node40,&node60,0);
+        TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
 //////////////Avl ADD with Rotate LEFT RIGHT//////////////////////////////////////////////////
 /**
 *         80(-1)                      80(-2)                             60(0)
@@ -141,6 +195,35 @@ void test_AvlAdd_given_LR_80_30_10_60_90_add_70(void){
     TEST_ASSERT_EQUAL_NODE(&node30,&node10,NULL,-1);
     TEST_ASSERT_EQUAL_NODE(&node80,&node70,&node90,0);
     TEST_ASSERT_EQUAL_NODE(&node70,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node90,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+}
+
+/**
+*         80(-1)                      80(-2)                             60(0)
+*       /      \         add          /     \         Rotate          /       \
+*    30(0)    90(0)     ----->     30(1)  90(0)      ---->         30(0)    80(1)
+*    /  \              70         /     \             LEFTRIGHT     /  \       \
+*  10(0) 60(0)                  10(0)  60(-1)                     10(0) 55(0)  90(0)
+*                                        /
+*                                      55(0)
+**/
+
+void test_AvlAdd_given_LR_80_30_10_60_90_add_55(void){
+    initNode(&node55,&node1,&node10,77);
+    initNode(&node60,NULL,NULL,0);
+    initNode(&node10,NULL,NULL,0);
+    initNode(&node30,&node10,&node60,0);
+    initNode(&node90,NULL,NULL,0);
+    initNode(&node80,&node30,&node90,-1);
+
+    //Test
+    root=avlAdd(&node80,&node55);
+    TEST_ASSERT_EQUAL_PTR(&node60,root);
+    TEST_ASSERT_EQUAL_NODE(root,&node30,&node80,0);
+    TEST_ASSERT_EQUAL_NODE(&node30,&node10,&node55,0);
+    TEST_ASSERT_EQUAL_NODE(&node80,NULL,&node90,1);
+    TEST_ASSERT_EQUAL_NODE(&node55,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node90,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
 }
@@ -171,6 +254,36 @@ void test_AvlAdd_given_RL_50_25_75_60_85_add_65(void){
     TEST_ASSERT_EQUAL_NODE(&node75,&node65,&node85,0);
     TEST_ASSERT_EQUAL_NODE(&node25,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node65,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node85,NULL,NULL,0);
+
+}
+
+/**
+*            30(1)                          30(2)                                   60(0)
+*           /   \                           /    \              rotate             /     \
+*         10(0)  70(0)      --->        10(0)    70(-1)          ----->         30(0)  70(1)
+*                /  \      add 55                /    \         RIGHT           /  \     \
+*            60(0)  85(0)                    60(-1)   85(0)     LEFT          10(0) 55(0) 85(0)
+*                                             /
+*                                           55(0)
+**/
+
+void test_AvlAdd_given_RL_10_30_70_60_85_add_55(void){
+    initNode(&node55,&node1,&node10,69);
+    initNode(&node85,NULL,NULL,0);
+    initNode(&node60,NULL,NULL,0);
+    initNode(&node70,&node60,&node85,0);
+    initNode(&node10,NULL,NULL,0);
+    initNode(&node30,&node10,&node70,1);
+
+    //Test
+    root=avlAdd(&node30,&node55);
+    TEST_ASSERT_EQUAL_PTR(&node60,root);
+    TEST_ASSERT_EQUAL_NODE(root,&node30,&node70,0);
+    TEST_ASSERT_EQUAL_NODE(&node30,&node10,&node55,0);
+    TEST_ASSERT_EQUAL_NODE(&node70,NULL,&node85,1);
+    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node55,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node85,NULL,NULL,0);
 
 }
@@ -342,7 +455,7 @@ void test_rotateRightAndReBalanceAdd_given_80_30_10_60_90_70(void){
     initNode(&node70,NULL,NULL,0);
     initNode(&node60,NULL,&node70,1);
     initNode(&node10,NULL,NULL,0);
-    initNode(&node30,&node10,&node60,0);
+    initNode(&node30,&node10,&node60,1);
     initNode(&node90,NULL,NULL,0);
     initNode(&node80,&node30,&node90,-2);
 
@@ -371,7 +484,7 @@ void test_rotateRightAndReBalanceAdd_given_80_30_10_60_90_50(void){
     initNode(&node70,NULL,NULL,0);
     initNode(&node60,&node50,NULL,-1);
     initNode(&node10,NULL,NULL,0);
-    initNode(&node30,&node10,&node60,0);
+    initNode(&node30,&node10,&node60,1);
     initNode(&node90,NULL,NULL,0);
     initNode(&node80,&node30,&node90,-2);
 

@@ -21,33 +21,44 @@ Node *avlDelete(Node *root,int nodeDelete){
 
 Node *_avlDelete(Node *root,int nodeDelete,Node ** deletedNode,int * heightDec){
     Node * child;
+    Node * rootLeft;
     int bfact = 0;
     if(root->value < nodeDelete){
         child = root->right;
         if(child != NULL){
             root->right=_avlDelete(child,nodeDelete,deletedNode,&bfact);
-            if(bfact ==1 ){
-              *heightDec =1;
-              root->bFactor =root->bFactor-bfact;
-            }
+            *heightDec =bfact;
+            root->bFactor =root->bFactor-bfact;
         }
     }
     else if (root->value ==nodeDelete){
         *deletedNode = root;
         *heightDec =1;
         return NULL;
+        /*
+        if(root->right == NULL && root->left == NULL){
+            return NULL;
+        }
+        if(root->right == NULL){
+          return root->left;
+        }
+        else{
+          rootLeft = root->left;
+          root= findNode(root->right);
+          root->left = rootLeft;
+          return root;
+        }
+        */
     }
     else{
         child = root->left;
         if(child != NULL){
             root->left=_avlDelete(child,nodeDelete,deletedNode,&bfact);
-            if(bfact ==1 ){
-              *heightDec =1;
-              root->bFactor =root->bFactor+bfact;
-            }
+            *heightDec =bfact;
+            root->bFactor =root->bFactor+bfact;
         }
     }
-    if((root->bFactor == -1 )||root->bFactor == 1 ){
+    if((root->bFactor == -1 )|| root->bFactor == 1 ){
         *heightDec =0;
     }else if(root->bFactor >= 2){
         root = rotateLeftAndReBalanceDelete(root);
@@ -59,7 +70,16 @@ Node *_avlDelete(Node *root,int nodeDelete,Node ** deletedNode,int * heightDec){
     return root;
 
 }
-
+/*
+Node * check(Node* root){
+  if(root->left == NULL){
+      return root;
+  }
+  else{
+      return check(root->left);
+  }
+}
+*/
 Node* rotateLeftAndReBalanceDelete(Node * root){
     int bFactor=0;
     int secondBfactor =0;
@@ -79,20 +99,23 @@ Node* rotateLeftAndReBalanceDelete(Node * root){
     }
     return root;
 }
-
+//fix this
 Node* rotateRightAndReBalanceDelete(Node * root){
     int bFactor=0;
-    if(root->left->bFactor >=0){
+    int secondBfactor =0;
+    if(root->left->bFactor > 0){
         bFactor = root->left->right->bFactor;
         root = rotateLeftRightNode(root);
         root->left->bFactor = (-1-(bFactor-1)>>1)*(bFactor&1);
         root->right->bFactor = (0-(bFactor-1)>>1)*(bFactor&1);
+        root->bFactor =0;
     }else{
-        bFactor = root->left->left->bFactor;
+        bFactor = root->left->bFactor;
+        secondBfactor = root->left->left->bFactor;
         root = rotateRightNode(root);
-        root->right->bFactor = 0;
-        root->left->bFactor = bFactor;
+        root->right->bFactor = -1-bFactor;
+        root->left->bFactor = secondBfactor;
+        root->bFactor =1+bFactor;
     }
-    root->bFactor =0;
     return root;
 }
