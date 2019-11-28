@@ -3,6 +3,6 @@
 #include "Node.h"
 Node * avlAdd(Node *root,Node * nodeAdd);
 Node * _avlAdd(Node *root,Node * nodeAdd,int * heightInc);
-Node * rotateLeftAndReBalanceAdd(Node * root);
-Node * rotateRightAndReBalanceAdd(Node * root);
+Node * rotateLeftAndReBalanceForAdd(Node * root);
+Node * rotateRightAndReBalanceForAdd(Node * root);
 #endif // _AVLADD_H

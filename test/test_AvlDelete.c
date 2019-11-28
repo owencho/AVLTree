@@ -4,6 +4,7 @@
 #include "Node.h"
 #include "CustomAssert.h"
 #include "Rotate.h"
+#include "Balance.h"
 #include "Exception.h"
 #include "Error.h"
 #include "CException.h"
@@ -98,7 +99,184 @@ void test_AvlDelete_given_WO_5_30_20_25_35_40_45_50_1_delete_1(void){
         TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
     }
 }
-//////////////Avl Delete with LEFT Rotation//////////////////////////////////////////////////
+/**
+*       30(1)                     30(1)
+*       /   \         delete      /  \
+*     5(0)  70(0)     ---->   5(0)    70(1)
+*          /   \         65              \
+*        65(0) 75(0)                    75(0)
+*
+**/
+
+void test_AvlDelete_given_WO_5_30_70_65_75_delete_65(void){
+    //Build number tree
+    initNode(&node5,NULL,NULL,0);
+    initNode(&node65,NULL,NULL,0);
+    initNode(&node75,NULL,NULL,0);
+    initNode(&node70,&node65,&node75,0);
+    initNode(&node30,&node5,&node70,1);
+
+    //Test
+    Try{
+        root=avlDelete(&node30,65);
+        TEST_ASSERT_EQUAL_PTR(&node30,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node5,&node70,1);
+        TEST_ASSERT_EQUAL_NODE(&node70,NULL,&node75,1);
+        TEST_ASSERT_EQUAL_NODE(&node5,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node75,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
+/**
+*       30(1)                     30(1)
+*       /   \         delete      /  \
+*     5(0)  70(0)     ---->   5(0)    70(-1)
+*          /   \         75            /
+*        65(0) 75(0)                 65(0)
+*
+**/
+
+void test_AvlDelete_given_WO_5_30_70_65_75_delete_75(void){
+    //Build number tree
+    initNode(&node5,NULL,NULL,0);
+    initNode(&node65,NULL,NULL,0);
+    initNode(&node75,NULL,NULL,0);
+    initNode(&node70,&node65,&node75,0);
+    initNode(&node30,&node5,&node70,1);
+
+    //Test
+    Try{
+        root=avlDelete(&node30,75);
+        TEST_ASSERT_EQUAL_PTR(&node30,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node5,&node70,1);
+        TEST_ASSERT_EQUAL_NODE(&node70,&node65,NULL,-1);
+        TEST_ASSERT_EQUAL_NODE(&node5,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node75,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
+/**
+*       30(1)                     30(0)
+*       /   \         delete      /  \
+*     5(0)  70(1)     ---->   5(0)    70(0)
+*              \         85
+*             85(0)
+*
+**/
+
+void test_AvlDelete_given_WO_5_30_70_85_delete_85(void){
+    //Build number tree
+    initNode(&node5,NULL,NULL,0);
+    initNode(&node75,NULL,NULL,0);
+    initNode(&node70,NULL,&node85,1);
+    initNode(&node30,&node5,&node70,1);
+
+    //Test
+    Try{
+        root=avlDelete(&node30,85);
+        TEST_ASSERT_EQUAL_PTR(&node30,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node5,&node70,0);
+        TEST_ASSERT_EQUAL_NODE(&node5,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node70,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
+
+/**
+*       30(-1)                     30(0)
+*       /   \         delete      /  \
+*     5(-1)  70(0)     ---->   5(0)    70(0)
+*      /                 1
+*    1(0)
+*
+**/
+
+void test_AvlDelete_given_WO_5_30_70_1_delete_1(void){
+    //Build number tree
+    initNode(&node1,NULL,NULL,0);
+    initNode(&node5,&node1,NULL,-1);
+    initNode(&node70,NULL,NULL,0);
+    initNode(&node30,&node5,&node70,-1);
+
+    //Test
+    Try{
+        root=avlDelete(&node30,1);
+        TEST_ASSERT_EQUAL_PTR(&node30,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node5,&node70,0);
+        TEST_ASSERT_EQUAL_NODE(&node5,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node70,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
+
+/**
+*       30(-1)                     30(-1)
+*       /   \         delete      /   \
+*     10(0)  70(0)     ---->   10(1)   70(0)
+*      /  \               1      \
+*    1(0)  15(0)                 15(0)
+*
+**/
+
+void test_AvlDelete_given_WO_15_10_30_70_1_delete_1(void){
+    //Build number tree
+    initNode(&node1,NULL,NULL,0);
+    initNode(&node15,NULL,NULL,0);
+    initNode(&node10,&node1,&node15,0);
+    initNode(&node70,NULL,NULL,0);
+    initNode(&node30,&node10,&node70,-1);
+
+    //Test
+    Try{
+        root=avlDelete(&node30,1);
+        TEST_ASSERT_EQUAL_PTR(&node30,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node10,&node70,-1);
+        TEST_ASSERT_EQUAL_NODE(&node10,NULL,&node15,1);
+        TEST_ASSERT_EQUAL_NODE(&node70,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
+
+/**
+*       30(-1)                     30(-1)
+*       /   \         delete      /   \
+*     10(0)  70(0)     ---->   10(-1)   70(0)
+*      /  \               15     /
+*    1(0)  15(0)               1(0)
+*
+**/
+
+void test_AvlDelete_given_WO_15_10_30_70_1_delete_15(void){
+    //Build number tree
+    initNode(&node1,NULL,NULL,0);
+    initNode(&node15,NULL,NULL,0);
+    initNode(&node10,&node1,&node15,0);
+    initNode(&node70,NULL,NULL,0);
+    initNode(&node30,&node10,&node70,-1);
+
+    //Test
+    Try{
+        root=avlDelete(&node30,15);
+        TEST_ASSERT_EQUAL_PTR(&node30,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node10,&node70,-1);
+        TEST_ASSERT_EQUAL_NODE(&node10,&node1,NULL,-1);
+        TEST_ASSERT_EQUAL_NODE(&node70,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
+/////////////Avl Delete with LEFT Rotation//////////////////////////////////////////////////
 
 /**
 *       30(1)                     30(2)                                70(-1)
@@ -394,7 +572,7 @@ void test_AvlDelete_given_R_50_30_70_20_45_delete_70(void){
     //Test
     Try{
         root=avlDelete(&node50,70);
-        //TEST_ASSERT_EQUAL_PTR(&node30,root);
+        TEST_ASSERT_EQUAL_PTR(&node30,root);
         TEST_ASSERT_EQUAL_NODE(root,&node20,&node50,1);
         TEST_ASSERT_EQUAL_NODE(&node50,&node45,NULL,-1);
         TEST_ASSERT_EQUAL_NODE(&node45,NULL,NULL,0);
@@ -491,15 +669,19 @@ void test_avlDelete_given_R_50_30_20_40_60_10(void){
     initNode(&node50,&node30,&node60,-1);
 
     //Test
-
-    root=avlDelete(&node50,70);
-    TEST_ASSERT_EQUAL_PTR(&node30,root);
-    TEST_ASSERT_EQUAL_NODE(root,&node20,&node50,0);
-    TEST_ASSERT_EQUAL_NODE(&node20,&node10,NULL,-1);
-    TEST_ASSERT_EQUAL_NODE(&node50,&node40,&node60,0);
-    TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    Try{
+        root=avlDelete(&node50,70);
+        TEST_ASSERT_EQUAL_PTR(&node30,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node20,&node50,0);
+        TEST_ASSERT_EQUAL_NODE(&node20,&node10,NULL,-1);
+        TEST_ASSERT_EQUAL_NODE(&node50,&node40,&node60,0);
+        TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
 
 }
 
@@ -523,16 +705,19 @@ void test_avlDelete_given_R_50_30_20_25_40_60_remove_70(void){
     initNode(&node50,&node30,&node60,-1);
 
     //Test
-
-    root=avlDelete(&node50,70);
-    TEST_ASSERT_EQUAL_PTR(&node30,root);
-    TEST_ASSERT_EQUAL_NODE(root,&node20,&node50,0);
-    TEST_ASSERT_EQUAL_NODE(&node20,NULL,&node25,1);
-    TEST_ASSERT_EQUAL_NODE(&node50,&node40,&node60,0);
-    TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
-
+    Try{
+        root=avlDelete(&node50,70);
+        TEST_ASSERT_EQUAL_PTR(&node30,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node20,&node50,0);
+        TEST_ASSERT_EQUAL_NODE(&node20,NULL,&node25,1);
+        TEST_ASSERT_EQUAL_NODE(&node50,&node40,&node60,0);
+        TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
 }
 //////////////Avl Delete with LEFTRIGHT Rotation//////////////////////////////////////////////////
 
@@ -585,14 +770,19 @@ void test_avlDelete_given_LR_80_30_10_60_90_70_99_remove99(void){
     initNode(&node80,&node30,&node90,-1);
 
     //Test
-    root=avlDelete(&node80,99);
-    TEST_ASSERT_EQUAL_PTR(&node60,root);
-    TEST_ASSERT_EQUAL_NODE(root,&node30,&node80,0);
-    TEST_ASSERT_EQUAL_NODE(&node30,&node10,NULL,-1);
-    TEST_ASSERT_EQUAL_NODE(&node80,&node70,&node90,0);
-    TEST_ASSERT_EQUAL_NODE(&node70,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node90,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    Try{
+        root=avlDelete(&node80,99);
+        TEST_ASSERT_EQUAL_PTR(&node60,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node30,&node80,0);
+        TEST_ASSERT_EQUAL_NODE(&node30,&node10,NULL,-1);
+        TEST_ASSERT_EQUAL_NODE(&node80,&node70,&node90,0);
+        TEST_ASSERT_EQUAL_NODE(&node70,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node90,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
 }
 /**
 *        80(-1)                            80(-2)                           60(0)
@@ -613,22 +803,26 @@ void test_avlDelete_given_LR_80_30_10_60_90_50_99_remove_99(void){
     initNode(&node80,&node30,&node90,-2);
 
     //Test
-
-    root=avlDelete(&node80,99);
-    TEST_ASSERT_EQUAL_PTR(&node60,root);
-    TEST_ASSERT_EQUAL_NODE(root,&node30,&node80,0);
-    TEST_ASSERT_EQUAL_NODE(&node30,&node10,&node50,0);
-    TEST_ASSERT_EQUAL_NODE(&node80,NULL,&node90,1);
-    TEST_ASSERT_EQUAL_NODE(&node50,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node90,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    Try{
+        root=avlDelete(&node80,99);
+        TEST_ASSERT_EQUAL_PTR(&node60,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node30,&node80,0);
+        TEST_ASSERT_EQUAL_NODE(&node30,&node10,&node50,0);
+        TEST_ASSERT_EQUAL_NODE(&node80,NULL,&node90,1);
+        TEST_ASSERT_EQUAL_NODE(&node50,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node90,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////AVL Delete node with left children only ////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+///WITHOUT Rotation
 /**
 *        80(-1)                            80(0)
 *       /     \          delete           /     \
@@ -638,22 +832,26 @@ void test_avlDelete_given_LR_80_30_10_60_90_50_99_remove_99(void){
 *          /
 *         50(0)
 **/
-void test_avlDelete_given_LeftChild_80_30_10_60_90_50_99_remove_60(void){
+void test_avlDelete_given_LeftChild_WO_80_30_10_60_90_50_99_remove_60(void){
     initNode(&node99,NULL,NULL,0);
     initNode(&node50,NULL,NULL,0);
     initNode(&node60,&node50,NULL,-1);
     initNode(&node10,NULL,NULL,0);
     initNode(&node30,&node10,&node60,1);
     initNode(&node90,NULL,&node99,1);
-    initNode(&node80,&node30,&node90,-2);
+    initNode(&node80,&node30,&node90,-1);
 
     //Test
-
-    root=avlDelete(&node80,60);
-    TEST_ASSERT_EQUAL_PTR(&node80,root);
-    TEST_ASSERT_EQUAL_NODE(root,&node30,&node90,0);
-    TEST_ASSERT_EQUAL_NODE(&node30,&node10,&node50,0);
-    TEST_ASSERT_EQUAL_NODE(&node50,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node90,NULL,&node99,0);
-    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    Try{
+        root=avlDelete(&node80,60);
+        TEST_ASSERT_EQUAL_PTR(&node80,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node30,&node90,0);
+        TEST_ASSERT_EQUAL_NODE(&node30,&node10,&node50,0);
+        TEST_ASSERT_EQUAL_NODE(&node90,NULL,&node99,1);
+        TEST_ASSERT_EQUAL_NODE(&node50,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
 }

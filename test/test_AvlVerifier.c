@@ -3,7 +3,9 @@
 #include <time.h>
 #include "unity.h"
 #include "AvlVerifier.h"
+#include "Balance.h"
 #include "AvlAdd.h"
+#include "Balance.h"
 #include "AvlDelete.h"
 #include "Node.h"
 #include "CustomAssert.h"

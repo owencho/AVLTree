@@ -1,5 +1,6 @@
 #include "AvlAdd.h"
 #include "Rotate.h"
+#include "Balance.h"
 #include "Error.h"
 #include "Exception.h"
 #include "CException.h"
@@ -29,8 +30,8 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc){
             *heightInc =1;
         }else{
             root->right=_avlAdd(child,nodeAdd,&bfact);
-              *heightInc =bfact;
-              root->bFactor =root->bFactor+bfact;
+            *heightInc =bfact;
+            root->bFactor =root->bFactor+bfact;
         }
     }
     else{
@@ -41,25 +42,21 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc){
             *heightInc =1;
         }else{
             root->left=_avlAdd(child,nodeAdd,&bfact);
-              *heightInc =bfact;
-               root->bFactor =root->bFactor-bfact;
+            *heightInc =bfact;
+            root->bFactor =root->bFactor-bfact;
         }
     }
-    if(root->bFactor == 0 ){
-        *heightInc =0;
-    }else if(root->bFactor >= 2){
-        root = rotateLeftAndReBalanceAdd(root);
-        *heightInc =0;
-    }else if(root->bFactor <= -2){
-        root = rotateRightAndReBalanceAdd(root);
-        *heightInc =0;
-    }
-    return root;
+    *heightInc = !(root->bFactor == 0 ||(root->bFactor >= 2||root->bFactor <= -2 ));
+    if(root->bFactor >= 2)
+        root = rotateLeftAndReBalanceForAdd(root);
+     else if(root->bFactor <= -2)
+        root = rotateRightAndReBalanceForAdd(root);
 
+    return root;
 }
 
 
-Node* rotateLeftAndReBalanceAdd(Node * root){
+Node* rotateLeftAndReBalanceForAdd(Node * root){
     int bFactor=0;
     if(root->right->bFactor >=0){
         bFactor = root->right->right->bFactor;
@@ -69,20 +66,18 @@ Node* rotateLeftAndReBalanceAdd(Node * root){
     }else{
         bFactor = root->right->left->bFactor;
         root = rotateRightLeftNode(root);
-        root->left->bFactor = (-1-(bFactor-1)>>1)*(bFactor&1);
-        root->right->bFactor = (0-(bFactor-1)>>1)*(bFactor&1);
+        root = balanceForDoubleRotate(root,bFactor);
     }
     root->bFactor = 0;
     return root;
 }
-//check
-Node* rotateRightAndReBalanceAdd(Node * root){
+
+Node* rotateRightAndReBalanceForAdd(Node * root){
     int bFactor=0;
     if(root->left->bFactor >0){
         bFactor = root->left->right->bFactor;
         root = rotateLeftRightNode(root);
-        root->left->bFactor = (-1-(bFactor-1)>>1)*(bFactor&1);
-        root->right->bFactor = (0-(bFactor-1)>>1)*(bFactor&1);
+        root = balanceForDoubleRotate(root ,bFactor);
     }else{
         bFactor = root->left->left->bFactor;
         root = rotateRightNode(root);
