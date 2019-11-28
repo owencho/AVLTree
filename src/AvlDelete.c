@@ -34,8 +34,6 @@ Node *_avlDelete(Node *root,int nodeDelete,Node ** deletedNode,int * heightDec){
     else if (root->value ==nodeDelete){
         *deletedNode = root;
         *heightDec =1;
-        return NULL;
-        /*
         if(root->right == NULL && root->left == NULL){
             return NULL;
         }
@@ -48,7 +46,6 @@ Node *_avlDelete(Node *root,int nodeDelete,Node ** deletedNode,int * heightDec){
           root->left = rootLeft;
           return root;
         }
-        */
     }
     else{
         child = root->left;
@@ -80,6 +77,7 @@ Node * check(Node* root){
   }
 }
 */
+
 Node* rotateLeftAndReBalanceDelete(Node * root){
     int bFactor=0;
     int secondBfactor =0;

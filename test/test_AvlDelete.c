@@ -623,3 +623,37 @@ void test_avlDelete_given_LR_80_30_10_60_90_50_99_remove_99(void){
     TEST_ASSERT_EQUAL_NODE(&node90,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////AVL Delete node with left children only ////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/**
+*        80(-1)                            80(0)
+*       /     \          delete           /     \
+*    30(1)   90(1)        ---->        30(0)   90(1)
+*   /     \     \           60         /    \     \
+* 10(0)   60(-1)  99(0)              10(0)  50(0) 99(0)
+*          /
+*         50(0)
+**/
+void test_avlDelete_given_LeftChild_80_30_10_60_90_50_99_remove_60(void){
+    initNode(&node99,NULL,NULL,0);
+    initNode(&node50,NULL,NULL,0);
+    initNode(&node60,&node50,NULL,-1);
+    initNode(&node10,NULL,NULL,0);
+    initNode(&node30,&node10,&node60,1);
+    initNode(&node90,NULL,&node99,1);
+    initNode(&node80,&node30,&node90,-2);
+
+    //Test
+
+    root=avlDelete(&node80,60);
+    TEST_ASSERT_EQUAL_PTR(&node80,root);
+    TEST_ASSERT_EQUAL_NODE(root,&node30,&node90,0);
+    TEST_ASSERT_EQUAL_NODE(&node30,&node10,&node50,0);
+    TEST_ASSERT_EQUAL_NODE(&node50,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node90,NULL,&node99,0);
+    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+}
