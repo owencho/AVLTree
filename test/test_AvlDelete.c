@@ -855,3 +855,80 @@ void test_avlDelete_given_LeftChild_WO_80_30_10_60_90_50_99_remove_60(void){
         TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
     }
 }
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///AVL Delete node with right children that has no left children ////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+*        80(-1)                            80(-1)
+*       /     \          delete           /     \
+*    30(1)   90(1)        ---->        30(1)   90(1)
+*   /     \     \           60         /    \     \
+* 10(0)   60(0)  99(0)              10(0)  65(-1) 99(0)
+*          /   \                            /
+*         50(0) 65(0)                     50(0)
+**/
+void test_avlDelete_given_LeftRightChild_WO_80_30_10_60_65_90_50_99_remove_60(void){
+    initNode(&node99,NULL,NULL,0);
+    initNode(&node50,NULL,NULL,0);
+    initNode(&node60,&node50,&node65,0);
+    initNode(&node10,NULL,NULL,0);
+    initNode(&node30,&node10,&node60,1);
+    initNode(&node90,NULL,&node99,1);
+    initNode(&node80,&node30,&node90,-1);
+
+
+    Try{
+        TEST_IGNORE_MESSAGE("havent modify the value yet");
+        root=avlDelete(&node80,60);
+        TEST_ASSERT_EQUAL_PTR(&node80,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node30,&node90,0);
+        TEST_ASSERT_EQUAL_NODE(&node30,&node10,&node65,0);
+        TEST_ASSERT_EQUAL_NODE(&node90,NULL,&node99,1);
+        TEST_ASSERT_EQUAL_NODE(&node65,&node50,NULL,-1);
+        TEST_ASSERT_EQUAL_NODE(&node50,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
+
+///WITHOUT Rotation
+/**
+*        80(-1)                            80(-2)
+*       /     \          delete           /     \
+*    30(-1)   90(1)        ---->        30(-1)   99(0)     --->
+*   /     \     \           90         /    \           rotateRightNode
+* 10(-1)  60(0)  99(0)              10(-1)  50(0)
+*  /                                 /
+* 5(0)                            5(0)
+**/
+void test_avlDelete_given_RightChild_WO_80_30_10_60_90_50_99_remove_60(void){
+    initNode(&node99,NULL,NULL,0);
+    initNode(&node50,NULL,NULL,0);
+    initNode(&node60,&node50,NULL,-1);
+    initNode(&node10,NULL,NULL,0);
+    initNode(&node30,&node10,&node60,1);
+    initNode(&node90,NULL,&node99,1);
+    initNode(&node80,&node30,&node90,-1);
+
+    //Test
+    Try{
+        TEST_IGNORE_MESSAGE("havent modify the value yet");
+        root=avlDelete(&node80,60);
+        TEST_ASSERT_EQUAL_PTR(&node80,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node30,&node90,0);
+        TEST_ASSERT_EQUAL_NODE(&node30,&node10,&node50,0);
+        TEST_ASSERT_EQUAL_NODE(&node90,NULL,&node99,1);
+        TEST_ASSERT_EQUAL_NODE(&node50,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}

@@ -46,12 +46,15 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc){
             root->bFactor =root->bFactor-bfact;
         }
     }
-    *heightInc = !(root->bFactor == 0 ||(root->bFactor >= 2||root->bFactor <= -2 ));
-    if(root->bFactor >= 2)
-        root = rotateLeftAndReBalanceForAdd(root);
-     else if(root->bFactor <= -2)
-        root = rotateRightAndReBalanceForAdd(root);
-
+    if(root->bFactor == 0 ){
+      *heightInc =0;
+    }else if(root->bFactor >= 2){
+      root = rotateLeftAndReBalanceForAdd(root);
+      *heightInc =0;
+    }else if(root->bFactor <= -2){
+      root = rotateRightAndReBalanceForAdd(root);
+      *heightInc =0;
+    }
     return root;
 }
 

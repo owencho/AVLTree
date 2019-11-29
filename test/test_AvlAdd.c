@@ -516,7 +516,7 @@ void test_rotateLeftAndReBalanceForAdd_25_30_20(void){
     initNode(&node30,&node20,NULL,-2);
 
     //Test
-    root=rotateLeftAndReBalanceForAdd(&node30);
+    root=rotateRightAndReBalanceForAdd(&node30);
     TEST_ASSERT_EQUAL_PTR(&node25,root);
     TEST_ASSERT_EQUAL_NODE(root,&node20,&node30,0);
     TEST_ASSERT_EQUAL_NODE(&node20,NULL,NULL,0);

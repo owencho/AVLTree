@@ -41,7 +41,7 @@ Node *_avlDelete(Node *root,int nodeDelete,Node ** deletedNode,int * heightDec){
         }
         else{
             rootLeft = root->left;
-            //root= AvlgetReplacer(root->right,heightDec,&replacedNode);
+            //root= avlGetReplacer(root->right,heightDec,&replacedNode);
             root->left = rootLeft;
             return root;
         }
@@ -99,3 +99,8 @@ Node* rotateRightAndReBalanceForDelete(Node * root){
     }
     return root;
 }
+/*
+Node* avlGetReplacer(Node * root ,int * heightDec,Node ** replacedNode){
+
+}
+*/
