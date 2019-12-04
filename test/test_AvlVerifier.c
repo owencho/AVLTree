@@ -45,7 +45,7 @@ void test_random_num(void){
 //Automated Test for checking AVL add function
 void test_verify_AVL_tree(void){
     Node * root;
-    int max = 100000 , i;
+    int max = 100 , i;
     int height;
     srand(time(0));
     i = max;

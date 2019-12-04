@@ -23,47 +23,81 @@ Node *avlDelete(Node *root,int nodeDelete){
 Node *_avlDelete(Node *root,int nodeDelete,Node ** deletedNode,int * heightDec){
     Node * child;
     Node * rootLeft;
-    Node * replacedNode;
-    int bfact = 0;
+    Node * replacedNode = NULL;
+    int heightChange = 0;
+    int rootBFactor;
     if(root->value < nodeDelete){
         child = root->right;
         if(child != NULL){
-            root->right=_avlDelete(child,nodeDelete,deletedNode,&bfact);
-            *heightDec =bfact;
-            root->bFactor =root->bFactor-bfact;
+            root->right=_avlDelete(child,nodeDelete,deletedNode,&heightChange);
+            *heightDec =heightChange;
+            root->bFactor =root->bFactor-heightChange;
         }
     }
     else if (root->value ==nodeDelete){
         *deletedNode = root;
-        *heightDec =1;
         if(root->right == NULL){
+            *heightDec =1;
             return root->left;
         }
         else{
             rootLeft = root->left;
-            //root= avlGetReplacer(root->right,heightDec,&replacedNode);
-            root->left = rootLeft;
-            return root;
+            rootBFactor = root->bFactor;
+            root= avlGetReplacer(root->right,&heightChange,&replacedNode);
+            *heightDec =heightChange;
+            replacedNode->left = rootLeft;
+            replacedNode->right = root;
+            replacedNode->bFactor =rootBFactor-heightChange;
+            root = replacedNode;
         }
+      //  root = nodeRemoveAndReplace(root,heightDec,&replacedNode);
     }
     else{
         child = root->left;
         if(child != NULL){
-            root->left=_avlDelete(child,nodeDelete,deletedNode,&bfact);
-            *heightDec =bfact;
-            root->bFactor =root->bFactor+bfact;
+            root->left=_avlDelete(child,nodeDelete,deletedNode,&heightChange);
+            *heightDec =heightChange;
+            root->bFactor =root->bFactor+heightChange;
         }
     }
+  //  root = checkParentBalanceFactorAndRotateOnAvlDelete(Node* root,heightDec);
     *heightDec = !(abs(root->bFactor) == 1||(root->bFactor >= 2||root->bFactor <= -2 ));
     if(root->bFactor >= 2)
         root = rotateLeftAndReBalanceForDelete(root);
     else if(root->bFactor <= -2)
         root = rotateRightAndReBalanceForDelete(root);
-
     return root;
 
 }
-
+/*
+Node * checkParentbFactorForRotateAndHeightChangeOnAvlDelete(Node* root,int * heightDec){
+    *heightDec = !(abs(root->bFactor) == 1||(root->bFactor >= 2||root->bFactor <= -2 ));
+    if(root->bFactor >= 2)
+        root = rotateLeftAndReBalanceForDelete(root);
+    else if(root->bFactor <= -2)
+        root = rotateRightAndReBalanceForDelete(root);
+    return root;
+}
+*/
+/*
+Node* nodeRemoveAndReplace(Node * root,int * heightDec,Node ** replacedNode){
+  *deletedNode = root;
+  if(root->right == NULL){
+      *heightDec =1;
+      return root->left;
+  }
+  else{
+      rootLeft = root->left;
+      rootBFactor = root->bFactor;
+      root= avlGetReplacer(root->right,&heightChange,&replacedNode);
+      *heightDec =heightChange;
+      replacedNode->left = rootLeft;
+      replacedNode->right = root;
+      replacedNode->bFactor =rootBFactor-heightChange;
+      root = replacedNode;
+  }
+}
+*/
 Node* rotateLeftAndReBalanceForDelete(Node * root){
     int bFactor=0;
     int secondBfactor =0;
@@ -99,8 +133,23 @@ Node* rotateRightAndReBalanceForDelete(Node * root){
     }
     return root;
 }
-/*
-Node* avlGetReplacer(Node * root ,int * heightDec,Node ** replacedNode){
 
+Node* avlGetReplacer(Node * root ,int * heightDec,Node ** replacedNode){
+    int heightChange;
+    Node * newNode;
+    Node * child;
+    if(root->left != NULL){
+      child = avlGetReplacer(root->left ,&heightChange,&newNode);
+      *replacedNode = newNode;
+      *heightDec =heightChange;
+      root->bFactor =root->bFactor+heightChange;
+      root->left = child;
+      *heightDec = !(abs(root->bFactor) == 1);  //remark
+    }
+    else{
+      *replacedNode = root;
+      *heightDec = 1;
+      return root->right;
+    }
+    return root;
 }
-*/

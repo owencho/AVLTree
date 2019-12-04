@@ -17,7 +17,7 @@ Node *avlAdd(Node *root,Node * nodeAdd){
     return _avlAdd(root,nodeAdd,&heightInc);
 }
 Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc){
-    int bfact = 0;
+    int heightChange = 0;
     Node * child;
     if(root->value == nodeAdd->value){
       throwException(ERR_SAME_NODE,"same node value detected");
@@ -29,9 +29,9 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc){
             root->right = nodeAdd;
             *heightInc =1;
         }else{
-            root->right=_avlAdd(child,nodeAdd,&bfact);
-            *heightInc =bfact;
-            root->bFactor =root->bFactor+bfact;
+            root->right=_avlAdd(child,nodeAdd,&heightChange);
+            *heightInc =heightChange;
+            root->bFactor =root->bFactor+heightChange;
         }
     }
     else{
@@ -41,9 +41,9 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc){
             root->left = nodeAdd;
             *heightInc =1;
         }else{
-            root->left=_avlAdd(child,nodeAdd,&bfact);
-            *heightInc =bfact;
-            root->bFactor =root->bFactor-bfact;
+            root->left=_avlAdd(child,nodeAdd,&heightChange);
+            *heightInc =heightChange;
+            root->bFactor =root->bFactor-heightChange;
         }
     }
     if(root->bFactor == 0 ){
