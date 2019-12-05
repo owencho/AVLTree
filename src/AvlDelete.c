@@ -32,12 +32,12 @@ Node *_avlDelete(Node *root,int nodeDelete,Node ** deletedNode,int * heightDec){
         root = nodeSearchforDeleteNode(root,nodeDelete,deletedNode,heightDec);
     }
 
-    root = rotateBalanceAndGetHeightChange(root,heightDec);
+    root = rotateBalanceAndGetHeightChangeForDelete(root,heightDec);
     return root;
 
 }
 
-Node * rotateBalanceAndGetHeightChange(Node* root,int * heightDec){
+Node * rotateBalanceAndGetHeightChangeForDelete(Node* root,int * heightDec){
     if(abs(root->bFactor) == 1 )
         *heightDec =0;
     else if(root->bFactor >= 2){
@@ -141,7 +141,7 @@ Node* avlGetReplacer(Node * root ,int * heightDec,Node ** replacedNode){
       *heightDec =heightChange;
       root->bFactor =root->bFactor+heightChange;
       root->left = child;
-      root=rotateBalanceAndGetHeightChange(root,heightDec);
+      root=rotateBalanceAndGetHeightChangeForDelete(root,heightDec);
     }
     else{
       *replacedNode = root;

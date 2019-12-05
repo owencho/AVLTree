@@ -9,5 +9,5 @@ Node* rotateRightAndReBalanceForDelete(Node * root);
 Node * avlGetReplacer(Node * root ,int * heightDec,Node ** replacedNode);
 Node* nodeRemoveAndReplace(Node * root,int * heightDec);
 Node* nodeSearchforDeleteNode(Node* root,int nodeDelete,Node ** deletedNode,int * heightDec);
-Node * rotateBalanceAndGetHeightChange(Node* root,int * heightDec);
+Node * rotateBalanceAndGetHeightChangeForDelete(Node* root,int * heightDec);
 #endif // _AVLDELETE_H

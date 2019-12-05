@@ -46,6 +46,10 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc){
             root->bFactor =root->bFactor-heightChange;
         }
     }
+    root = rotateBalanceAndGetHeightChangeForAdd(root,heightInc);
+    return root;
+}
+Node * rotateBalanceAndGetHeightChangeForAdd(Node* root,int * heightInc){
     if(root->bFactor == 0 ){
       *heightInc =0;
     }else if(root->bFactor >= 2){
@@ -57,8 +61,6 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc){
     }
     return root;
 }
-
-
 Node* rotateLeftAndReBalanceForAdd(Node * root){
     int bFactor=0;
     if(root->right->bFactor >=0){

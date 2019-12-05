@@ -1865,7 +1865,7 @@ void test_nodeSearchforDeleteNode_15_30_20_35(void){
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-///rotateBalanceAndGetHeightChange//////////////////////////////////////////////
+///rotateBalanceAndGetHeightChangeForDelete////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 /**
 *       40(-1)
@@ -1885,7 +1885,7 @@ void test_rotateBalanceAndGetHeightChange_40_50_30_20_35(void){
     initNode(&node40,&node30,&node50,-1);
     heightDec = 1; // set heightDec to one to check
     //Test
-    root=rotateBalanceAndGetHeightChange(&node40,&heightDec);
+    root=rotateBalanceAndGetHeightChangeForDelete(&node40,&heightDec);
     TEST_ASSERT_EQUAL_PTR(&node40,root);
     TEST_ASSERT_EQUAL(heightDec,0);   //heightDec == 0 due to height remain same
     TEST_ASSERT_EQUAL_NODE(root,&node30,&node50,-1);
@@ -1913,7 +1913,7 @@ void test_rotateBalanceAndGetHeightChange_40_50_30_45_55(void){
     initNode(&node40,&node30,&node50,1);
     heightDec = 1; // set heightDec to one to check
     //Test
-    root=rotateBalanceAndGetHeightChange(&node40,&heightDec);
+    root=rotateBalanceAndGetHeightChangeForDelete(&node40,&heightDec);
     TEST_ASSERT_EQUAL_PTR(&node40,root);
     TEST_ASSERT_EQUAL(heightDec,0);   //heightDec == 0 due to height remain same
     TEST_ASSERT_EQUAL_NODE(root,&node30,&node50,1);
@@ -1928,7 +1928,7 @@ void test_rotateBalanceAndGetHeightChange_40_50_30_45_55(void){
 *       /                      /    \
 *     30(0)        --->     20(0)   40(-1)
 *    /    \       rotate             /
-*  20(0)  35(0)   left            35(0)
+*  20(0)  35(0)   right            35(0)
 *
 **/
 
@@ -1940,7 +1940,7 @@ void test_rotateBalanceAndGetHeightChange_40_15_30_20_35(void){
     initNode(&node40,&node30,NULL,-2);
     heightDec = 1; // set heightDec to one to check
     //Test
-    root=rotateBalanceAndGetHeightChange(&node40,&heightDec);
+    root=rotateBalanceAndGetHeightChangeForDelete(&node40,&heightDec);
     TEST_ASSERT_EQUAL_PTR(&node30,root);
     TEST_ASSERT_EQUAL(heightDec,0);   //heightDec == 0 due to height remain same
     TEST_ASSERT_EQUAL_NODE(root,&node20,&node40,1);
@@ -1954,7 +1954,7 @@ void test_rotateBalanceAndGetHeightChange_40_15_30_20_35(void){
 *       \                      /    \
 *     30(0)        --->     10(1)   35(0)
 *    /    \       rotate       \
-*  20(0)  35(0)   right        20(0)
+*  20(0)  35(0)   left        20(0)
 *
 **/
 
@@ -1967,7 +1967,7 @@ void test_rotateBalanceAndGetHeightChange_10_30_20_35(void){
     initNode(&node10,NULL,&node30,2);
     heightDec = 1; // set heightDec to 1 to check
     //Test
-    root=rotateBalanceAndGetHeightChange(&node10,&heightDec);
+    root=rotateBalanceAndGetHeightChangeForDelete(&node10,&heightDec);
     TEST_ASSERT_EQUAL_PTR(&node30,root);
     TEST_ASSERT_EQUAL(heightDec,0);   //heightDec == 0 due to height remain same
     TEST_ASSERT_EQUAL_NODE(root,&node10,&node35,-1);

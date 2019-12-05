@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <math.h>
 #include "unity.h"
 #include "AvlVerifier.h"
 #include "Balance.h"
@@ -45,8 +46,7 @@ void test_random_num(void){
 //Automated Test for checking AVL add function
 void test_verify_AVL_tree(void){
     Node * root;
-    int max = 100 , i;
-    int height;
+    int max = 10000 , i;
     srand(time(0));
     i = max;
     root =  createNode(getRandomNum(),  NULL ,NULL,0);
@@ -59,5 +59,26 @@ void test_verify_AVL_tree(void){
         }
         TEST_VERIFY_AVL_TREE(root, max-i+1);
     }
+    freeAllNodesInTree(root);
+}
+
+//Automated Test for checking AVL add and delete function
+void test_verify_AVL_tree(void){
+    Node * root;
+    int max = 10000 , i;
+    int height = log2(max)+5;
+    srand(time(0));
+    i = max;
+    root =  createNode(getRandomNum(),  NULL ,NULL,0);
+    while(i--){
+       Try{
+            root = avlAdd(root,createAvlNode(getRandomNum()));
+        }Catch(ex){
+            dumpException(ex);
+            i++;
+        }
+        TEST_VERIFY_AVL_TREE(root, max-i+1);
+    }
+
     freeAllNodesInTree(root);
 }

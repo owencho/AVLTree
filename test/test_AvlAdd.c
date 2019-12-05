@@ -11,6 +11,7 @@
 
 CEXCEPTION_T ex;
 Node * root;
+int heightInc;
 Node node1, node5, node10, node15,node20,node25,node30,node35,node40,node45,node50,node55;
 Node node60,node65,node70,node75,node80,node85,node90,node95,node99;
 void setUp(void){
@@ -782,4 +783,113 @@ void test_AvlAdd_given_50_30_20_40_60_add_30_expected_error(void){
         TEST_ASSERT_EQUAL(ERR_SAME_NODE, ex->errorCode);
     }
 
+}
+
+////////////////////////////////////////////////////////////////////////////////
+///rotateBalanceAndGetHeightChangeForadd////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/**
+*       40(-1)
+*       /    \             no rotation
+*     30(0)  50(0)   --->  but heightInc == 0
+*    /    \
+*  20(0)  35(0)
+*
+**/
+
+void test_rotateBalanceAndGetHeightChangeForAdd_40_50_30_20_35(void){
+    //Build number tree
+    initNode(&node20,NULL,NULL,0);
+    initNode(&node50,NULL,NULL,0);
+    initNode(&node35,NULL,NULL,0);
+    initNode(&node30,&node20,&node35,0);
+    initNode(&node40,&node30,&node50,-1);
+    heightInc = 1; // set heightInc to one to check
+    //Test
+    root=rotateBalanceAndGetHeightChangeForAdd(&node40,&heightInc);
+    TEST_ASSERT_EQUAL_PTR(&node40,root);
+    TEST_ASSERT_EQUAL(heightInc,1);
+    TEST_ASSERT_EQUAL_NODE(root,&node30,&node50,-1);
+    TEST_ASSERT_EQUAL_NODE(&node30,&node20,&node35,0);
+    TEST_ASSERT_EQUAL_NODE(&node20,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node35,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node50,NULL,NULL,0);
+}
+
+/**
+*       40(1)
+*       /    \             no rotation
+*     30(0)  50(0)   --->  but heightInc == 0
+*           /    \
+*         45(0)  55(0)
+*
+**/
+
+void test_rotateBalanceAndGetHeightChangeForAdd_40_50_30_45_55(void){
+    //Build number tree
+    initNode(&node45,NULL,NULL,0);
+    initNode(&node30,NULL,NULL,0);
+    initNode(&node55,NULL,NULL,0);
+    initNode(&node50,&node45,&node55,0);
+    initNode(&node40,&node30,&node50,1);
+    heightInc = 1; // set heightInc to one to check
+    //Test
+    root=rotateBalanceAndGetHeightChangeForAdd(&node40,&heightInc);
+    TEST_ASSERT_EQUAL_PTR(&node40,root);
+    TEST_ASSERT_EQUAL(heightInc,1);
+    TEST_ASSERT_EQUAL_NODE(root,&node30,&node50,1);
+    TEST_ASSERT_EQUAL_NODE(&node50,&node45,&node55,0);
+    TEST_ASSERT_EQUAL_NODE(&node45,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node55,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node30,NULL,NULL,0);
+}
+
+/**
+*       40(-2)                   30(0)
+*       /                       /    \
+*     30(-1)         --->     20(0)   40(0)
+*    /             rotate
+*  20(0)           right
+*
+**/
+
+void test_rotateBalanceAndGetHeightChangeForAdd_40_30_20(void){
+    //Build number tree
+    initNode(&node20,NULL,NULL,0);
+    initNode(&node30,&node20,NULL,-1);
+    initNode(&node40,&node30,NULL,-2);
+    heightInc = 1; // set heightInc to one to check
+    //Test
+    root=rotateBalanceAndGetHeightChangeForAdd(&node40,&heightInc);
+    TEST_ASSERT_EQUAL_PTR(&node30,root);
+    TEST_ASSERT_EQUAL(heightInc,0);
+    TEST_ASSERT_EQUAL_NODE(root,&node20,&node40,0);
+    TEST_ASSERT_EQUAL_NODE(&node20,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL,0);
+}
+
+/**
+*    10(2)                      30(0)
+*       \                      /    \
+*     30(1)        --->     10(0)   35(0)
+*         \       rotate
+*        35(0)   left
+*
+**/
+
+
+void test_rotateBalanceAndGetHeightChangeForAdd_10_30_35(void){
+    //Build number tree
+    initNode(&node35,NULL,NULL,0);
+    initNode(&node30,NULL,&node35,1);
+    initNode(&node10,NULL,&node30,2);
+    heightInc = 1; // set heightInc to 1 to check
+    //Test
+    root=rotateBalanceAndGetHeightChangeForAdd(&node10,&heightInc);
+    TEST_ASSERT_EQUAL_PTR(&node30,root);
+    TEST_ASSERT_EQUAL(heightInc,0);
+    TEST_ASSERT_EQUAL_NODE(root,&node10,&node35,-1);
+    TEST_ASSERT_EQUAL_NODE(&node10,NULL,&node20,1);
+    TEST_ASSERT_EQUAL_NODE(&node20,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_NODE(&node35,NULL,NULL,0);
 }
