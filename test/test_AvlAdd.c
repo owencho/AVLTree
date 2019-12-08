@@ -24,6 +24,34 @@ void setUp(void){
     node95.value =95; node99.value =99; node10.value =10;
 }
 void tearDown(void){}
+///////Exception testing for adding same value node
+/**
+*            50(-1)
+*           /   \
+*         30(0)  60(0)     --->      ERROR!
+*        /  \             add 30
+*     20(0)  40(0)
+*
+*
+**/
+
+void test_AvlAdd_given_50_30_20_40_60_add_30_expected_error(void){
+    initNode(&node10,&node1,&node10,77);
+    initNode(&node20,NULL,NULL,0);
+    initNode(&node40,NULL,NULL,0);
+    initNode(&node30,&node20,&node40,0);
+    initNode(&node60,NULL,NULL,0);
+    initNode(&node50,&node30,&node60,-1);
+
+    Try{
+        root=avlAdd(&node50,&node30);
+        TEST_FAIL_MESSAGE("Expecting exeception to be thrown.");
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_ASSERT_EQUAL(ERR_SAME_NODE, ex->errorCode);
+    }
+
+}
 //////////////Avl ADD without Rotate//////////////////////////////////////////////////
 /**
 *            40(-1)                               40(-1)
@@ -46,17 +74,21 @@ void test_AvlAdd_given_WO_5_30_20_25_35_40_45_50_add_1(void){
     initNode(&node45,NULL,&node50,1);
     initNode(&node40,&node20,&node45,-1);
 
-    //Test
-    root=avlAdd(&node40,&node1);
-    TEST_ASSERT_EQUAL_PTR(&node40,root);
-    TEST_ASSERT_EQUAL_NODE(root,&node20,&node45,-1);
-    TEST_ASSERT_EQUAL_NODE(&node20,&node5,&node30,0);
-    TEST_ASSERT_EQUAL_NODE(&node30,&node25,&node35,0);
-    TEST_ASSERT_EQUAL_NODE(&node5,&node1,NULL,-1);
-    TEST_ASSERT_EQUAL_NODE(&node45,NULL,&node50,1);
-    TEST_ASSERT_EQUAL_NODE(&node25,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node35,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node50,NULL,NULL,0);
+    Try{
+        root=avlAdd(&node40,&node1);
+        TEST_ASSERT_EQUAL_PTR(&node40,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node20,&node45,-1);
+        TEST_ASSERT_EQUAL_NODE(&node20,&node5,&node30,0);
+        TEST_ASSERT_EQUAL_NODE(&node30,&node25,&node35,0);
+        TEST_ASSERT_EQUAL_NODE(&node5,&node1,NULL,-1);
+        TEST_ASSERT_EQUAL_NODE(&node45,NULL,&node50,1);
+        TEST_ASSERT_EQUAL_NODE(&node25,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node35,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node50,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
 }
 //////////////Avl ADD with Rotate Right//////////////////////////////////////////////////
 
@@ -78,15 +110,19 @@ void test_AvlAdd_given_R_50_30_20_40_60_add_10(void){
     initNode(&node60,NULL,NULL,0);
     initNode(&node50,&node30,&node60,-1);
 
-    //Test
-    root=avlAdd(&node50,&node10);
-    TEST_ASSERT_EQUAL_PTR(&node30,root);
-    TEST_ASSERT_EQUAL_NODE(root,&node20,&node50,0);
-    TEST_ASSERT_EQUAL_NODE(&node20,&node10,NULL,-1);
-    TEST_ASSERT_EQUAL_NODE(&node50,&node40,&node60,0);
-    TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    Try{
+        root=avlAdd(&node50,&node10);
+        TEST_ASSERT_EQUAL_PTR(&node30,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node20,&node50,0);
+        TEST_ASSERT_EQUAL_NODE(&node20,&node10,NULL,-1);
+        TEST_ASSERT_EQUAL_NODE(&node50,&node40,&node60,0);
+        TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
 }
 
 /**
@@ -107,15 +143,19 @@ void test_AvlAdd_given_R_50_30_20_40_60_add_25(void){
     initNode(&node60,NULL,NULL,0);
     initNode(&node50,&node30,&node60,-1);
 
-    //Test
-    root=avlAdd(&node50,&node25);
-    TEST_ASSERT_EQUAL_PTR(&node30,root);
-    TEST_ASSERT_EQUAL_NODE(root,&node20,&node50,0);
-    TEST_ASSERT_EQUAL_NODE(&node20,NULL,&node25,1);
-    TEST_ASSERT_EQUAL_NODE(&node50,&node40,&node60,0);
-    TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    Try{
+        root=avlAdd(&node50,&node25);
+        TEST_ASSERT_EQUAL_PTR(&node30,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node20,&node50,0);
+        TEST_ASSERT_EQUAL_NODE(&node20,NULL,&node25,1);
+        TEST_ASSERT_EQUAL_NODE(&node50,&node40,&node60,0);
+        TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
 }
 
 /**
@@ -135,14 +175,18 @@ void test_AvlAdd_given_R_5_1_60_50_add_40(void){
     initNode(&node60,&node50,NULL,-1);
     initNode(&node5,&node1,&node60,1);
 
-    //Test
-    root=avlAdd(&node5,&node40);
-    TEST_ASSERT_EQUAL_PTR(&node5,root);
-    TEST_ASSERT_EQUAL_NODE(root,&node1,&node50,1);
-    TEST_ASSERT_EQUAL_NODE(&node50,&node40,&node60,0);
-    TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node1,NULL,NULL,0);
+    Try{
+        root=avlAdd(&node5,&node40);
+        TEST_ASSERT_EQUAL_PTR(&node5,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node1,&node50,1);
+        TEST_ASSERT_EQUAL_NODE(&node50,&node40,&node60,0);
+        TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node1,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
 }
 
 /**
@@ -159,7 +203,6 @@ void test_AvlAdd_given_R_60_50_add_70(void){
     initNode(&node50,NULL,NULL,0);
     initNode(&node60,&node50,NULL,-1);
 
-    //Test
     Try{
         root=avlAdd(&node60,&node40);
         TEST_ASSERT_EQUAL_PTR(&node50,root);
@@ -190,15 +233,19 @@ void test_AvlAdd_given_LR_80_30_10_60_90_add_70(void){
     initNode(&node90,NULL,NULL,0);
     initNode(&node80,&node30,&node90,-1);
 
-    //Test
-    root=avlAdd(&node80,&node70);
-    TEST_ASSERT_EQUAL_PTR(&node60,root);
-    TEST_ASSERT_EQUAL_NODE(root,&node30,&node80,0);
-    TEST_ASSERT_EQUAL_NODE(&node30,&node10,NULL,-1);
-    TEST_ASSERT_EQUAL_NODE(&node80,&node70,&node90,0);
-    TEST_ASSERT_EQUAL_NODE(&node70,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node90,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    Try{
+        root=avlAdd(&node80,&node70);
+        TEST_ASSERT_EQUAL_PTR(&node60,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node30,&node80,0);
+        TEST_ASSERT_EQUAL_NODE(&node30,&node10,NULL,-1);
+        TEST_ASSERT_EQUAL_NODE(&node80,&node70,&node90,0);
+        TEST_ASSERT_EQUAL_NODE(&node70,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node90,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
 }
 
 /**
@@ -219,15 +266,20 @@ void test_AvlAdd_given_LR_80_30_10_60_90_add_55(void){
     initNode(&node90,NULL,NULL,0);
     initNode(&node80,&node30,&node90,-1);
 
-    //Test
-    root=avlAdd(&node80,&node55);
-    TEST_ASSERT_EQUAL_PTR(&node60,root);
-    TEST_ASSERT_EQUAL_NODE(root,&node30,&node80,0);
-    TEST_ASSERT_EQUAL_NODE(&node30,&node10,&node55,0);
-    TEST_ASSERT_EQUAL_NODE(&node80,NULL,&node90,1);
-    TEST_ASSERT_EQUAL_NODE(&node55,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node90,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    Try{
+        root=avlAdd(&node80,&node55);
+        TEST_ASSERT_EQUAL_PTR(&node60,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node30,&node80,0);
+        TEST_ASSERT_EQUAL_NODE(&node30,&node10,&node55,0);
+        TEST_ASSERT_EQUAL_NODE(&node80,NULL,&node90,1);
+        TEST_ASSERT_EQUAL_NODE(&node55,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node90,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+
 }
 //////////////Avl ADD with Rotate  RIGHT LEFT //////////////////////////////////////////////////
 /**
@@ -248,16 +300,19 @@ void test_AvlAdd_given_RL_50_25_75_60_85_add_65(void){
     initNode(&node25,NULL,NULL,0);
     initNode(&node50,&node25,&node75,1);
 
-    //Test
-    root=avlAdd(&node50,&node65);
-    TEST_ASSERT_EQUAL_PTR(&node60,root);
-    TEST_ASSERT_EQUAL_NODE(root,&node50,&node75,0);
-    TEST_ASSERT_EQUAL_NODE(&node50,&node25,NULL,-1);
-    TEST_ASSERT_EQUAL_NODE(&node75,&node65,&node85,0);
-    TEST_ASSERT_EQUAL_NODE(&node25,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node65,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node85,NULL,NULL,0);
-
+    Try{
+        root=avlAdd(&node50,&node65);
+        TEST_ASSERT_EQUAL_PTR(&node60,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node50,&node75,0);
+        TEST_ASSERT_EQUAL_NODE(&node50,&node25,NULL,-1);
+        TEST_ASSERT_EQUAL_NODE(&node75,&node65,&node85,0);
+        TEST_ASSERT_EQUAL_NODE(&node25,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node65,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node85,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
 }
 
 /**
@@ -278,15 +333,19 @@ void test_AvlAdd_given_RL_10_30_70_60_85_add_55(void){
     initNode(&node10,NULL,NULL,0);
     initNode(&node30,&node10,&node70,1);
 
-    //Test
-    root=avlAdd(&node30,&node55);
-    TEST_ASSERT_EQUAL_PTR(&node60,root);
-    TEST_ASSERT_EQUAL_NODE(root,&node30,&node70,0);
-    TEST_ASSERT_EQUAL_NODE(&node30,&node10,&node55,0);
-    TEST_ASSERT_EQUAL_NODE(&node70,NULL,&node85,1);
-    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node55,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node85,NULL,NULL,0);
+    Try{
+        root=avlAdd(&node30,&node55);
+        TEST_ASSERT_EQUAL_PTR(&node60,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node30,&node70,0);
+        TEST_ASSERT_EQUAL_NODE(&node30,&node10,&node55,0);
+        TEST_ASSERT_EQUAL_NODE(&node70,NULL,&node85,1);
+        TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node55,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node85,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
 
 }
 //////////////Avl ADD with Rotate LEFT //////////////////////////////////////////////////
@@ -301,7 +360,7 @@ void test_AvlAdd_given_RL_10_30_70_60_85_add_55(void){
 **/
 
 void test_AvlAdd_given_L_25_10_40_30_50_add_60(void){
-    //Build number tree
+
     initNode(&node60,&node1,&node10,69);
     initNode(&node50,NULL,NULL,0);
     initNode(&node30,NULL,NULL,0);
@@ -309,16 +368,20 @@ void test_AvlAdd_given_L_25_10_40_30_50_add_60(void){
     initNode(&node10,NULL,NULL,0);
     initNode(&node25,&node10,&node40,1);
 
-    //Test
 
-    root=avlAdd(&node25,&node60);
-    TEST_ASSERT_EQUAL_PTR(&node40,root);
-    TEST_ASSERT_EQUAL_NODE(root,&node25,&node50,0);
-    TEST_ASSERT_EQUAL_NODE(&node25,&node10,&node30,0);
-    TEST_ASSERT_EQUAL_NODE(&node50,NULL,&node60,1);
-    TEST_ASSERT_EQUAL_NODE(&node30,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
+    Try{
+        root=avlAdd(&node25,&node60);
+        TEST_ASSERT_EQUAL_PTR(&node40,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node25,&node50,0);
+        TEST_ASSERT_EQUAL_NODE(&node25,&node10,&node30,0);
+        TEST_ASSERT_EQUAL_NODE(&node50,NULL,&node60,1);
+        TEST_ASSERT_EQUAL_NODE(&node30,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
 }
 
 /**
@@ -339,16 +402,19 @@ void test_AvlAdd_given_L_50_25_75_60_85_add_80(void){
     initNode(&node25,NULL,NULL,0);
     initNode(&node50,&node25,&node75,1);
 
-    //Test
-    root=avlAdd(&node50,&node80);
-    TEST_ASSERT_EQUAL_PTR(&node75,root);
-    TEST_ASSERT_EQUAL_NODE(root,&node50,&node85,0);
-    TEST_ASSERT_EQUAL_NODE(&node50,&node25,&node60,0);
-    TEST_ASSERT_EQUAL_NODE(&node85,&node80,NULL,-1);
-    TEST_ASSERT_EQUAL_NODE(&node25,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_NODE(&node80,NULL,NULL,0);
-
+    Try{
+        root=avlAdd(&node50,&node80);
+        TEST_ASSERT_EQUAL_PTR(&node75,root);
+        TEST_ASSERT_EQUAL_NODE(root,&node50,&node85,0);
+        TEST_ASSERT_EQUAL_NODE(&node50,&node25,&node60,0);
+        TEST_ASSERT_EQUAL_NODE(&node85,&node80,NULL,-1);
+        TEST_ASSERT_EQUAL_NODE(&node25,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node60,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node80,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
 }
 
 
@@ -369,7 +435,6 @@ void test_rotateRightAndReBalanceForAdd_given_30_20_10(void){
     initNode(&node20,&node10,NULL,-1);
     initNode(&node30,&node20,NULL,-2);
 
-    //Test
     root=rotateRightAndReBalanceForAdd(&node30);
     TEST_ASSERT_EQUAL_PTR(&node20,root);
     TEST_ASSERT_EQUAL_NODE(root,&node10,&node30,0);
@@ -395,8 +460,6 @@ void test_rotateRightAndReBalanceForAdd_given_50_30_20_40_60_10(void){
     initNode(&node40,&node30,&node50,-1);
     initNode(&node70,NULL,NULL,0);
     initNode(&node60,&node40,&node70,-2);
-
-    //Test
 
     root=rotateRightAndReBalanceForAdd(&node60);
     TEST_ASSERT_EQUAL_PTR(&node40,root);
@@ -426,8 +489,6 @@ void test_rotateRightAndReBalanceForAdd_given_20_15_30_35_40_50(void){
     initNode(&node30,&node15,&node35,-1);
     initNode(&node50,NULL,NULL,0);
     initNode(&node40,&node30,&node50,-2);
-
-    //Test
 
     root=rotateRightAndReBalanceForAdd(&node40);
     TEST_ASSERT_EQUAL_PTR(&node30,root);
@@ -461,7 +522,6 @@ void test_rotateRightAndReBalanceForAdd_given_80_30_10_60_90_70(void){
     initNode(&node90,NULL,NULL,0);
     initNode(&node80,&node30,&node90,-2);
 
-    //Test
     root=rotateRightAndReBalanceForAdd(&node80);
     TEST_ASSERT_EQUAL_PTR(&node60,root);
     TEST_ASSERT_EQUAL_NODE(root,&node30,&node80,0);
@@ -490,8 +550,6 @@ void test_rotateRightAndReBalanceForAdd_given_80_30_10_60_90_50(void){
     initNode(&node90,NULL,NULL,0);
     initNode(&node80,&node30,&node90,-2);
 
-    //Test
-
     root=rotateRightAndReBalanceForAdd(&node80);
     TEST_ASSERT_EQUAL_PTR(&node60,root);
     TEST_ASSERT_EQUAL_NODE(root,&node30,&node80,0);
@@ -511,12 +569,10 @@ void test_rotateRightAndReBalanceForAdd_given_80_30_10_60_90_50(void){
 *
 **/
 void test_rotateLeftAndReBalanceForAdd_25_30_20(void){
-    //Build number tree
     initNode(&node25,NULL,NULL,0);
     initNode(&node20,NULL,&node25,1);
     initNode(&node30,&node20,NULL,-2);
 
-    //Test
     root=rotateRightAndReBalanceForAdd(&node30);
     TEST_ASSERT_EQUAL_PTR(&node25,root);
     TEST_ASSERT_EQUAL_NODE(root,&node20,&node30,0);
@@ -537,7 +593,6 @@ void test_rotateLeftAndReBalanceForAdd_25_30_20(void){
 **/
 
 void test_rotateLeftAndReBalanceForAdd_given_35_20_50_40_60_70(void){
-    //Build number tree
     initNode(&node70,NULL,NULL,0);
     initNode(&node60,NULL,&node70,1);
     initNode(&node40,NULL,NULL,0);
@@ -545,7 +600,6 @@ void test_rotateLeftAndReBalanceForAdd_given_35_20_50_40_60_70(void){
     initNode(&node20,NULL,NULL,0);
     initNode(&node35,&node20,&node50,2);
 
-    //Test
     root=rotateLeftAndReBalanceForAdd(&node35);
     TEST_ASSERT_EQUAL_PTR(&node50,root);
     TEST_ASSERT_EQUAL_NODE(root,&node35,&node60,0);
@@ -568,7 +622,6 @@ void test_rotateLeftAndReBalanceForAdd_given_35_20_50_40_60_70(void){
 **/
 
 void test_rotateLeftAndReBalanceForAdd_given_25_10_40_30_50_60(void){
-    //Build number tree
     initNode(&node60,NULL,NULL,0);
     initNode(&node50,NULL,&node60,1);
     initNode(&node30,NULL,NULL,0);
@@ -576,7 +629,6 @@ void test_rotateLeftAndReBalanceForAdd_given_25_10_40_30_50_60(void){
     initNode(&node10,NULL,NULL,0);
     initNode(&node25,&node10,&node40,2);
 
-    //Test
     root=rotateLeftAndReBalanceForAdd(&node25);
     TEST_ASSERT_EQUAL_PTR(&node40,root);
     TEST_ASSERT_EQUAL_NODE(root,&node25,&node50,0);
@@ -598,12 +650,10 @@ void test_rotateLeftAndReBalanceForAdd_given_25_10_40_30_50_60(void){
 **/
 
 void test_rotateLeftAndReBalanceForAdd_given_20_50_70(void){
-    //Build number tree
     initNode(&node70,NULL,NULL,0);
     initNode(&node50,NULL,&node70,1);
     initNode(&node20,NULL,&node50,2);
 
-    //Test
     root=rotateLeftAndReBalanceForAdd(&node20);
     TEST_ASSERT_EQUAL_PTR(&node50,root);
     TEST_ASSERT_EQUAL_NODE(root,&node20,&node70,0);
@@ -630,7 +680,6 @@ void test_rotateLeftAndReBalanceForAdd_given_50_25_75_60_85_80(void){
     initNode(&node25,NULL,NULL,0);
     initNode(&node50,&node25,&node75,2);
 
-    //Test
     root=rotateLeftAndReBalanceForAdd(&node50);
     TEST_ASSERT_EQUAL_PTR(&node75,root);
     TEST_ASSERT_EQUAL_NODE(root,&node50,&node85,0);
@@ -660,7 +709,6 @@ void test_rotateLeftAndReBalanceForAdd_given_25_30_45_40_60_75(void){
     initNode(&node25,NULL,NULL,0);
     initNode(&node30,&node25,&node45,2);
 
-    //Test
     root=rotateLeftAndReBalanceForAdd(&node30);
     TEST_ASSERT_EQUAL_PTR(&node45,root);
     TEST_ASSERT_EQUAL_NODE(root,&node30,&node60,0);
@@ -691,7 +739,6 @@ void test_rotateLeftAndReBalanceForAdd_given_RL_55_50_25_75_60_80(void){
     initNode(&node25,NULL,NULL,0);
     initNode(&node50,&node25,&node75,2);
 
-    //Test
     root=rotateLeftAndReBalanceForAdd(&node50);
     TEST_ASSERT_EQUAL_PTR(&node60,root);
     TEST_ASSERT_EQUAL_NODE(root,&node50,&node75,0);
@@ -721,7 +768,6 @@ void test_rotateLeftAndReBalanceForAdd_given_RL_65_50_25_75_60_80(void){
     initNode(&node25,NULL,NULL,0);
     initNode(&node50,&node25,&node75,2);
 
-    //Test
     root=rotateLeftAndReBalanceForAdd(&node50);
     TEST_ASSERT_EQUAL_PTR(&node60,root);
     TEST_ASSERT_EQUAL_NODE(root,&node50,&node75,0);
@@ -742,12 +788,10 @@ void test_rotateLeftAndReBalanceForAdd_given_RL_65_50_25_75_60_80(void){
 *
 **/
 void test_rotateLeftAndReBalanceForAdd_15_30_20(void){
-    //Build number tree
     initNode(&node20,NULL,NULL,0);
     initNode(&node30,&node20,NULL,-1);
     initNode(&node15,NULL,&node30,2);
 
-    //Test
     root=rotateLeftAndReBalanceForAdd(&node15);
     TEST_ASSERT_EQUAL_PTR(&node20,root);
     TEST_ASSERT_EQUAL_NODE(root,&node15,&node30,0);
@@ -755,35 +799,7 @@ void test_rotateLeftAndReBalanceForAdd_15_30_20(void){
     TEST_ASSERT_EQUAL_NODE(&node30,NULL,NULL,0);
 }
 
-///////Exception testing for adding same value node
-/**
-*            50(-1)
-*           /   \
-*         30(0)  60(0)     --->      ERROR!
-*        /  \             add 30
-*     20(0)  40(0)
-*
-*
-**/
 
-void test_AvlAdd_given_50_30_20_40_60_add_30_expected_error(void){
-    initNode(&node10,&node1,&node10,77);
-    initNode(&node20,NULL,NULL,0);
-    initNode(&node40,NULL,NULL,0);
-    initNode(&node30,&node20,&node40,0);
-    initNode(&node60,NULL,NULL,0);
-    initNode(&node50,&node30,&node60,-1);
-
-    //Test
-    Try{
-        root=avlAdd(&node50,&node30);
-        TEST_FAIL_MESSAGE("Expecting exeception to be thrown.");
-    }Catch(ex) {
-        dumpException(ex);
-        TEST_ASSERT_EQUAL(ERR_SAME_NODE, ex->errorCode);
-    }
-
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 ///rotateBalanceAndGetHeightChangeForadd////////////////////////////////////////
@@ -798,14 +814,13 @@ void test_AvlAdd_given_50_30_20_40_60_add_30_expected_error(void){
 **/
 
 void test_rotateBalanceAndGetHeightChangeForAdd_40_50_30_20_35(void){
-    //Build number tree
     initNode(&node20,NULL,NULL,0);
     initNode(&node50,NULL,NULL,0);
     initNode(&node35,NULL,NULL,0);
     initNode(&node30,&node20,&node35,0);
     initNode(&node40,&node30,&node50,-1);
     heightInc = 1; // set heightInc to one to check
-    //Test
+
     root=rotateBalanceAndGetHeightChangeForAdd(&node40,&heightInc);
     TEST_ASSERT_EQUAL_PTR(&node40,root);
     TEST_ASSERT_EQUAL(heightInc,1);
@@ -826,14 +841,13 @@ void test_rotateBalanceAndGetHeightChangeForAdd_40_50_30_20_35(void){
 **/
 
 void test_rotateBalanceAndGetHeightChangeForAdd_40_50_30_45_55(void){
-    //Build number tree
     initNode(&node45,NULL,NULL,0);
     initNode(&node30,NULL,NULL,0);
     initNode(&node55,NULL,NULL,0);
     initNode(&node50,&node45,&node55,0);
     initNode(&node40,&node30,&node50,1);
     heightInc = 1; // set heightInc to one to check
-    //Test
+
     root=rotateBalanceAndGetHeightChangeForAdd(&node40,&heightInc);
     TEST_ASSERT_EQUAL_PTR(&node40,root);
     TEST_ASSERT_EQUAL(heightInc,1);
@@ -843,7 +857,11 @@ void test_rotateBalanceAndGetHeightChangeForAdd_40_50_30_45_55(void){
     TEST_ASSERT_EQUAL_NODE(&node55,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node30,NULL,NULL,0);
 }
-
+//this few test that given no height change because
+// when the node is added inside, the root of the whole tree has not change
+// its balancefactor yet which did not increase 1 or decrease 1 on the main root
+// of the tree so it does not requires the root to change its balanceFactor
+//when the child already rebalance the tree
 /**
 *       40(-2)                   30(0)
 *       /                       /    \
@@ -854,12 +872,11 @@ void test_rotateBalanceAndGetHeightChangeForAdd_40_50_30_45_55(void){
 **/
 
 void test_rotateBalanceAndGetHeightChangeForAdd_40_30_20(void){
-    //Build number tree
     initNode(&node20,NULL,NULL,0);
     initNode(&node30,&node20,NULL,-1);
     initNode(&node40,&node30,NULL,-2);
     heightInc = 1; // set heightInc to one to check
-    //Test
+
     root=rotateBalanceAndGetHeightChangeForAdd(&node40,&heightInc);
     TEST_ASSERT_EQUAL_PTR(&node30,root);
     TEST_ASSERT_EQUAL(heightInc,0);
@@ -879,17 +896,151 @@ void test_rotateBalanceAndGetHeightChangeForAdd_40_30_20(void){
 
 
 void test_rotateBalanceAndGetHeightChangeForAdd_10_30_35(void){
-    //Build number tree
     initNode(&node35,NULL,NULL,0);
     initNode(&node30,NULL,&node35,1);
     initNode(&node10,NULL,&node30,2);
     heightInc = 1; // set heightInc to 1 to check
-    //Test
+
     root=rotateBalanceAndGetHeightChangeForAdd(&node10,&heightInc);
     TEST_ASSERT_EQUAL_PTR(&node30,root);
     TEST_ASSERT_EQUAL(heightInc,0);
-    TEST_ASSERT_EQUAL_NODE(root,&node10,&node35,-1);
-    TEST_ASSERT_EQUAL_NODE(&node10,NULL,&node20,1);
+    TEST_ASSERT_EQUAL_NODE(root,&node10,&node35,0);
+    TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node20,NULL,NULL,0);
     TEST_ASSERT_EQUAL_NODE(&node35,NULL,NULL,0);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+///rotateBalanceAndGetHeightChangeForadd////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/**
+*            50(-1)                     50(0)
+*           /   \                       /   \ (height increase 1 here)
+*         30(0)  60(0)     --->      30(0)  60(1)
+*        /  \             add 80     /  \     \
+*     20(0)  40(0)                20(0) 40(0) 80(0)
+*
+*
+**/
+//implementing this function at node 60
+void test_nodeSearchAndAddNode_given_50_30_20_40_60_add_80(void){
+    initNode(&node80,NULL,NULL,0);
+    initNode(&node20,NULL,NULL,0);
+    initNode(&node40,NULL,NULL,0);
+    initNode(&node30,&node20,&node40,0);
+    initNode(&node60,NULL,NULL,0);
+    initNode(&node50,&node30,&node60,-1);
+    heightInc = 0; // set heightInc to 0 to check
+
+    Try{
+        root=nodeSearchAndAddNode(&node60,&node80,&heightInc);
+        TEST_ASSERT_EQUAL_PTR(&node60,root);
+        TEST_ASSERT_EQUAL(heightInc,1);
+        TEST_ASSERT_EQUAL_NODE(root,NULL,&node80,1);
+        TEST_ASSERT_EQUAL_NODE(&node80,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+
+}
+
+/**
+*            50(-1)                      50(0)
+*           /   \                       /     \ (height increase 1 here)
+*         30(0)  60(0)     --->      30(0)    60(-1)
+*        /  \             add 70     /  \      /
+*     20(0)  40(0)                20(0) 40(0) 55(0)
+*
+*
+**/
+//implementing this function at node 60
+void test_nodeSearchAndAddNode_given_50_30_20_40_60_add_55(void){
+    initNode(&node55,NULL,NULL,0);
+    initNode(&node20,NULL,NULL,0);
+    initNode(&node40,NULL,NULL,0);
+    initNode(&node30,&node20,&node40,0);
+    initNode(&node60,NULL,NULL,0);
+    initNode(&node50,&node30,&node60,-1);
+    heightInc = 0; // set heightInc to 0 to check
+
+    Try{
+        root=nodeSearchAndAddNode(&node60,&node55,&heightInc);
+        TEST_ASSERT_EQUAL_PTR(&node60,root);
+        TEST_ASSERT_EQUAL(heightInc,1);
+        TEST_ASSERT_EQUAL_NODE(root,&node55,NULL,-1);
+        TEST_ASSERT_EQUAL_NODE(&node55,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+
+}
+
+/**
+*            50(-1)                                 50(-2)
+*           /   \       (height increase 1 here)-> /     \
+*         30(0)  60(0)     --->               30(-1)    60(0)
+*        /  \             add 10              /  \
+*     20(0)  40(0)                        20(-1) 40(0)
+*                                          /
+*                                       10(0)
+**/
+//implementing this function at node 30
+void test_nodeSearchAndAddNode_given_50_30_20_40_60_add_10(void){
+    initNode(&node10,NULL,NULL,0);
+    initNode(&node20,NULL,NULL,0);
+    initNode(&node40,NULL,NULL,0);
+    initNode(&node30,&node20,&node40,0);
+    initNode(&node60,NULL,NULL,0);
+    initNode(&node50,&node30,&node60,-1);
+    heightInc = 0; // set heightInc to 0 to check
+
+    Try{
+        root=nodeSearchAndAddNode(&node30,&node10,&heightInc);
+        TEST_ASSERT_EQUAL_PTR(&node30,root);
+        TEST_ASSERT_EQUAL(heightInc,1);
+        TEST_ASSERT_EQUAL_NODE(root,&node20,&node40,-1);
+        TEST_ASSERT_EQUAL_NODE(&node20,&node10,NULL,-1);
+        TEST_ASSERT_EQUAL_NODE(&node40,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node10,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+
+}
+
+/**
+*            50(-1)                                 50(-2)
+*           /   \       (height increase 1 here)-> /     \
+*         30(0)  60(0)     --->               30(1)    60(0)
+*        /  \             add 45              /  \
+*     20(0)  40(0)                        20(0) 40(1)
+*                                                 \
+*                                                 45(0)
+**/
+//implementing this function at node 30
+void test_nodeSearchAndAddNode_given_50_30_20_40_60_add_45(void){
+    initNode(&node10,NULL,NULL,0);
+    initNode(&node20,NULL,NULL,0);
+    initNode(&node40,NULL,NULL,0);
+    initNode(&node30,&node20,&node40,0);
+    initNode(&node60,NULL,NULL,0);
+    initNode(&node50,&node30,&node60,-1);
+    heightInc = 0; // set heightInc to 0 to check
+
+    Try{
+        root=nodeSearchAndAddNode(&node30,&node45,&heightInc);
+        TEST_ASSERT_EQUAL_PTR(&node30,root);
+        TEST_ASSERT_EQUAL(heightInc,1);
+        TEST_ASSERT_EQUAL_NODE(root,&node20,&node40,1);
+        TEST_ASSERT_EQUAL_NODE(&node20,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_NODE(&node40,NULL,&node45,1);
+        TEST_ASSERT_EQUAL_NODE(&node45,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+
 }

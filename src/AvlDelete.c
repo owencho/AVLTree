@@ -36,17 +36,17 @@ Node *_avlDelete(Node *root,int nodeDelete,Node ** deletedNode,int * heightDec){
     return root;
 
 }
-
+//refer my samsung note for
 Node * rotateBalanceAndGetHeightChangeForDelete(Node* root,int * heightDec){
     if(abs(root->bFactor) == 1 )
         *heightDec =0;
     else if(root->bFactor >= 2){
+        *heightDec =(abs(root->right->bFactor) == 1);
         root = rotateLeftAndReBalanceForDelete(root);
-        *heightDec =0;
     }
     else if(root->bFactor <= -2){
+        *heightDec =(abs(root->left->bFactor) == 1);
         root = rotateRightAndReBalanceForDelete(root);
-        *heightDec =0;
     }
     return root;
 }

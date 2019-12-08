@@ -32,10 +32,10 @@ int _verifyAvl(Node * root, uint32_t * countPtr){
     }
     *countPtr = leftCount + rightCount +1;
     if(root->bFactor > 1 || root->bFactor < -1){
-        testReportFailure(lineNo,"balanceFactor is %d which is larger than 1 or less than -1 on %d at index %d",root->bFactor,root->value,*countPtr);
+        testReportFailure(lineNo,"balanceFactor in the root is %d which is larger than 1 or less than -1 on %d at index %d",root->bFactor,root->value,*countPtr);
     }
     if(root->bFactor != rightChildHeight-leftChildHeight){
-        testReportFailure(lineNo,"balanceFactor is %d which but expected %d is incorrect on %d at index %d"
+        testReportFailure(lineNo,"balanceFactor in the root is %d but expected %d is incorrect on %d at index %d"
                           ,root->bFactor,rightChildHeight-leftChildHeight,root->value,*countPtr);
     }
     if(leftChildHeight >= rightChildHeight){

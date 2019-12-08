@@ -94,11 +94,11 @@ void test_verify_AVL_tree(void){
 void test_verify_add_delete_AVL_tree(void){
     Node * root ;
     Node * childNode;
-    int max = 10000 , i;
+    int max = 100000 , i;
     int height,deleteValue;
     srand(time(0));
     i = max;
-    root =  createNode(getRandomNum(),  NULL ,NULL,0);
+    root =  createNode(getRandomNum(), NULL ,NULL,0);
     while(i--){
        Try{
             root = avlAdd(root,createAvlNode(getRandomNum()));
@@ -109,7 +109,7 @@ void test_verify_add_delete_AVL_tree(void){
         TEST_VERIFY_AVL_TREE(root, max-i+1);
     }
     for(i=0;i<max;i++){
-        height= (getRandomNum()/log2(max)+5);
+        height= (getRandomNum()/(log2(max)+5));
         childNode = root;
         deleteValue=getRandomDeleteNode(childNode,height);
          Try{

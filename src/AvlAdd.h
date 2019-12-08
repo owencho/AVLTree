@@ -6,4 +6,5 @@ Node * _avlAdd(Node *root,Node * nodeAdd,int * heightInc);
 Node * rotateLeftAndReBalanceForAdd(Node * root);
 Node * rotateRightAndReBalanceForAdd(Node * root);
 Node * rotateBalanceAndGetHeightChangeForAdd(Node* root,int * heightInc);
+Node* nodeSearchAndAddNode(Node* root,Node * nodeAdd,int * heightInc);
 #endif // _AVLADD_H
