@@ -7,7 +7,8 @@ struct Node{
     Node * left ;
     Node * right ;
     int bFactor;
-    int value;
+    char value[0];
+    //int value;
 };
 Node * createNode(int value,  Node * left ,Node * right,int balanceFactor);
 void initNode(Node * node,  Node * left ,Node * right,int balanceFactor);

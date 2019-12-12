@@ -4,29 +4,31 @@
 #include "Error.h"
 #include "Exception.h"
 #include "CException.h"
+#include "Compare.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
 
-Node *avlAdd(Node *root,Node * nodeAdd){
+Node *avlAdd(Node *root,Node * nodeAdd,Compare compare){
     int heightInc;
     nodeAdd->left = NULL;
     nodeAdd->right = NULL;
     nodeAdd->bFactor =0;
-    return _avlAdd(root,nodeAdd,&heightInc);
+    return _avlAdd(root,nodeAdd,&heightInc,compare);
 }
-Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc){
+Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc,Compare compare){
     if(root->value == nodeAdd->value)
       throwException(ERR_SAME_NODE,"same node value detected");
-    root = nodeSearchAndAddNode(root,nodeAdd,heightInc);
+    root = nodeSearchAndAddNode(root,nodeAdd,heightInc,compare);
     root = rotateBalanceAndGetHeightChangeForAdd(root,heightInc);
     return root;
 }
 
-Node* nodeSearchAndAddNode(Node* root,Node * nodeAdd,int * heightInc){
+Node* nodeSearchAndAddNode(Node* root,Node * nodeAdd,int * heightInc,Compare compare){
     Node * child;
     int heightChange=0;
+    int size = compare(root,nodeAdd->value);
     if(root->value < nodeAdd->value){
         child = root->right;
         if(child == NULL){
@@ -34,7 +36,7 @@ Node* nodeSearchAndAddNode(Node* root,Node * nodeAdd,int * heightInc){
             root->right = nodeAdd;
             *heightInc =1;
         }else{
-            root->right=_avlAdd(child,nodeAdd,&heightChange);
+            root->right=_avlAdd(child,nodeAdd,&heightChange,compare);
             *heightInc =heightChange;
             root->bFactor =root->bFactor+heightChange;
         }
@@ -46,7 +48,7 @@ Node* nodeSearchAndAddNode(Node* root,Node * nodeAdd,int * heightInc){
             root->left = nodeAdd;
             *heightInc =1;
         }else{
-            root->left=_avlAdd(child,nodeAdd,&heightChange);
+            root->left=_avlAdd(child,nodeAdd,&heightChange,compare);
             *heightInc =heightChange;
             root->bFactor =root->bFactor-heightChange;
         }
