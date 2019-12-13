@@ -1,13 +1,17 @@
 #include "unity.h"
+#include "AvlAdd.h"
 #include "IntCompare.h"
+#include "IntNode.h"
 #include "Compare.h"
+#include "Balance.h"
+#include "Rotate.h"
 #include "Node.h"
 #include "Error.h"
 #include "Exception.h"
 #include "CException.h"
 #include "CustomAssert.h"
 CEXCEPTION_T ex;
-IntNode * root ;
+Node * root ;
 IntNode node1, node5, node10, node15,node20,node25,node30,node35,node40,node45,node50,node55;
 IntNode node60,node65,node70,node75,node80,node85,node90,node95,node99;
 void setUp(void){
@@ -20,11 +24,25 @@ void setUp(void){
     node95.value =95; node99.value =99; node10.value =10;
 }
 void tearDown(void){}
-
-void test_IntCompare(void){
+// IntCompare return 1 when when root > nodeAdd
+// IntCompare return -1 when when root < nodeAdd
+// IntCompare return 0 when when root == nodeAdd
+void test_IntCompare_smaller_root_return_neg1(void){
     Compare compare = (Compare)intCompare;
     int i = 56;
-    TEST_ASSERT_EQUAL(0,(compare(&node5,&i)));
+    TEST_ASSERT_EQUAL(-1,(compare((Node*)&node5,(void *)&i)));
+}
+
+void test_IntCompare_larger_root_return_1(void){
+    Compare compare = (Compare)intCompare;
+    int i = 4;
+    TEST_ASSERT_EQUAL(1,(compare((Node*)&node5,(void *)&i)));
+}
+
+void test_IntCompare_equal_root_return_0(void){
+    Compare compare = (Compare)intCompare;
+    int i = 5;
+    TEST_ASSERT_EQUAL(0,(compare((Node*)&node5,(void *)&i)));
 }
 
 /**
@@ -38,27 +56,28 @@ void test_IntCompare(void){
 **/
 
 void test_AvlAdd_given_WO_5_30_20_25_35_40_45_50_add_1(void){
-    initIntNode(&node1,&node10,&node10,77);
-    initIntNode(&node50,NULL,NULL,0);
-    initIntNode(&node25,NULL,NULL,0);
-    initIntNode(&node35,NULL,NULL,0);
-    initIntNode(&node30,&node25,&node35,0);
-    initIntNode(&node5,NULL,NULL,0);
-    initIntNode(&node20,&node5,&node30,1);
-    initIntNode(&node45,NULL,&node50,1);
-    initIntNode(&node40,&node20,&node45,-1);
+    InitNode initNode = (InitNode)initIntNode;
+    initNode(&node1,&node10,&node10,77);
+    initNode(&node50,NULL,NULL,0);
+    initNode(&node25,NULL,NULL,0);
+    initNode(&node35,NULL,NULL,0);
+    initNode(&node30,&node25,&node35,0);
+    initNode(&node5,NULL,NULL,0);
+    initNode(&node20,&node5,&node30,1);
+    initNode(&node45,NULL,&node50,1);
+    initNode(&node40,&node20,&node45,-1);
 
     Try{
         root=avlAdd((Node*)&node40,(Node*)&node1,(Compare)intCompare);
         TEST_ASSERT_EQUAL_PTR(&node40,root);
-        TEST_ASSERT_EQUAL_NODE(root,&node20,&node45,-1);
-        TEST_ASSERT_EQUAL_NODE(&node20,&node5,&node30,0);
-        TEST_ASSERT_EQUAL_NODE(&node30,&node25,&node35,0);
-        TEST_ASSERT_EQUAL_NODE(&node5,&node1,NULL,-1);
-        TEST_ASSERT_EQUAL_NODE(&node45,NULL,&node50,1);
-        TEST_ASSERT_EQUAL_NODE(&node25,NULL,NULL,0);
-        TEST_ASSERT_EQUAL_NODE(&node35,NULL,NULL,0);
-        TEST_ASSERT_EQUAL_NODE(&node50,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node20,&node45,-1);
+        TEST_ASSERT_EQUAL_INT_NODE(&node20,&node5,&node30,0);
+        TEST_ASSERT_EQUAL_INT_NODE(&node30,&node25,&node35,0);
+        TEST_ASSERT_EQUAL_INT_NODE(&node5,&node1,NULL,-1);
+        TEST_ASSERT_EQUAL_INT_NODE(&node45,NULL,&node50,1);
+        TEST_ASSERT_EQUAL_INT_NODE(&node25,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_INT_NODE(&node35,NULL,NULL,0);
+        TEST_ASSERT_EQUAL_INT_NODE(&node50,NULL,NULL,0);
     }Catch(ex) {
         dumpException(ex);
         TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");

@@ -4,7 +4,6 @@
 #include "Error.h"
 #include "Exception.h"
 #include "CException.h"
-#include "Compare.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -18,8 +17,6 @@ Node *avlAdd(Node *root,Node * nodeAdd,Compare compare){
     return _avlAdd(root,nodeAdd,&heightInc,compare);
 }
 Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc,Compare compare){
-    if(root->value == nodeAdd->value)
-      throwException(ERR_SAME_NODE,"same node value detected");
     root = nodeSearchAndAddNode(root,nodeAdd,heightInc,compare);
     root = rotateBalanceAndGetHeightChangeForAdd(root,heightInc);
     return root;
@@ -28,8 +25,10 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc,Compare compare){
 Node* nodeSearchAndAddNode(Node* root,Node * nodeAdd,int * heightInc,Compare compare){
     Node * child;
     int heightChange=0;
-    int size = compare(root,nodeAdd->value);
-    if(root->value < nodeAdd->value){
+    int size = compare(root,(void*)&nodeAdd->value);
+    if(!size)
+        throwException(ERR_SAME_NODE,"same node value detected");
+    else if(size == -1){
         child = root->right;
         if(child == NULL){
             root->bFactor++;

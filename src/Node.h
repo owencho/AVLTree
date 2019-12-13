@@ -2,16 +2,14 @@
 #define _NODE_H
 #include <stdlib.h>
 typedef struct Node Node ;
+typedef void (*InitNode)(void * node,  void * left ,void * right,int balanceFactor);
 
 struct Node{
     Node * left ;
     Node * right ;
     int bFactor;
     char value[0];
-    //int value;
 };
-Node * createNode(int value,  Node * left ,Node * right,int balanceFactor);
-void initNode(Node * node,  Node * left ,Node * right,int balanceFactor);
 void freeAllNodesInTree(Node *root);
 
 #define freeNode(node)                                      \

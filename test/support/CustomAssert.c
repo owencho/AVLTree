@@ -6,9 +6,9 @@
 #include <malloc.h>
 #include <stdarg.h>
 
-void assertEqualNode (const Node * actualNode,
-                      const Node * leftNode,
-                      const Node * rightNode,
+void assertEqualIntNode (const IntNode * actualNode,
+                      const IntNode * leftNode,
+                      const IntNode * rightNode,
                       const int balanceFactor,
                       const UNITY_LINE_TYPE lineNumber){
 

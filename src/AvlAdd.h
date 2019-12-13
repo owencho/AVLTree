@@ -1,6 +1,7 @@
 #ifndef _AVLADD_H
 #define _AVLADD_H
 #include "Node.h"
+#include "Compare.h"
 Node * avlAdd(Node *root,Node * nodeAdd,Compare compare);
 Node * _avlAdd(Node *root,Node * nodeAdd,int * heightInc,Compare compare);
 Node * rotateLeftAndReBalanceForAdd(Node * root);
