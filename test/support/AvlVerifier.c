@@ -1,9 +1,9 @@
 #include "AvlVerifier.h"
 #include "unity.h"
-
+#include "IntNode.h"
 
 int lineNo;
-void verifyAvl(Node * root,int expectedNumOfElement,UNITY_LINE_TYPE lineNumber){
+void verifyAvl(IntNode * root,int expectedNumOfElement,UNITY_LINE_TYPE lineNumber){
     uint32_t count =0;
     int height =0;
     if (!root) return ;
@@ -15,7 +15,7 @@ void verifyAvl(Node * root,int expectedNumOfElement,UNITY_LINE_TYPE lineNumber){
 
 }
 
-int _verifyAvl(Node * root, uint32_t * countPtr){
+int _verifyAvl(IntNode * root, uint32_t * countPtr){
     uint32_t leftCount=0,rightCount=0;
     int leftChildHeight=0,rightChildHeight=0;
     if(root->left != NULL){

@@ -9,29 +9,22 @@
 #include <stdio.h>
 #include <string.h>
 
-Node *avlDelete(Node *root,int nodeDelete){
+Node *avlDelete(Node *root,int nodeDelete,Compare compare){
     Node* deletedNode = NULL;
     Node * afterRoot;
     int height;
-    afterRoot = _avlDelete(root,nodeDelete,&deletedNode,&height);
+    afterRoot = _avlDelete(root,nodeDelete,&deletedNode,&height,compare);
     if(deletedNode == NULL){
       throwException(ERR_NODE_NOT_FOUND," node value of %d cant found inside the tree and couldnt remove the node ",nodeDelete);
     }
     return afterRoot;
 }
 
-Node *_avlDelete(Node *root,int nodeDelete,Node ** deletedNode,int * heightDec){
+Node *_avlDelete(Node *root,int nodeDelete,Node ** deletedNode,int * heightDec,Compare compare){
     Node * replacedNode = NULL;
-    if (root->value ==nodeDelete){
-        *deletedNode = root;
-        root = nodeRemoveAndReplace(root,heightDec);
-        if(root == NULL)
-            return root;
-    }
-    else{
-        root = nodeSearchforDeleteNode(root,nodeDelete,deletedNode,heightDec);
-    }
-
+    root = nodeSearchAndReplaceForDeleteNode(root,nodeDelete,deletedNode,heightDec,compare);
+    if(root == NULL)
+        return root;
     root = rotateBalanceAndGetHeightChangeForDelete(root,heightDec);
     return root;
 
@@ -51,24 +44,39 @@ Node * rotateBalanceAndGetHeightChangeForDelete(Node* root,int * heightDec){
     return root;
 }
 
-Node* nodeSearchforDeleteNode(Node* root,int nodeDelete,Node ** deletedNode,int * heightDec){
+Node* nodeSearchAndReplaceForDeleteNode(Node* root,int nodeDelete,Node ** deletedNode,int * heightDec,Compare compare){
+    int size = compare(root,(void*)&nodeDelete);
+    if(!size){
+        *deletedNode = root;
+        root = nodeRemoveAndReplace(root,heightDec);
+    }
+    else if(size == -1)
+        root = nodeSearchRightForDeleteNode(root,nodeDelete,deletedNode,heightDec,compare);
+    else
+        root = nodeSearchLeftForDeleteNode(root,nodeDelete,deletedNode,heightDec,compare);
+    return root;
+}
+
+Node* nodeSearchRightForDeleteNode(Node* root,int nodeDelete,Node ** deletedNode,int * heightDec,Compare compare){
     Node * child;
     int heightChange = 0;
-    if(root->value < nodeDelete){
-        child = root->right;
-        if(child != NULL){
-            root->right=_avlDelete(child,nodeDelete,deletedNode,&heightChange);
-            *heightDec =heightChange;
-            root->bFactor =root->bFactor-heightChange;
-        }
+    child = root->right;
+    if(child != NULL){
+        root->right=_avlDelete(child,nodeDelete,deletedNode,&heightChange,compare);
+        *heightDec =heightChange;
+        root->bFactor =root->bFactor-heightChange;
     }
-    else{
-        child = root->left;
-        if(child != NULL){
-            root->left=_avlDelete(child,nodeDelete,deletedNode,&heightChange);
-            *heightDec =heightChange;
-            root->bFactor =root->bFactor+heightChange;
-        }
+    return root;
+}
+
+Node* nodeSearchLeftForDeleteNode(Node* root,int nodeDelete,Node ** deletedNode,int * heightDec,Compare compare){
+    Node * child;
+    int heightChange = 0;
+    child = root->left;
+    if(child != NULL){
+        root->left=_avlDelete(child,nodeDelete,deletedNode,&heightChange,compare);
+        *heightDec =heightChange;
+        root->bFactor =root->bFactor+heightChange;
     }
     return root;
 }

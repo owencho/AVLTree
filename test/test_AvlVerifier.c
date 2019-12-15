@@ -4,6 +4,9 @@
 #include <math.h>
 #include "unity.h"
 #include "AvlVerifier.h"
+#include "Compare.h"
+#include "IntCompare.h"
+#include "IntNode.h"
 #include "Balance.h"
 #include "AvlAdd.h"
 #include "Balance.h"
@@ -19,12 +22,22 @@ CEXCEPTION_T ex;
 void setUp(void){}
 void tearDown(void){}
 
+Node * createNode(uint32_t value){
+    IntNode * node = malloc(sizeof(IntNode));
+    node->value = value ;
+    node->left = NULL;
+    node->right = NULL;
+    node->bFactor = 0;
+    return (Node*)node;
+}
 Node *createAvlNode(uint32_t value){
-    Node * node =(Node * )malloc(sizeof(Node));
+    IntNode * node =(IntNode*)malloc(sizeof(IntNode));
     node->value =value;
     node->bFactor = 1;
-    node ->left = (Node*)1;
-    node ->right = (Node*)1;
+    node ->left = (IntNode*)1;
+    node ->right = (IntNode*)1;
+
+    return (Node*)node;
 }
 
 uint32_t getRandomNum(void){
@@ -37,7 +50,7 @@ void test_random_num(void){
     while(i--)
         printf("random num : %d \n",getRandomNum());
 }
-int getRandomDeleteNode(Node* childNode, int height){
+int getRandomDeleteNode(IntNode* childNode, int height){
     int randNum;
     while(height--){
         randNum = getRandomNum();
@@ -94,31 +107,31 @@ void test_verify_AVL_tree(void){
 void test_verify_add_delete_AVL_tree(void){
     Node * root ;
     Node * childNode;
-    int max = 100000 , i;
+    int max = 10 , i;
     int height,deleteValue;
     srand(time(0));
     i = max;
-    root =  createNode(getRandomNum(), NULL ,NULL,0);
+    root =  createNode(getRandomNum());
     while(i--){
        Try{
-            root = avlAdd(root,createAvlNode(getRandomNum()));
+            root = avlAdd(root,createAvlNode(getRandomNum()),(Compare)intCompare);
         }Catch(ex){
             dumpException(ex);
             i++;
         }
-        TEST_VERIFY_AVL_TREE(root, max-i+1);
+        TEST_VERIFY_AVL_TREE((IntNode*)root, max-i+1);
     }
     for(i=0;i<max;i++){
         height= (getRandomNum()/(log2(max)+5));
         childNode = root;
-        deleteValue=getRandomDeleteNode(childNode,height);
+        deleteValue=getRandomDeleteNode((IntNode*)childNode,height);
          Try{
-              root = avlDelete(root,deleteValue);
+              root = avlDelete(root,deleteValue,(Compare)intCompare);
           }Catch(ex){
               dumpException(ex);
               i--;
           }
-          TEST_VERIFY_AVL_TREE(root, max-i);
+          TEST_VERIFY_AVL_TREE((IntNode*)root, max-i);
       }
       freeAllNodesInTree(root);
 }

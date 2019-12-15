@@ -56,16 +56,15 @@ void test_IntCompare_equal_root_return_0(void){
 **/
 
 void test_AvlAdd_given_WO_5_30_20_25_35_40_45_50_add_1(void){
-    InitNode initNode = (InitNode)initIntNode;
-    initNode(&node1,&node10,&node10,77);
-    initNode(&node50,NULL,NULL,0);
-    initNode(&node25,NULL,NULL,0);
-    initNode(&node35,NULL,NULL,0);
-    initNode(&node30,&node25,&node35,0);
-    initNode(&node5,NULL,NULL,0);
-    initNode(&node20,&node5,&node30,1);
-    initNode(&node45,NULL,&node50,1);
-    initNode(&node40,&node20,&node45,-1);
+    initIntNode(&node1,&node10,&node10,77);
+    initIntNode(&node50,NULL,NULL,0);
+    initIntNode(&node25,NULL,NULL,0);
+    initIntNode(&node35,NULL,NULL,0);
+    initIntNode(&node30,&node25,&node35,0);
+    initIntNode(&node5,NULL,NULL,0);
+    initIntNode(&node20,&node5,&node30,1);
+    initIntNode(&node45,NULL,&node50,1);
+    initIntNode(&node40,&node20,&node45,-1);
 
     Try{
         root=avlAdd((Node*)&node40,(Node*)&node1,(Compare)intCompare);

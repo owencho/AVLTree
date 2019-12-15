@@ -23,34 +23,45 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc,Compare compare){
 }
 
 Node* nodeSearchAndAddNode(Node* root,Node * nodeAdd,int * heightInc,Compare compare){
-    Node * child;
-    int heightChange=0;
     int size = compare(root,(void*)&nodeAdd->value);
     if(!size)
         throwException(ERR_SAME_NODE,"same node value detected");
-    else if(size == -1){
-        child = root->right;
-        if(child == NULL){
-            root->bFactor++;
-            root->right = nodeAdd;
-            *heightInc =1;
-        }else{
-            root->right=_avlAdd(child,nodeAdd,&heightChange,compare);
-            *heightInc =heightChange;
-            root->bFactor =root->bFactor+heightChange;
-        }
+    else if(size == -1)
+        root = nodeSearchAndAddNodeForRight(root,nodeAdd,heightInc,compare);
+    else
+        root = nodeSearchAndAddNodeForLeft(root,nodeAdd,heightInc,compare);
+
+    return root;
+}
+
+Node* nodeSearchAndAddNodeForRight(Node* root,Node * nodeAdd,int * heightInc,Compare compare){
+    Node * child;
+    int heightChange=0;
+    child = root->right;
+    if(child == NULL){
+        root->bFactor++;
+        root->right = nodeAdd;
+        *heightInc =1;
+    }else{
+        root->right=_avlAdd(child,nodeAdd,&heightChange,compare);
+        *heightInc =heightChange;
+        root->bFactor =root->bFactor+heightChange;
     }
-    else{
-        child = root->left;
-        if(child == NULL){
-            root->bFactor --;
-            root->left = nodeAdd;
-            *heightInc =1;
-        }else{
-            root->left=_avlAdd(child,nodeAdd,&heightChange,compare);
-            *heightInc =heightChange;
-            root->bFactor =root->bFactor-heightChange;
-        }
+    return root;
+}
+
+Node* nodeSearchAndAddNodeForLeft(Node* root,Node * nodeAdd,int * heightInc,Compare compare){
+    Node * child;
+    int heightChange=0;
+    child = root->left;
+    if(child == NULL){
+        root->bFactor --;
+        root->left = nodeAdd;
+        *heightInc =1;
+    }else{
+        root->left=_avlAdd(child,nodeAdd,&heightChange,compare);
+        *heightInc =heightChange;
+        root->bFactor =root->bFactor-heightChange;
     }
     return root;
 }

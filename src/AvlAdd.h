@@ -8,4 +8,6 @@ Node * rotateLeftAndReBalanceForAdd(Node * root);
 Node * rotateRightAndReBalanceForAdd(Node * root);
 Node * rotateBalanceAndGetHeightChangeForAdd(Node* root,int * heightInc);
 Node* nodeSearchAndAddNode(Node* root,Node * nodeAdd,int * heightInc,Compare compare);
+Node* nodeSearchAndAddNodeForRight(Node* root,Node * nodeAdd,int * heightInc,Compare compare);
+Node* nodeSearchAndAddNodeForLeft(Node* root,Node * nodeAdd,int * heightInc,Compare compare);
 #endif // _AVLADD_H
