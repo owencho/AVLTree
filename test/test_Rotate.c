@@ -22,7 +22,7 @@ void setUp(void){
     node95.value =95; node99.value =99; node10.value =10;
 }
 void tearDown(void){}
-/*
+////Rotate Right///
 /**
 *          30                           20
 *        /         rotate             /   \
@@ -33,11 +33,10 @@ void tearDown(void){}
 **/
 
 void test_rotateRightNode(void){
-    //Build number tree
     initIntNode(&node10,  NULL ,NULL,0);
     initIntNode(&node20,  &node10 ,NULL,0);
     initIntNode(&node30,  &node20 ,NULL,0);
-    //Test
+
     root = rotateRightNode((Node*)&node30);
     TEST_ASSERT_EQUAL(root,&node20);
     TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node10,&node30,0);
@@ -57,7 +56,6 @@ void test_rotateRightNode(void){
 
 
 void test_rotateRightComplexNode(void){
-    //Build number tree
     initIntNode(&node10,  NULL ,NULL,0);
     initIntNode(&node40,  NULL ,NULL,0);
     initIntNode(&node60,  NULL ,NULL,0);
@@ -65,9 +63,8 @@ void test_rotateRightComplexNode(void){
     initIntNode(&node30,  &node20 ,&node40,0);
     initIntNode(&node50,  &node30 ,&node60,0);
 
-    //Test
     root=rotateRightNode((Node*)&node50);
-    TEST_ASSERT_EQUAL(root,&node20);
+    TEST_ASSERT_EQUAL(root,&node30);
     TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node20,&node50,0);
     TEST_ASSERT_EQUAL_INT_NODE(&node20,&node10,NULL,0);
     TEST_ASSERT_EQUAL_INT_NODE(&node50,&node40,&node60,0);
@@ -75,7 +72,7 @@ void test_rotateRightComplexNode(void){
     TEST_ASSERT_EQUAL_INT_NODE(&node60,NULL,NULL,0);
     TEST_ASSERT_EQUAL_INT_NODE(&node10,NULL,NULL,0);
 }
-///////////////////////////////////////////
+///////////////////////////Rotate Left///////////////////////
 /**
 *         20                           50
 *          \        rotate           /   \
@@ -85,12 +82,10 @@ void test_rotateRightComplexNode(void){
 *
 **/
 void test_rotateLeftNode(void){
-    //Build number tree
     initIntNode(&node70,  NULL ,NULL,0);
     initIntNode(&node50,  NULL,&node70,0);
     initIntNode(&node20,  NULL ,&node50,0);
 
-    //Test
     root=rotateLeftNode((Node*)&node20);
     TEST_ASSERT_EQUAL(root,&node50);
     TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node20,&node70,0);
@@ -108,7 +103,6 @@ void test_rotateLeftNode(void){
 **/
 
 void test_rotateLeftComplexNode(void){
-    //Build number tree
     initIntNode(&node10,  NULL ,NULL,0);
     initIntNode(&node30,  NULL ,NULL,0);
     initIntNode(&node60,  NULL ,NULL,0);
@@ -116,8 +110,6 @@ void test_rotateLeftComplexNode(void){
     initIntNode(&node40,  &node30 ,&node50,0);
     initIntNode(&node20,  &node10 ,&node40,0);
 
-
-    //Test
     root=rotateLeftNode((Node*)&node20);
     TEST_ASSERT_EQUAL(root,&node40);
     TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node20,&node50,0);
@@ -127,7 +119,7 @@ void test_rotateLeftComplexNode(void){
     TEST_ASSERT_EQUAL_INT_NODE(&node30,NULL,NULL,0);
     TEST_ASSERT_EQUAL_INT_NODE(&node60,NULL,NULL,0);
 }
-
+///////////////////////////Rotate Left Right///////////////////////
 /**
 *         80                         80
 *       /          rotate           /      Rotate        50
@@ -137,12 +129,10 @@ void test_rotateLeftComplexNode(void){
 *
 **/
 void test_rotateLeftRightNode(void){
-    //Build number tree
     initIntNode(&node50,  NULL ,NULL,0);
     initIntNode(&node20, NULL, &node50,0);
     initIntNode(&node80,  &node20 ,NULL,0);
 
-    //Test
     root=rotateLeftRightNode((Node*)&node80);
     TEST_ASSERT_EQUAL(root,&node50);
     TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node20,&node80,0);
@@ -162,7 +152,6 @@ void test_rotateLeftRightNode(void){
 **/
 
 void test_rotateLeftRightComplexNode(void){
-    //Build number tree
     initIntNode(&node10,  NULL ,NULL,0);
     initIntNode(&node80,  NULL ,NULL,0);
     initIntNode(&node99,  NULL ,NULL,0);
@@ -170,8 +159,7 @@ void test_rotateLeftRightComplexNode(void){
     initIntNode(&node30,  &node10 ,&node60,0);
     initIntNode(&node90,  &node30 ,&node99,0);
 
-    //Test
-    root=rotateLeftRightNode((Node*)&node10);
+    root=rotateLeftRightNode((Node*)&node90);
     TEST_ASSERT_EQUAL(root,&node60);
     TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node30,&node90,0);
     TEST_ASSERT_EQUAL_INT_NODE(&node30,&node10,NULL,0);
@@ -181,7 +169,7 @@ void test_rotateLeftRightComplexNode(void){
     TEST_ASSERT_EQUAL_INT_NODE(&node99,NULL,NULL,0);
 }
 
-///////////////////////////////////////////
+///////////////////////////Rotate Right Left///////////////////////
 /**
 *      10                    10
 *       \       rotate        \         Rotate        20
@@ -191,15 +179,12 @@ void test_rotateLeftRightComplexNode(void){
 *
 **/
 void test_rotateRightLeftNode(void){
-    //Build number tree
     initIntNode(&node20,  NULL ,NULL,0);
     initIntNode(&node30,  &node20 ,NULL,0);
     initIntNode(&node10, NULL, &node30 ,0);
 
-
-    //Test
     root=rotateRightLeftNode((Node*)&node10);
-    TEST_ASSERT_EQUAL(root,&node60);
+    TEST_ASSERT_EQUAL(root,&node20);
     TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node10,&node30,0);
     TEST_ASSERT_EQUAL_INT_NODE(&node30,NULL,NULL,0);
     TEST_ASSERT_EQUAL_INT_NODE(&node10,NULL,NULL,0);
@@ -216,7 +201,6 @@ void test_rotateRightLeftNode(void){
 **/
 
 void test_rotateRightLeftComplexNode(void){
-    //Build number tree
     initIntNode(&node45,  NULL ,NULL,0);
     initIntNode(&node35,  NULL ,NULL,0);
     initIntNode(&node25,  NULL ,NULL,0);
@@ -225,9 +209,8 @@ void test_rotateRightLeftComplexNode(void){
     initIntNode(&node40,  &node30 ,&node45,0);
     initIntNode(&node20,  &node10 ,&node40,0);
 
-    //Test
     root=rotateRightLeftNode((Node*)&node20);
-    TEST_ASSERT_EQUAL(root,&node60);
+    TEST_ASSERT_EQUAL(root,&node30);
     TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node20,&node40,0);
     TEST_ASSERT_EQUAL_INT_NODE(&node20,&node10,&node25,0);
     TEST_ASSERT_EQUAL_INT_NODE(&node40,&node35,&node45,0);
