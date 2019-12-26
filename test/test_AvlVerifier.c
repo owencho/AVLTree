@@ -125,8 +125,9 @@ void test_verify_add_delete_AVL_tree(void){
         height= (getRandomNum()/(log2(max)+5));
         childNode = root;
         deleteValue=getRandomDeleteNode((IntNode*)childNode,height);
+
          Try{
-              root = avlDelete(root,deleteValue,(Compare)intCompare);
+              root = avlDelete(root,(void*)&deleteValue,(Compare)intCompare);
           }Catch(ex){
               dumpException(ex);
               i--;
