@@ -8,5 +8,4 @@ struct IntNode{
     int bFactor;
     int value;
 };
-void initIntNode(IntNode * node,  IntNode * left ,IntNode * right,int balanceFactor);
 #endif // _INTNODE_H

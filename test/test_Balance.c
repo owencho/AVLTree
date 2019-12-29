@@ -25,6 +25,11 @@ void setUp(void){
     node95.value =95; node99.value =99; node10.value =10;
 }
 void tearDown(void){}
+void initIntNode(IntNode * node,  IntNode * left ,IntNode * right,int balanceFactor){
+    node->left = left;
+    node->right = right;
+    node->bFactor = balanceFactor;
+}
 //////////////balanceForDoubleRotate//////////////////////////////////////////////////
 //Left right bFactor = Root->left->right balance Factor
 

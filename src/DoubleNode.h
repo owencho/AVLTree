@@ -8,5 +8,4 @@ struct DoubleNode{
     int bFactor;
     double value;
 };
-void initDoubleNode(DoubleNode * node,  DoubleNode * left ,DoubleNode * right,int balanceFactor);
 #endif // _DOUBLENODE_H

@@ -15,6 +15,11 @@ void setUp(void){
     node95.value =95; node99.value =99; node10.value =10;
 }
 void tearDown(void){}
+void initDoubleNode(DoubleNode * node,  DoubleNode * left ,DoubleNode * right,int balanceFactor){
+    node->left = left;
+    node->right = right;
+    node->bFactor = balanceFactor;
+}
 // doubleCompare return 1 when when root > nodeAdd
 // doubleCompare return -1 when when root < nodeAdd
 // doubleCompare return 0 when when root == nodeAdd

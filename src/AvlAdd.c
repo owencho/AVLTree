@@ -23,7 +23,7 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc,Compare compare){
 }
 
 Node* nodeSearchAndAddNode(Node* root,Node * nodeAdd,int * heightInc,Compare compare){
-    int size = compare(root,(void*)nodeAdd->value);
+    int size = compare(root,(void*)&nodeAdd->value);
     if(!size)
         throwException(ERR_SAME_NODE,"same node value detected");
     else if(size == -1)

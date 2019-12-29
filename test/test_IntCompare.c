@@ -14,6 +14,7 @@ CEXCEPTION_T ex;
 Node * root ;
 IntNode node1, node5, node10, node15,node20,node25,node30,node35,node40,node45,node50,node55;
 IntNode node60,node65,node70,node75,node80,node85,node90,node95,node99;
+
 void setUp(void){
     node1.value =1;   node5.value =5;   node15.value =15;
     node20.value =20; node25.value =25; node30.value =30;
@@ -24,6 +25,11 @@ void setUp(void){
     node95.value =95; node99.value =99; node10.value =10;
 }
 void tearDown(void){}
+void initIntNode(IntNode * node,  IntNode * left ,IntNode * right,int balanceFactor){
+    node->left = left;
+    node->right = right;
+    node->bFactor = balanceFactor;
+}
 // IntCompare return 1 when when root > nodeAdd
 // IntCompare return -1 when when root < nodeAdd
 // IntCompare return 0 when when root == nodeAdd

@@ -28,6 +28,11 @@ void setUp(void){
     node80.value =80; node85.value =85; node90.value =90;
     node95.value =95; node99.value =99; node10.value =10;
 }
+void initIntNode(IntNode * node,  IntNode * left ,IntNode * right,int balanceFactor){
+    node->left = left;
+    node->right = right;
+    node->bFactor = balanceFactor;
+}
 //////////////Avl Delete without same Root inside Rotate/////////////////////////////////////////////////////
 /**
 *             80(-1)

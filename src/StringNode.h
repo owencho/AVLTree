@@ -9,5 +9,4 @@ struct StringNode{
     char* value;
 };
 
-void initStringNode(StringNode * node,  StringNode * left ,StringNode * right,int balanceFactor);
 #endif // _STRINGNODE_H
