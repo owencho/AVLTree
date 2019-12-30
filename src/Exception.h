@@ -8,8 +8,10 @@ struct Exception{
   uint32_t errorCode;
   char* errorMessage;
 };
-void dumpException(Exception *ex);
+void dumpExceptionString(Exception *ex,UNITY_LINE_TYPE lineNumber);
 void freeException(Exception *ex);
 void throwException(uint32_t errorCode,char *errorMessage,...);
 
+#define dumpException(ex)        \
+                      dumpExceptionString(ex,__LINE__)
 #endif // _EXCEPTION_H

@@ -7,8 +7,8 @@
 #include <malloc.h>
 #include <stdarg.h>
 
-void dumpException(Exception *ex){
-    printf("%s (err=%d)", ex->errorMessage , ex->errorCode);
+void dumpExceptionString(Exception *ex,UNITY_LINE_TYPE lineNumber){
+    printf("ERROR on line %d : %s \n",lineNumber,ex->errorMessage);
 }
 
 void freeException(Exception *ex){
@@ -24,8 +24,8 @@ void throwException(uint32_t errorCode,char *errorMessage,...){
     va_list arg;
     va_start(arg, errorMessage);
 
-    actualLength = vsnprintf(NULL,0, errorMessage, arg);   //trick system to take actualLength
-    buffer =malloc(actualLength + 1);               // allocate value to buffer
+    actualLength = vsnprintf(NULL,0, errorMessage, arg);
+    buffer =malloc(actualLength + 1);
     vsnprintf(buffer,actualLength + 1, errorMessage, arg);
     va_end(arg);
 

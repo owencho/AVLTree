@@ -16,7 +16,7 @@ Node *avlDelete(Node *root,void * nodeDelete,Compare compare){
     afterRoot = _avlDelete(root,nodeDelete,&deletedNode,&height,compare);
     if(deletedNode == NULL){
       int*errorValue = nodeDelete;
-      throwException(ERR_NODE_NOT_FOUND," node value of %d cant found inside the tree and couldnt remove the node ",*errorValue);
+      throwException(ERR_NODE_NOT_FOUND," node value of %d not exist inside the tree and couldnt remove the node ",*errorValue);
     }
     return afterRoot;
 }
