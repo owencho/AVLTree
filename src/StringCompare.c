@@ -1,10 +1,17 @@
 #include "StringCompare.h"
 #include <stdio.h>
 #include <string.h>
-int stringCompare (StringNode *node, char * nodeAdd){
-    if(strcmp(node->value ,nodeAdd)<0)
+int stringCompareForAvlAdd (StringNode *node, StringNode *nodeAdd){
+    if(strcmp(node->str ,nodeAdd->str)<0)
         return -1;
-    else if (strcmp(node->value ,nodeAdd)>0)
+    else if (strcmp(node->str ,nodeAdd->str)>0)
+        return 1;
+    return 0;
+}
+int stringCompareForAvlDelete (StringNode *node, char * nodeDelete){
+    if(strcmp(node->str ,nodeDelete)<0)
+        return -1;
+    else if (strcmp(node->str ,nodeDelete)>0)
         return 1;
     return 0;
 }

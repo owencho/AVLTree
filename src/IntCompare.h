@@ -2,5 +2,6 @@
 #define _INTCOMPARE_H
 #include <stdlib.h>
 #include "IntNode.h"
-int intCompare (IntNode *node, int * valuePtr);
+int intCompareForAvlAdd (IntNode *node, IntNode * nodeAdd);
+int intCompareForAvlDelete (IntNode *node, int * nodeDelete);
 #endif // _INTCOMPARE_H

@@ -6,7 +6,7 @@ struct StringNode{
     StringNode * left ;
     StringNode * right ;
     int bFactor;
-    char* value;
+    char* str;
 };
 
 #endif // _STRINGNODE_H

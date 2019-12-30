@@ -2,6 +2,6 @@
 #define _DOUBLECOMPARE_H
 #include "DoubleNode.h"
 
-int doubleCompare (DoubleNode *node, double * valuePtr);
-
+int doubleCompareForAvlAdd (DoubleNode *node, DoubleNode *nodeAdd);
+int doubleCompareForAvlDelete (DoubleNode *node, double * valuePtr);
 #endif // _DOUBLECOMPARE_H

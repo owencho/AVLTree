@@ -1,9 +1,17 @@
 #include "IntCompare.h"
 #include "IntNode.h"
-int intCompare (IntNode *node, int * valuePtr){
-    if(node->value < *valuePtr)
+int intCompareForAvlAdd (IntNode *node, IntNode * nodeAdd){
+    if(node->value < nodeAdd->value)
         return -1;
-    else if (node->value > *valuePtr)
+    else if (node->value > nodeAdd->value)
+        return 1;
+    return 0;
+}
+
+int intCompareForAvlDelete (IntNode *node, int * nodeDelete){
+    if(node->value < *nodeDelete)
+        return -1;
+    else if (node->value > *nodeDelete)
         return 1;
     return 0;
 }

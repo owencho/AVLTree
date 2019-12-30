@@ -51,7 +51,7 @@ void test_AvlAdd_given_50_30_20_40_60_add_30_expected_error(void){
     initIntNode(&node50,&node30,&node60,-1);
 
     Try{
-        root=avlAdd((Node*)&node50,(Node*)&node30,(Compare)intCompare);
+        root=avlAdd((Node*)&node50,(Node*)&node30,(Compare)intCompareForAvlAdd);
         TEST_FAIL_MESSAGE("Expecting exeception to be thrown.");
     }Catch(ex) {
         dumpException(ex);
@@ -82,7 +82,7 @@ void test_AvlAdd_given_WO_5_30_20_25_35_40_45_50_add_1(void){
     initIntNode(&node40,&node20,&node45,-1);
 
     Try{
-        root=avlAdd((Node*)&node40,(Node*)&node1,(Compare)intCompare);
+        root=avlAdd((Node*)&node40,(Node*)&node1,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node40,root);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node20,&node45,-1);
         TEST_ASSERT_EQUAL_INT_NODE(&node20,&node5,&node30,0);
@@ -118,7 +118,7 @@ void test_AvlAdd_given_R_50_30_20_40_60_add_10(void){
     initIntNode(&node50,&node30,&node60,-1);
 
     Try{
-        root=avlAdd((Node*)&node50,(Node*)&node10,(Compare)intCompare);
+        root=avlAdd((Node*)&node50,(Node*)&node10,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node30,root);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node20,&node50,0);
         TEST_ASSERT_EQUAL_INT_NODE(&node20,&node10,NULL,-1);
@@ -151,7 +151,7 @@ void test_AvlAdd_given_R_50_30_20_40_60_add_25(void){
     initIntNode(&node50,&node30,&node60,-1);
 
     Try{
-        root=avlAdd((Node*)&node50,(Node*)&node25,(Compare)intCompare);
+        root=avlAdd((Node*)&node50,(Node*)&node25,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node30,root);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node20,&node50,0);
         TEST_ASSERT_EQUAL_INT_NODE(&node20,NULL,&node25,1);
@@ -183,7 +183,7 @@ void test_AvlAdd_given_R_5_1_60_50_add_40(void){
     initIntNode(&node5,&node1,&node60,1);
 
     Try{
-        root=avlAdd((Node*)&node5,(Node*)&node40,(Compare)intCompare);
+        root=avlAdd((Node*)&node5,(Node*)&node40,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node5,root);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node1,&node50,1);
         TEST_ASSERT_EQUAL_INT_NODE(&node50,&node40,&node60,0);
@@ -211,7 +211,7 @@ void test_AvlAdd_given_R_60_50_add_70(void){
     initIntNode(&node60,&node50,NULL,-1);
 
     Try{
-        root=avlAdd((Node*)&node60,(Node*)&node40,(Compare)intCompare);
+        root=avlAdd((Node*)&node60,(Node*)&node40,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node50,root);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node40,&node60,0);
         TEST_ASSERT_EQUAL_INT_NODE(&node40,NULL,NULL,0);
@@ -241,7 +241,7 @@ void test_AvlAdd_given_LR_80_30_10_60_90_add_70(void){
     initIntNode(&node80,&node30,&node90,-1);
 
     Try{
-        root=avlAdd((Node*)&node80,(Node*)&node70,(Compare)intCompare);
+        root=avlAdd((Node*)&node80,(Node*)&node70,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node60,root);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node30,&node80,0);
         TEST_ASSERT_EQUAL_INT_NODE(&node30,&node10,NULL,-1);
@@ -274,7 +274,7 @@ void test_AvlAdd_given_LR_80_30_10_60_90_add_55(void){
     initIntNode(&node80,&node30,&node90,-1);
 
     Try{
-        root=avlAdd((Node*)&node80,(Node*)&node55,(Compare)intCompare);
+        root=avlAdd((Node*)&node80,(Node*)&node55,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node60,root);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node30,&node80,0);
         TEST_ASSERT_EQUAL_INT_NODE(&node30,&node10,&node55,0);
@@ -308,7 +308,7 @@ void test_AvlAdd_given_RL_50_25_75_60_85_add_65(void){
     initIntNode(&node50,&node25,&node75,1);
 
     Try{
-        root=avlAdd((Node*)&node50,(Node*)&node65,(Compare)intCompare);
+        root=avlAdd((Node*)&node50,(Node*)&node65,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node60,root);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node50,&node75,0);
         TEST_ASSERT_EQUAL_INT_NODE(&node50,&node25,NULL,-1);
@@ -341,7 +341,7 @@ void test_AvlAdd_given_RL_10_30_70_60_85_add_55(void){
     initIntNode(&node30,&node10,&node70,1);
 
     Try{
-        root=avlAdd((Node*)&node30,(Node*)&node55,(Compare)intCompare);
+        root=avlAdd((Node*)&node30,(Node*)&node55,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node60,root);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node30,&node70,0);
         TEST_ASSERT_EQUAL_INT_NODE(&node30,&node10,&node55,0);
@@ -376,7 +376,7 @@ void test_AvlAdd_given_L_25_10_40_30_50_add_60(void){
 
 
     Try{
-        root=avlAdd((Node*)&node25,(Node*)&node60,(Compare)intCompare);
+        root=avlAdd((Node*)&node25,(Node*)&node60,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node40,root);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node25,&node50,0);
         TEST_ASSERT_EQUAL_INT_NODE(&node25,&node10,&node30,0);
@@ -409,7 +409,7 @@ void test_AvlAdd_given_L_50_25_75_60_85_add_80(void){
     initIntNode(&node50,&node25,&node75,1);
 
     Try{
-        root=avlAdd((Node*)&node50,(Node*)&node80,(Compare)intCompare);
+        root=avlAdd((Node*)&node50,(Node*)&node80,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node75,root);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node50,&node85,0);
         TEST_ASSERT_EQUAL_INT_NODE(&node50,&node25,&node60,0);
@@ -939,7 +939,7 @@ void test_nodeSearchAndAddNode_given_50_30_20_40_60_add_30_expected_error(void){
     initIntNode(&node50,&node30,&node60,-1);
 
     Try{
-        root=nodeSearchAndAddNode((Node*)&node50,(Node*)&node30,&heightInc,(Compare)intCompare);
+        root=nodeSearchAndAddNode((Node*)&node50,(Node*)&node30,&heightInc,(Compare)intCompareForAvlAdd);
         TEST_FAIL_MESSAGE("Expecting exeception to be thrown.");
     }Catch(ex) {
         dumpException(ex);
@@ -967,7 +967,7 @@ void test_nodeSearchAndAddNode_given_50_30_20_40_60_add_80(void){
     heightInc = 0; // set heightInc to 0 to check
 
     Try{
-        root=nodeSearchAndAddNode((Node*)&node60,(Node*)&node80,&heightInc,(Compare)intCompare);
+        root=nodeSearchAndAddNode((Node*)&node60,(Node*)&node80,&heightInc,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR((IntNode*)&node60,root);
         TEST_ASSERT_EQUAL(heightInc,1);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,NULL,&node80,1);
@@ -999,7 +999,7 @@ void test_nodeSearchAndAddNode_given_50_30_20_40_60_add_55(void){
     heightInc = 0; // set heightInc to 0 to check
 
     Try{
-        root=nodeSearchAndAddNode((Node*)&node60,(Node*)&node55,&heightInc,(Compare)intCompare);
+        root=nodeSearchAndAddNode((Node*)&node60,(Node*)&node55,&heightInc,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node60,root);
         TEST_ASSERT_EQUAL(heightInc,1);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node55,NULL,-1);
@@ -1031,7 +1031,7 @@ void test_nodeSearchAndAddNode_given_50_30_20_40_60_add_10(void){
     heightInc = 0; // set heightInc to 0 to check
 
     Try{
-        root=nodeSearchAndAddNode((Node*)&node30,(Node*)&node10,&heightInc,(Compare)intCompare);
+        root=nodeSearchAndAddNode((Node*)&node30,(Node*)&node10,&heightInc,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node30,root);
         TEST_ASSERT_EQUAL(heightInc,1);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node20,&node40,-1);
@@ -1065,7 +1065,7 @@ void test_nodeSearchAndAddNode_given_50_30_20_40_60_add_25(void){
     heightInc = 0; // set heightInc to 0 to check
 
     Try{
-        root=nodeSearchAndAddNode((Node*)&node30,(Node*)&node25,&heightInc,(Compare)intCompare);
+        root=nodeSearchAndAddNode((Node*)&node30,(Node*)&node25,&heightInc,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node30,root);
         TEST_ASSERT_EQUAL(heightInc,1);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node20,&node40,-1);
@@ -1099,7 +1099,7 @@ void test_nodeSearchAndAddNode_given_50_30_20_40_60_add_45(void){
     heightInc = 0; // set heightInc to 0 to check
 
     Try{
-        root=nodeSearchAndAddNode((Node*)&node30,(Node*)&node45,&heightInc,(Compare)intCompare);
+        root=nodeSearchAndAddNode((Node*)&node30,(Node*)&node45,&heightInc,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node30,root);
         TEST_ASSERT_EQUAL(heightInc,1);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node20,&node40,1);
@@ -1132,7 +1132,7 @@ void test_nodeSearchAndAddNode_given_50_30_20_40_60_add_35(void){
     heightInc = 0; // set heightInc to 0 to check
 
     Try{
-        root=nodeSearchAndAddNode((Node*)&node30,(Node*)&node35,&heightInc,(Compare)intCompare);
+        root=nodeSearchAndAddNode((Node*)&node30,(Node*)&node35,&heightInc,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node30,root);
         TEST_ASSERT_EQUAL(heightInc,1);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node20,&node40,1);
@@ -1164,7 +1164,7 @@ void test_nodeSearchAndAddNodeForLeft_given_50_add_30(void){
     heightInc = 0; // set heightInc to 0 to check
 
     Try{
-        root=nodeSearchAndAddNodeForLeft((Node*)&node50,(Node*)&node30,&heightInc,(Compare)intCompare);
+        root=nodeSearchAndAddNodeForLeft((Node*)&node50,(Node*)&node30,&heightInc,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node50,root);
         TEST_ASSERT_EQUAL(heightInc,1);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node30,NULL,-1);
@@ -1192,7 +1192,7 @@ void test_nodeSearchAndAddNodeForLeft_given_50_40_add_30(void){
     heightInc = 0; // set heightInc to 0 to check
 
     Try{
-        root=nodeSearchAndAddNodeForLeft((Node*)&node50,(Node*)&node30,&heightInc,(Compare)intCompare);
+        root=nodeSearchAndAddNodeForLeft((Node*)&node50,(Node*)&node30,&heightInc,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node50,root);
         TEST_ASSERT_EQUAL(heightInc,1);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node40,NULL,-2);
@@ -1222,7 +1222,7 @@ void test_nodeSearchAndAddNodeForLeft_given_50_add_60(void){
     heightInc = 0; // set heightInc to 0 to check
 
     Try{
-        root=nodeSearchAndAddNodeForRight((Node*)&node50,(Node*)&node60,&heightInc,(Compare)intCompare);
+        root=nodeSearchAndAddNodeForRight((Node*)&node50,(Node*)&node60,&heightInc,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node50,root);
         TEST_ASSERT_EQUAL(heightInc,1);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,NULL,&node60,1);
@@ -1248,7 +1248,7 @@ void test_nodeSearchAndAddNodeForLeft_given_50_60_add_70(void){
     heightInc = 0; // set heightInc to 0 to check
 
     Try{
-        root=nodeSearchAndAddNodeForRight((Node*)&node50,(Node*)&node70,&heightInc,(Compare)intCompare);
+        root=nodeSearchAndAddNodeForRight((Node*)&node50,(Node*)&node70,&heightInc,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node50,root);
         TEST_ASSERT_EQUAL(heightInc,1);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,NULL,&node60,2);

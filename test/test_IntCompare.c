@@ -12,6 +12,7 @@
 #include "CustomAssert.h"
 CEXCEPTION_T ex;
 Node * root ;
+IntNode nodeAdd;
 IntNode node1, node5, node10, node15,node20,node25,node30,node35,node40,node45,node50,node55;
 IntNode node60,node65,node70,node75,node80,node85,node90,node95,node99;
 
@@ -33,22 +34,40 @@ void initIntNode(IntNode * node,  IntNode * left ,IntNode * right,int balanceFac
 // IntCompare return 1 when when root > nodeAdd
 // IntCompare return -1 when when root < nodeAdd
 // IntCompare return 0 when when root == nodeAdd
-void test_IntCompare_smaller_root_return_neg1(void){
-    Compare compare = (Compare)intCompare;
+void test_IntCompareForAvlDelete_smaller_root_return_neg1(void){
+    Compare compare = (Compare)intCompareForAvlDelete;
     int i = 56;
     TEST_ASSERT_EQUAL(-1,(compare((Node*)&node5,(void *)&i)));
 }
 
-void test_IntCompare_larger_root_return_1(void){
-    Compare compare = (Compare)intCompare;
+void test_IntCompareForAvlDelete_larger_root_return_1(void){
+    Compare compare = (Compare)intCompareForAvlDelete;
     int i = 4;
     TEST_ASSERT_EQUAL(1,(compare((Node*)&node5,(void *)&i)));
 }
 
-void test_IntCompare_equal_root_return_0(void){
-    Compare compare = (Compare)intCompare;
+void test_IntCompareForAvlDelete_equal_root_return_0(void){
+    Compare compare = (Compare)intCompareForAvlDelete;
     int i = 5;
     TEST_ASSERT_EQUAL(0,(compare((Node*)&node5,(void *)&i)));
+}
+
+void test_IntCompareForAvlAdd_smaller_root_return_neg1(void){
+    Compare compare = (Compare)intCompareForAvlAdd;
+    nodeAdd.value = 56;
+    TEST_ASSERT_EQUAL(-1,(compare((Node*)&node5,(void *)&nodeAdd)));
+}
+
+void test_IntCompareForAvlAdd_larger_root_return_1(void){
+    Compare compare = (Compare)intCompareForAvlAdd;
+    nodeAdd.value = 4;
+    TEST_ASSERT_EQUAL(1,(compare((Node*)&node5,(void *)&nodeAdd)));
+}
+
+void test_IntCompareForAvlAdd_equal_root_return_0(void){
+    Compare compare = (Compare)intCompareForAvlAdd;
+    nodeAdd.value =5;
+    TEST_ASSERT_EQUAL(0,(compare((Node*)&node5,(void *)&nodeAdd)));
 }
 
 /**
@@ -73,7 +92,7 @@ void test_AvlAdd_given_WO_5_30_20_25_35_40_45_50_add_1(void){
     initIntNode(&node40,&node20,&node45,-1);
 
     Try{
-        root=avlAdd((Node*)&node40,(Node*)&node1,(Compare)intCompare);
+        root=avlAdd((Node*)&node40,(Node*)&node1,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&node40,root);
         TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node20,&node45,-1);
         TEST_ASSERT_EQUAL_INT_NODE(&node20,&node5,&node30,0);

@@ -114,7 +114,7 @@ void test_verify_add_delete_AVL_tree(void){
     root =  createNode(getRandomNum());
     while(i--){
        Try{
-            root = avlAdd(root,createAvlNode(getRandomNum()),(Compare)intCompare);
+            root = avlAdd(root,createAvlNode(getRandomNum()),(Compare)intCompareForAvlAdd);
         }Catch(ex){
             dumpException(ex);
             i++;
@@ -127,7 +127,7 @@ void test_verify_add_delete_AVL_tree(void){
         deleteValue=getRandomDeleteNode((IntNode*)childNode,height);
 
          Try{
-              root = avlDelete(root,(void*)&deleteValue,(Compare)intCompare);
+              root = avlDelete(root,(void*)&deleteValue,(Compare)intCompareForAvlDelete);
           }Catch(ex){
               dumpException(ex);
               i--;

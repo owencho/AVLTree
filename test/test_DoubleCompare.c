@@ -5,6 +5,7 @@
 #include "Node.h"
 DoubleNode node1, node5, node10, node15,node20,node25,node30,node35,node40,node45,node50,node55;
 DoubleNode node60,node65,node70,node75,node80,node85,node90,node95,node99;
+DoubleNode nodeAdd;
 void setUp(void){
     node1.value =1.123;   node5.value =5;   node15.value =15;
     node20.value =20; node25.value =25; node30.value =30;
@@ -23,20 +24,38 @@ void initDoubleNode(DoubleNode * node,  DoubleNode * left ,DoubleNode * right,in
 // doubleCompare return 1 when when root > nodeAdd
 // doubleCompare return -1 when when root < nodeAdd
 // doubleCompare return 0 when when root == nodeAdd
-void test_DoubleCompare(void){
-    Compare compare = (Compare)doubleCompare;
+void test_DoubleCompareForAvlDelete(void){
+    Compare compare = (Compare)doubleCompareForAvlDelete;
     double i = 1.123;
     TEST_ASSERT_EQUAL(0,(compare((Node*)&node1,(void *)&i)));
 }
 
-void test_DoubleCompare_smaller_root_return_neg1(void){
-    Compare compare = (Compare)doubleCompare;
+void test_DoubleCompareForAvlDelete_smaller_root_return_neg1(void){
+    Compare compare = (Compare)doubleCompareForAvlDelete;
     double i = 1.123;
     TEST_ASSERT_EQUAL(1,(compare((Node*)&node5,(void *)&i)));
 }
 
-void test_DoubleCompare_larger_root_return_1(void){
-    Compare compare = (Compare)doubleCompare;
+void test_DoubleCompareForAvlDelete_larger_root_return_1(void){
+    Compare compare = (Compare)doubleCompareForAvlDelete;
     double i = 12.123;
     TEST_ASSERT_EQUAL(-1,(compare((Node*)&node5,(void *)&i)));
+}
+
+void test_DoubleCompareForAvlAdd(void){
+    Compare compare = (Compare)doubleCompareForAvlAdd;
+    nodeAdd.value = 1.123;
+    TEST_ASSERT_EQUAL(0,(compare((Node*)&node1,(void *)&nodeAdd)));
+}
+
+void test_DoubleCompareForAvlAdd_smaller_root_return_neg1(void){
+    Compare compare = (Compare)doubleCompareForAvlAdd;
+    nodeAdd.value = 2.123;
+    TEST_ASSERT_EQUAL(1,(compare((Node*)&node5,(void *)&nodeAdd)));
+}
+
+void test_DoubleCompareForAvlAdd_larger_root_return_1(void){
+    Compare compare = (Compare)doubleCompareForAvlAdd;
+    nodeAdd.value = 11.123;
+    TEST_ASSERT_EQUAL(-1,(compare((Node*)&node5,(void *)&nodeAdd)));
 }

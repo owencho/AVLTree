@@ -12,12 +12,14 @@
 #include "CustomAssert.h"
 CEXCEPTION_T ex;
 Node * root ;
+StringNode  nodeAdd;
+char* inputString;
 StringNode nodeMelon,nodeMenon,nodePapaya,nodeDurian;
 void setUp(void){
-    nodeMelon.value ="melon";
-    nodeMenon.value ="menon";
-    nodePapaya.value ="papaya";
-    nodeDurian.value ="durian";
+    nodeMelon.str ="melon";
+    nodeMenon.str ="menon";
+    nodePapaya.str ="papaya";
+    nodeDurian.str ="durian";
 }
 void tearDown(void){}
 void initStringNode(StringNode * node,  StringNode * left ,StringNode * right,int balanceFactor){
@@ -28,46 +30,45 @@ void initStringNode(StringNode * node,  StringNode * left ,StringNode * right,in
 // stringCompare return 1 when when root > nodeAdd
 // stringCompare return -1 when when root < nodeAdd
 // stringCompare return 0 when when root == nodeAdd
-void test_StringCompare_smaller_root_oelon_return_neg1(void){
-    Compare compare = (Compare)stringCompare;
-    char* i = "oelon";
-    TEST_ASSERT_EQUAL(-1,(compare((Node*)&nodeMelon,(void *)i)));
+void test_StringCompareForAvlDelete_smaller_root_oelon_return_neg1(void){
+    Compare compare = (Compare)stringCompareForAvlDelete;
+    inputString = "oelon";
+    TEST_ASSERT_EQUAL(-1,(compare((Node*)&nodeMelon,(void *)inputString)));
 }
 
-void test_StringCompare_smaller_root_milon_return_neg1(void){
-    Compare compare = (Compare)stringCompare;
-    char* i = "milon";
-    TEST_ASSERT_EQUAL(-1,(compare((Node*)&nodeMelon,(void *)i)));
+void test_StringCompareForAvlDelete_same_root_melon_return_neg0(void){
+    Compare compare = (Compare)stringCompareForAvlDelete;
+    inputString = "melon";
+    TEST_ASSERT_EQUAL(0,(compare((Node*)&nodeMelon,(void *)inputString)));
 }
 
-void test_StringCompare_smaller_root_meeon_return_neg1(void){
-    Compare compare = (Compare)stringCompare;
-    char* i = "menon";
-    TEST_ASSERT_EQUAL(-1,(compare((Node*)&nodeMelon,(void *)i)));
+void test_StringCompareForAvlDelete_larger_root_papay_return_1(void){
+    Compare compare = (Compare)stringCompareForAvlDelete;
+    inputString = "papay";
+    TEST_ASSERT_EQUAL(1,(compare((Node*)&nodePapaya,(void *)inputString)));
 }
 
-void test_StringCompare_larger_root_papay_return_1(void){
-    Compare compare = (Compare)stringCompare;
-    char* i = "papay";
-    TEST_ASSERT_EQUAL(1,(compare((Node*)&nodePapaya,(void *)i)));
+void test_StringCompareForAvlAdd_larger_root_papaqa_return_1(void){
+    Compare compare = (Compare)stringCompareForAvlAdd;
+    nodeAdd.str = "papaqa";
+    TEST_ASSERT_EQUAL(1,(compare((Node*)&nodePapaya,(void *)&nodeAdd)));
 }
 
-void test_StringCompare_larger_root_papaqa_return_1(void){
-    Compare compare = (Compare)stringCompare;
-    char* i = "papaqa";
-    TEST_ASSERT_EQUAL(1,(compare((Node*)&nodePapaya,(void *)i)));
+void test_StringCompareForAvlAdd_smaller_root_milon_return_neg1(void){
+    Compare compare = (Compare)stringCompareForAvlAdd;
+    nodeAdd.str = "milon";
+    TEST_ASSERT_EQUAL(-1,(compare((Node*)&nodeMelon,(void *)&nodeAdd)));
 }
-
-void test_StringCompare_same_root_return_0(void){
-    Compare compare = (Compare)stringCompare;
-    char* i = "durian";
-    TEST_ASSERT_EQUAL(0,(compare((Node*)&nodeDurian,(void *)i)));
+void test_StringCompareForAvlAdd_same_root_return_0(void){
+    Compare compare = (Compare)stringCompareForAvlAdd;
+    nodeAdd.str = "durian";
+    TEST_ASSERT_EQUAL(0,(compare((Node*)&nodeDurian,(void *)&nodeAdd)));
 }
 
 /**
-*            melon(0)                     melon(-1)
-*                                         /
-*                          --->         menon(0)
+*            melon(0)                  melon(1)
+*                                         \
+*                          --->           menon(0)
 *                        add menon
 *
 *
@@ -79,14 +80,14 @@ void test_AvlAdd_given_string(void){
     initStringNode(&nodeMelon,NULL,NULL,0);
 
     Try{
-        root=avlAdd((Node*)&nodeMelon,(Node*)&nodeMenon,(Compare)stringCompare);
+        root=avlAdd((Node*)&nodeMelon,(Node*)&nodeMenon,(Compare)stringCompareForAvlAdd);
         TEST_ASSERT_EQUAL_PTR(&nodeMelon,root);
-        TEST_ASSERT_EQUAL(-1,root->bFactor);
-        TEST_ASSERT_EQUAL_PTR(&nodeMenon,root->left);
-        TEST_ASSERT_EQUAL(0,root->left->bFactor);
-        TEST_ASSERT_NULL(root->right);
-        TEST_ASSERT_NULL(root->left->right);
-        TEST_ASSERT_NULL(root->left->left);
+        TEST_ASSERT_EQUAL(1,root->bFactor);
+        TEST_ASSERT_EQUAL_PTR(&nodeMenon,root->right);
+        TEST_ASSERT_EQUAL(0,root->right->bFactor);
+        TEST_ASSERT_NULL(root->left);
+        TEST_ASSERT_NULL(root->right->right);
+        TEST_ASSERT_NULL(root->right->left);
     }Catch(ex) {
         dumpException(ex);
         TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
