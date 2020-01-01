@@ -55,9 +55,9 @@ void test_balanceForDoubleRotate_given_LR_80_30_10_60_90_70(void){
     bFactor = node80.left->right->bFactor;
     root = rotateLeftRightNode((Node*)&node80);
     root=balanceForDoubleRotate(root,bFactor);
-    TEST_ASSERT_EQUAL(root->bFactor,0);
-    TEST_ASSERT_EQUAL(root->left->bFactor,-1);
-    TEST_ASSERT_EQUAL(root->right->bFactor,0);
+    TEST_ASSERT_EQUAL(0,root->bFactor);
+    TEST_ASSERT_EQUAL(-1,root->left->bFactor);
+    TEST_ASSERT_EQUAL(0,root->right->bFactor);
 
 }
 
@@ -83,9 +83,9 @@ void test_balanceForDoubleRotate_given_LR_80_30_10_60_90_55(void){
     bFactor = node80.left->right->bFactor;
     root = rotateLeftRightNode((Node*)&node80);
     root=balanceForDoubleRotate(root,bFactor);
-    TEST_ASSERT_EQUAL(root->bFactor,0);
-    TEST_ASSERT_EQUAL(root->left->bFactor,0);
-    TEST_ASSERT_EQUAL(root->right->bFactor,1);
+    TEST_ASSERT_EQUAL(0,root->bFactor);
+    TEST_ASSERT_EQUAL(0,root->left->bFactor);
+    TEST_ASSERT_EQUAL(1,root->right->bFactor);
 
 }
 
@@ -107,9 +107,9 @@ void test_balanceForDoubleRotate_given_LR_60_50_55(void){
     bFactor = node60.left->right->bFactor;
     root = rotateLeftRightNode((Node*)&node60);
     root=balanceForDoubleRotate(root,bFactor);
-    TEST_ASSERT_EQUAL(root->bFactor,0);
-    TEST_ASSERT_EQUAL(root->left->bFactor,0);
-    TEST_ASSERT_EQUAL(root->right->bFactor,0);
+    TEST_ASSERT_EQUAL(0,root->bFactor);
+    TEST_ASSERT_EQUAL(0,root->left->bFactor);
+    TEST_ASSERT_EQUAL(0,root->right->bFactor);
 
 }
 
@@ -135,9 +135,9 @@ void test_balanceForDoubleRotate_given_RL_20_25_30_40_35_50(void){
     bFactor = node25.right->left->bFactor;
     root = rotateRightLeftNode((Node*)&node25);
     root = balanceForDoubleRotate(root,bFactor);
-    TEST_ASSERT_EQUAL(root->bFactor,0);
-    TEST_ASSERT_EQUAL(root->left->bFactor,-1);
-    TEST_ASSERT_EQUAL(root->right->bFactor,0);
+    TEST_ASSERT_EQUAL(0,root->bFactor);
+    TEST_ASSERT_EQUAL(-1,root->left->bFactor);
+    TEST_ASSERT_EQUAL(0,root->right->bFactor);
 
 }
 
@@ -163,9 +163,9 @@ void test_balanceForDoubleRotate_given_RL_bf1_20_25_30_40_35_50(void){
     bFactor = node25.right->left->bFactor;
     root = rotateRightLeftNode((Node*)&node25);
     root = balanceForDoubleRotate(root,bFactor);
-    TEST_ASSERT_EQUAL(root->bFactor,0);
-    TEST_ASSERT_EQUAL(root->left->bFactor,0);
-    TEST_ASSERT_EQUAL(root->right->bFactor,1);
+    TEST_ASSERT_EQUAL(0,root->bFactor);
+    TEST_ASSERT_EQUAL(0,root->left->bFactor);
+    TEST_ASSERT_EQUAL(1,root->right->bFactor);
 
 }
 
@@ -187,8 +187,8 @@ void test_balanceForDoubleRotate_given_RL_50_55_60(void){
     bFactor = node50.right->left->bFactor;
     root = rotateRightLeftNode((Node*)&node50);
     root = balanceForDoubleRotate(root,bFactor);
-    TEST_ASSERT_EQUAL(root->bFactor,0);
-    TEST_ASSERT_EQUAL(root->left->bFactor,0);
-    TEST_ASSERT_EQUAL(root->right->bFactor,0);
+    TEST_ASSERT_EQUAL(0,root->bFactor);
+    TEST_ASSERT_EQUAL(0,root->left->bFactor);
+    TEST_ASSERT_EQUAL(0,root->right->bFactor);
 
 }
