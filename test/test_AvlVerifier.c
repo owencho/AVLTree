@@ -128,6 +128,7 @@ void test_verify_add_delete_AVL_tree(void){
 
          Try{
               deletedNode = (IntNode*)avlDelete(&root,(void*)&deleteValue,(Compare)intCompareForAvlDelete);
+              freeNode((Node*)deletedNode);
           }Catch(ex){
               dumpException(ex);
               i--;

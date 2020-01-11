@@ -3,8 +3,6 @@
 #include "Compare.h"
 #include "Node.h"
 Node *avlDelete(Node ** root,void * nodeDelete,Compare compare);
-
-//done
 Node *_avlDelete(Node *root,void * nodeDelete,Node ** deletedNode,int * heightDec,Compare compare);
 Node* nodeRemoveAndReplace(Node * root,int * heightDec);
 Node * findSmallestNode(Node*root);

@@ -1,6 +1,6 @@
 #include "unity.h"
 #include "AvlAdd.h"
-#include "AvlDelete.h"
+#include "AvlAdd.h"
 #include "Node.h"
 #include "IntNode.h"
 #include "IntCompare.h"
@@ -58,6 +58,40 @@ void test_AvlAdd_given_50_30_20_40_60_add_30_expected_error(void){
         TEST_ASSERT_EQUAL(ERR_SAME_NODE, ex->errorCode);
     }
 
+}
+
+void test_AvlAdd_given_NULL_deleteValue_expect_error(void){
+  initIntNode(&node10,&node1,&node10,77);
+  initIntNode(&node20,NULL,NULL,0);
+  initIntNode(&node40,NULL,NULL,0);
+  initIntNode(&node30,&node20,&node40,0);
+  initIntNode(&node60,NULL,NULL,0);
+  initIntNode(&node50,&node30,&node60,-1);
+
+  Try{
+      root=avlAdd((Node*)&node50,NULL,(Compare)intCompareForAvlAdd);
+      TEST_FAIL_MESSAGE("Expecting exeception to be thrown.");
+  }Catch(ex) {
+      dumpException(ex);
+      TEST_ASSERT_EQUAL(ERR_NODE_ADD_NULL, ex->errorCode);
+  }
+}
+
+void test_AvlAdd_given_NULL_compare_expect_error(void){
+  initIntNode(&node10,&node1,&node10,77);
+  initIntNode(&node20,NULL,NULL,0);
+  initIntNode(&node40,NULL,NULL,0);
+  initIntNode(&node30,&node20,&node40,0);
+  initIntNode(&node60,NULL,NULL,0);
+  initIntNode(&node50,&node30,&node60,-1);
+
+  Try{
+      root=avlAdd((Node*)&node50,(Node*)&node30,NULL);
+      TEST_FAIL_MESSAGE("Expecting exeception to be thrown.");
+  }Catch(ex) {
+      dumpException(ex);
+      TEST_ASSERT_EQUAL(ERR_FN_POINTER_NULL, ex->errorCode);
+  }
 }
 //////////////Avl ADD without Rotate//////////////////////////////////////////////////
 /**
@@ -426,6 +460,15 @@ void test_AvlAdd_given_L_50_25_75_60_85_add_80(void){
 
 //////////////ROTATE RIGHT AND REBALANCE FOR ADD//////////////////////////////////////////////////
 
+void test_rotateRightAndReBalanceForAdd_NULL_tree(void){
+    initIntNode(&node10,NULL,NULL,0);
+    initIntNode(&node20,&node10,NULL,-1);
+    initIntNode(&node30,&node20,NULL,-2);
+
+    root=rotateRightAndReBalanceForAdd(NULL);
+    TEST_ASSERT_NULL(root);
+
+}
 // ROTATE RIGHT AND REBALANCE
 /**
 *          30(-2)                            20(0)
@@ -586,7 +629,15 @@ void test_rotateLeftAndReBalanceForAdd_25_30_20(void){
     TEST_ASSERT_EQUAL_INT_NODE(&node30,NULL,NULL,0);
 }
 //////////////ROTATE LEFT AND REBALANCE//////////////////////////////////////////////////
+void test_rotateLeftAndReBalanceForAdd_NULL_tree(void){
+    initIntNode(&node10,NULL,NULL,0);
+    initIntNode(&node20,&node10,NULL,-1);
+    initIntNode(&node30,&node20,NULL,-2);
 
+    root=rotateLeftAndReBalanceForAdd(NULL);
+    TEST_ASSERT_NULL(root);
+
+}
 // ROTATE LEFT AND REBALANCE
 /**
 *              35(2)                           50(0)
@@ -810,6 +861,19 @@ void test_rotateLeftAndReBalanceForAdd_15_30_20(void){
 ////////////////////////////////////////////////////////////////////////////////
 ///rotateBalanceAndGetHeightChangeForadd////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+
+void test_rotateBalanceAndGetHeightChangeForAdd_NULL_tree(void){
+    initIntNode(&node20,NULL,NULL,0);
+    initIntNode(&node50,NULL,NULL,0);
+    initIntNode(&node35,NULL,NULL,0);
+    initIntNode(&node30,&node20,&node35,0);
+    initIntNode(&node40,&node30,&node50,-1);
+    heightInc = 1; // set heightInc to one to check
+
+    root=rotateBalanceAndGetHeightChangeForAdd(NULL,&heightInc);
+    TEST_ASSERT_NULL(root);
+}
+
 /**
 *       40(-1)
 *       /    \             no rotation
@@ -917,7 +981,7 @@ void test_rotateBalanceAndGetHeightChangeForAdd_10_30_35(void){
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-///nodeSearchAndAddNode///////////////////////////////////////////////////
+///nodeSearchAndAddNode////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ///////Exception testing for adding same value node
 /**
@@ -1148,7 +1212,19 @@ void test_nodeSearchAndAddNode_given_50_30_20_40_60_add_35(void){
 ////////////////////////////////////////////////////////////////////////////////
 ///nodeSearchAndAddNodeForLeft/////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+void test_nodeSearchAndAddNodeForLeft_given_root_NULL(void){
+    initIntNode(&node30,NULL,NULL,0);
+    initIntNode(&node50,NULL,NULL,0);
+    heightInc = 0; // set heightInc to 0 to check
 
+    Try{
+        root=nodeSearchAndAddNodeForLeft(NULL,(Node*)&node30,&heightInc,(Compare)intCompareForAvlAdd);
+        TEST_ASSERT_NULL(root);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
 /**
 *            50(0)                                 50(-1)
 *                                                   /
@@ -1207,6 +1283,19 @@ void test_nodeSearchAndAddNodeForLeft_given_50_40_add_30(void){
 ////////////////////////////////////////////////////////////////////////////////
 ///nodeSearchAndAddNodeForRight/////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+void test_nodeSearchAndAddNodeForRight_given_root_NULL(void){
+    initIntNode(&node30,NULL,NULL,0);
+    initIntNode(&node50,NULL,NULL,0);
+    heightInc = 0; // set heightInc to 0 to check
+
+    Try{
+        root=nodeSearchAndAddNodeForRight(NULL,(Node*)&node30,&heightInc,(Compare)intCompareForAvlAdd);
+        TEST_ASSERT_NULL(root);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
 /**
 *            50(0)                                 50(1)
 *                                                   \
@@ -1216,7 +1305,7 @@ void test_nodeSearchAndAddNodeForLeft_given_50_40_add_30(void){
 *
 *
 **/
-void test_nodeSearchAndAddNodeForLeft_given_50_add_60(void){
+void test_nodeSearchAndAddNodeForRight_given_50_add_60(void){
     initIntNode(&node60,NULL,NULL,0);
     initIntNode(&node50,NULL,NULL,0);
     heightInc = 0; // set heightInc to 0 to check
@@ -1241,7 +1330,7 @@ void test_nodeSearchAndAddNodeForLeft_given_50_add_60(void){
 *
 *
 **/
-void test_nodeSearchAndAddNodeForLeft_given_50_60_add_70(void){
+void test_nodeSearchAndAddNodeForRight_given_50_60_add_70(void){
     initIntNode(&node70,NULL,NULL,0);
     initIntNode(&node60,NULL,NULL,0);
     initIntNode(&node50,NULL,&node60,1);

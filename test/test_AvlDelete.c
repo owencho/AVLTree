@@ -84,7 +84,7 @@ void test_AvlDelete_given_NULL_deleteValue_expect_error(void){
         TEST_FAIL_MESSAGE("Expecting exeception to be thrown.");
     }Catch(ex) {
         dumpException(ex);
-        TEST_ASSERT_EQUAL(ERR_NODE_NULL, ex->errorCode);
+        TEST_ASSERT_EQUAL(ERR_DELETE_VALUE_NULL, ex->errorCode);
     }
 }
 

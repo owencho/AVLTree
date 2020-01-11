@@ -16,7 +16,7 @@ Node *avlDelete(Node ** root,void * nodeDelete,Compare compare){
     if(root == NULL)
         return NULL;
     else if (nodeDelete == NULL)
-        throwException(ERR_NODE_NULL," node does not exist inside the tree as it points to NULL");
+        throwException(ERR_DELETE_VALUE_NULL," node does not exist inside the tree as it points to NULL");
     else if (compare==NULL )
         throwException(ERR_FN_POINTER_NULL," the function pointer for compare is NULL");
 

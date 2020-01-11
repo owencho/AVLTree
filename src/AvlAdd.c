@@ -11,6 +11,12 @@
 
 Node *avlAdd(Node *root,Node * nodeAdd,Compare compare){
     int heightInc;
+    if(root == NULL)
+        return NULL;
+    else if (nodeAdd == NULL)
+        throwException(ERR_NODE_ADD_NULL," node could not added inside the tree as it points to NULL");
+    else if (compare==NULL )
+        throwException(ERR_FN_POINTER_NULL," the function pointer for compare is NULL");
     nodeAdd->left = NULL;
     nodeAdd->right = NULL;
     nodeAdd->bFactor =0;
@@ -23,7 +29,10 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc,Compare compare){
 }
 
 Node* nodeSearchAndAddNode(Node* root,Node * nodeAdd,int * heightInc,Compare compare){
-    int size = compare(root,nodeAdd);
+    int size;
+    if(root == NULL || heightInc ==NULL || nodeAdd ==NULL ||compare ==NULL )
+      return root;
+    size = compare(root,nodeAdd);
     if(!size)
         throwException(ERR_SAME_NODE,"same node value detected");
     else if(size == -1)
@@ -37,6 +46,8 @@ Node* nodeSearchAndAddNode(Node* root,Node * nodeAdd,int * heightInc,Compare com
 Node* nodeSearchAndAddNodeForRight(Node* root,Node * nodeAdd,int * heightInc,Compare compare){
     Node * child;
     int heightChange=0;
+    if(root == NULL || heightInc ==NULL || nodeAdd ==NULL ||compare ==NULL )
+      return root;
     child = root->right;
     if(child == NULL){
         root->bFactor++;
@@ -53,6 +64,8 @@ Node* nodeSearchAndAddNodeForRight(Node* root,Node * nodeAdd,int * heightInc,Com
 Node* nodeSearchAndAddNodeForLeft(Node* root,Node * nodeAdd,int * heightInc,Compare compare){
     Node * child;
     int heightChange=0;
+    if(root == NULL || heightInc ==NULL || nodeAdd ==NULL ||compare ==NULL )
+      return root;
     child = root->left;
     if(child == NULL){
         root->bFactor --;
@@ -67,6 +80,8 @@ Node* nodeSearchAndAddNodeForLeft(Node* root,Node * nodeAdd,int * heightInc,Comp
 }
 
 Node * rotateBalanceAndGetHeightChangeForAdd(Node* root,int * heightInc){
+    if(root == NULL || heightInc ==NULL )
+      return root;
     if(root->bFactor == 0 ){
       *heightInc =0;
     }else if(root->bFactor >= 2){
@@ -81,6 +96,8 @@ Node * rotateBalanceAndGetHeightChangeForAdd(Node* root,int * heightInc){
 
 Node* rotateLeftAndReBalanceForAdd(Node * root){
     int bFactor=0;
+    if(root == NULL)
+        return root;
     if(root->right->bFactor >=0){
         bFactor = root->right->right->bFactor;
         root = rotateLeftNode(root);
@@ -97,6 +114,8 @@ Node* rotateLeftAndReBalanceForAdd(Node * root){
 
 Node* rotateRightAndReBalanceForAdd(Node * root){
     int bFactor=0;
+    if(root == NULL)
+        return root;
     if(root->left->bFactor >0){
         bFactor = root->left->right->bFactor;
         root = rotateLeftRightNode(root);
