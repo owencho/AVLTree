@@ -28,6 +28,15 @@ void initIntNode(IntNode * node,  IntNode * left ,IntNode * right,int balanceFac
     node->bFactor = balanceFactor;
 }
 ////Rotate Right///
+
+void test_rotateRightNode_input_NULL(void){
+    initIntNode(&node10,  NULL ,NULL,0);
+    initIntNode(&node20,  &node10 ,NULL,0);
+    initIntNode(&node30,  &node20 ,NULL,0);
+
+    root = rotateRightNode(NULL);
+    TEST_ASSERT_NULL(root);
+}
 /**
 *          30                           20
 *        /         rotate             /   \
@@ -78,6 +87,15 @@ void test_rotateRightComplexNode(void){
     TEST_ASSERT_EQUAL_INT_NODE(&node10,NULL,NULL,0);
 }
 ///////////////////////////Rotate Left///////////////////////
+
+void test_rotateLeftNode_input_NULL(void){
+    initIntNode(&node10,  NULL ,NULL,0);
+    initIntNode(&node20,  &node10 ,NULL,0);
+    initIntNode(&node30,  &node20 ,NULL,0);
+
+    root = rotateLeftNode(NULL);
+    TEST_ASSERT_NULL(root);
+}
 /**
 *         20                           50
 *          \        rotate           /   \
@@ -125,6 +143,15 @@ void test_rotateLeftComplexNode(void){
     TEST_ASSERT_EQUAL_INT_NODE(&node60,NULL,NULL,0);
 }
 ///////////////////////////Rotate Left Right///////////////////////
+
+void test_rotateLeftRightNode_input_NULL(void){
+    initIntNode(&node10,  NULL ,NULL,0);
+    initIntNode(&node20,  &node10 ,NULL,0);
+    initIntNode(&node30,  &node20 ,NULL,0);
+
+    root = rotateLeftRightNode(NULL);
+    TEST_ASSERT_NULL(root);
+}
 /**
 *         80                         80
 *       /          rotate           /      Rotate        50
@@ -175,6 +202,15 @@ void test_rotateLeftRightComplexNode(void){
 }
 
 ///////////////////////////Rotate Right Left///////////////////////
+
+void test_rotateRightLeftNode_input_NULL(void){
+    initIntNode(&node10,  NULL ,NULL,0);
+    initIntNode(&node20,  &node10 ,NULL,0);
+    initIntNode(&node30,  &node20 ,NULL,0);
+
+    root = rotateRightLeftNode(NULL);
+    TEST_ASSERT_NULL(root);
+}
 /**
 *      10                    10
 *       \       rotate        \         Rotate        20

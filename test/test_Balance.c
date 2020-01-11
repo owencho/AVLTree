@@ -33,6 +33,17 @@ void initIntNode(IntNode * node,  IntNode * left ,IntNode * right,int balanceFac
 //////////////balanceForDoubleRotate//////////////////////////////////////////////////
 //Left right bFactor = Root->left->right balance Factor
 
+void test_balanceForDoubleRotate_given_root_NULL(void){
+    initIntNode(&node70,NULL,NULL,0);
+    initIntNode(&node60,NULL,&node70,1);
+    initIntNode(&node10,NULL,NULL,0);
+    initIntNode(&node30,&node10,&node60,1);
+    initIntNode(&node90,NULL,NULL,0);
+    initIntNode(&node80,&node30,&node90,-2);
+
+    root=balanceForDoubleRotate(root,bFactor);
+    TEST_ASSERT_NULL(root);
+}
 /**
 *      80(-2)                             60(0)
 *     /     \          Rotate           /       \
