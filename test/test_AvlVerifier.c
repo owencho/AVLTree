@@ -84,30 +84,31 @@ int getRandomDeleteNode(IntNode* childNode, int height){
 //5 √ 10 √ 100 √ 1000 √ 10000 √
 
 //Automated Test for checking AVL add function
-/*
+
 void test_verify_AVL_tree(void){
     Node * root;
-    int max = 10000 , i;
+    int max = 100 , i;
     srand(time(0));
     i = max;
-    root =  createNode(getRandomNum(),  NULL ,NULL,0);
+    root =  createNode(getRandomNum());
     while(i--){
        Try{
-            root = avlAdd(root,createAvlNode(getRandomNum()));
+            root = avlAdd(root,createAvlNode(getRandomNum()),(Compare)intCompareForAvlAdd);
         }Catch(ex){
             dumpException(ex);
             i++;
         }
-        TEST_VERIFY_AVL_TREE(root, max-i+1);
+        TEST_VERIFY_AVL_TREE((IntNode*)root, max-i+1);
     }
     freeAllNodesInTree(root);
 }
-*/
+
 //Automated Test for checking AVL add and delete function
 void test_verify_add_delete_AVL_tree(void){
     Node * root ;
+    IntNode * deletedNode;
     Node * childNode;
-    int max = 10 , i;
+    int max = 100 , i;
     int height,deleteValue;
     srand(time(0));
     i = max;
@@ -123,11 +124,10 @@ void test_verify_add_delete_AVL_tree(void){
     }
     for(i=0;i<max;i++){
         height= (getRandomNum()/(log2(max)+5));
-        childNode = root;
-        deleteValue=getRandomDeleteNode((IntNode*)childNode,height);
+        deleteValue=getRandomDeleteNode((IntNode*)root,height);
 
          Try{
-              root = avlDelete(root,(void*)&deleteValue,(Compare)intCompareForAvlDelete);
+              deletedNode = (IntNode*)avlDelete(&root,(void*)&deleteValue,(Compare)intCompareForAvlDelete);
           }Catch(ex){
               dumpException(ex);
               i--;

@@ -9,12 +9,18 @@
 #include <stdio.h>
 #include <string.h>
 
-Node *avlDelete(Node *root,void * nodeDelete,Compare compare){
+Node *avlDelete(Node ** root,void * nodeDelete,Compare compare){
     Node* deletedNode = NULL;
+    Node  afterRoot;
     int height;
-    if(root == NULL ||nodeDelete == NULL || compare==NULL )
+    if(root == NULL)
         return NULL;
-    root = _avlDelete(root,nodeDelete,&deletedNode,&height,compare);
+    else if (nodeDelete == NULL)
+        throwException(ERR_NODE_NULL," node does not exist inside the tree as it points to NULL");
+    else if (compare==NULL )
+        throwException(ERR_FN_POINTER_NULL," the function pointer for compare is NULL");
+
+    *root = _avlDelete(*root,nodeDelete,&deletedNode,&height,compare);
     if(deletedNode == NULL){
         throwException(ERR_NODE_NOT_FOUND," node does not exist inside the tree and couldnt remove the node ");
     }
@@ -22,16 +28,15 @@ Node *avlDelete(Node *root,void * nodeDelete,Compare compare){
 }
 
 Node *_avlDelete(Node *root,void * nodeDelete,Node ** deletedNode,int * heightDec,Compare compare){
-    Node * replacedNode = NULL;
     root = nodeSearchAndReplaceForDeleteNode(root,nodeDelete,deletedNode,heightDec,compare);
-    if(root == NULL) // if nodeSearchAndReplaceForDeleteNode return NULL we no need to rotateBalanceAndGetHeightChangeForAdd
-        return root;
-    root = rotateBalanceAndGetHeightChangeForDelete(root,heightDec);
+    root= rotateBalanceAndGetHeightChangeForDelete(root,heightDec);
     return root;
-
 }
 //refer my samsung note for
 Node * rotateBalanceAndGetHeightChangeForDelete(Node* root,int * heightDec){
+    if(root ==NULL || heightDec == NULL)
+        return root;
+
     if(abs(root->bFactor) == 1 )
         *heightDec =0;
     else if(root->bFactor >= 2){
@@ -46,6 +51,8 @@ Node * rotateBalanceAndGetHeightChangeForDelete(Node* root,int * heightDec){
 }
 
 Node* nodeSearchAndReplaceForDeleteNode(Node* root,void * nodeDelete,Node ** deletedNode,int * heightDec,Compare compare){
+    if(root == NULL || heightDec ==NULL || deletedNode ==NULL || nodeDelete==NULL )
+        return root;
     int size = compare(root,nodeDelete);
     if(!size){
         *deletedNode = root;
@@ -61,6 +68,8 @@ Node* nodeSearchAndReplaceForDeleteNode(Node* root,void * nodeDelete,Node ** del
 Node* nodeSearchRightForDeleteNode(Node* root,void * nodeDelete,Node ** deletedNode,int * heightDec,Compare compare){
     Node * child;
     int heightChange = 0;
+    if(root == NULL || heightDec ==NULL || deletedNode ==NULL || nodeDelete==NULL )
+        return root;
     child = root->right;
     if(child != NULL){
         root->right=_avlDelete(child,nodeDelete,deletedNode,&heightChange,compare);
@@ -73,6 +82,8 @@ Node* nodeSearchRightForDeleteNode(Node* root,void * nodeDelete,Node ** deletedN
 Node* nodeSearchLeftForDeleteNode(Node* root,void * nodeDelete,Node ** deletedNode,int * heightDec,Compare compare){
     Node * child;
     int heightChange = 0;
+    if(root == NULL || heightDec ==NULL || deletedNode ==NULL || nodeDelete==NULL)
+        return root;
     child = root->left;
     if(child != NULL){
         root->left=_avlDelete(child,nodeDelete,deletedNode,&heightChange,compare);
@@ -87,6 +98,9 @@ Node* nodeRemoveAndReplace(Node * root,int * heightDec){
     int heightChange = 0;
     Node * rootLeft;
     Node * replacedNode;
+    if(root == NULL || heightDec ==NULL)
+        return root;
+
     if(root->right == NULL){
         *heightDec =1;
         return root->left;
@@ -104,9 +118,36 @@ Node* nodeRemoveAndReplace(Node * root,int * heightDec){
     return root;
 }
 
+Node* avlGetReplacer(Node * root ,int * heightDec,Node ** replacedNode){
+    int heightChange;
+    Node * newNode;
+    Node * child;
+
+    if(root == NULL || heightDec ==NULL || replacedNode ==NULL)
+       return root;
+
+    if(root->left != NULL){
+        child = avlGetReplacer(root->left ,&heightChange,&newNode);
+        *replacedNode = newNode;
+        *heightDec =heightChange;
+        root->bFactor =root->bFactor+heightChange;
+        root->left = child;
+        root=rotateBalanceAndGetHeightChangeForDelete(root,heightDec);
+    }
+    else{
+        *replacedNode = root;
+        *heightDec = 1;
+        return root->right;
+    }
+    return root;
+}
+
+
 Node* rotateLeftAndReBalanceForDelete(Node * root){
     int bFactor=0;
     int secondBfactor =0;
+    if(root == NULL)
+        return root;
     if(root->right->bFactor >=0){
         bFactor = root->right->bFactor;
         secondBfactor = root->right->right->bFactor;
@@ -125,6 +166,8 @@ Node* rotateLeftAndReBalanceForDelete(Node * root){
 Node* rotateRightAndReBalanceForDelete(Node * root){
     int bFactor=0;
     int secondBfactor =0;
+    if(root == NULL)
+        return root;
     if(root->left->bFactor > 0){
         bFactor = root->left->right->bFactor;
         root = rotateLeftRightNode(root);
@@ -140,30 +183,10 @@ Node* rotateRightAndReBalanceForDelete(Node * root){
     return root;
 }
 
-Node* avlGetReplacer(Node * root ,int * heightDec,Node ** replacedNode){
-    int heightChange;
-    Node * newNode;
-    Node * child;
-    if(root->left != NULL){
-        child = avlGetReplacer(root->left ,&heightChange,&newNode);
-        *replacedNode = newNode;
-        *heightDec =heightChange;
-        root->bFactor =root->bFactor+heightChange;
-        root->left = child;
-        root=rotateBalanceAndGetHeightChangeForDelete(root,heightDec);
-    }
-    else{
-        *replacedNode = root;
-        *heightDec = 1;
-        return root->right;
-    }
-    return root;
-}
-
 Node * findSmallestNode(Node*root){
     Node * leftNode;
     if(root == NULL)
-        return root;
+        return NULL;
     if(root->left != NULL){
         leftNode = root->left;
         root = findSmallestNode(leftNode);
@@ -172,11 +195,15 @@ Node * findSmallestNode(Node*root){
 }
 
 Node * avlRemoveSmallest(Node*root,Compare compare){
-    if(root == NULL || compare == NULL)
-        return NULL;
+    if(root == NULL)
+       return NULL;
     Node* smallestNode;
+    void* value;
     smallestNode = findSmallestNode(root);
-    void* value = smallestNode->value;
-    smallestNode = avlDelete(root,value,compare);
+    if(smallestNode == NULL)
+        return NULL;
+
+    value = smallestNode->value;
+    smallestNode = avlDelete(&root,value,compare);
     return smallestNode;
 }
