@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 void freeAllNodesInTree(Node *root){
-    if(root == NULL) return; 
+    if(root == NULL) return;
     if(root->left != NULL){
         freeAllNodesInTree(root->left);
     }
