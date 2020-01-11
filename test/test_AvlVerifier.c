@@ -87,7 +87,7 @@ int getRandomDeleteNode(IntNode* childNode, int height){
 
 void test_verify_AVL_tree(void){
     Node * root;
-    int max = 100 , i;
+    int max = 100000 , i;
     srand(time(0));
     i = max;
     root =  createNode(getRandomNum());
