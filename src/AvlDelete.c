@@ -32,7 +32,7 @@ Node *_avlDelete(Node *root,void * nodeDelete,Node ** deletedNode,int * heightDe
     root= rotateBalanceAndGetHeightChangeForDelete(root,heightDec);
     return root;
 }
-//refer my samsung note for
+
 Node * rotateBalanceAndGetHeightChangeForDelete(Node* root,int * heightDec){
     if(root ==NULL || heightDec == NULL)
         return root;
@@ -192,18 +192,4 @@ Node * findSmallestNode(Node*root){
         root = findSmallestNode(leftNode);
     }
     return root;
-}
-
-Node * avlRemoveSmallest(Node*root,Compare compare){
-    if(root == NULL)
-       return NULL;
-    Node* smallestNode;
-    void* value;
-    smallestNode = findSmallestNode(root);
-    if(smallestNode == NULL)
-        return NULL;
-
-    value = smallestNode->value;
-    smallestNode = avlDelete(&root,value,compare);
-    return smallestNode;
 }

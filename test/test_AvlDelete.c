@@ -108,9 +108,9 @@ void test_AvlDelete_given_NULL_compare_expect_error(void){
         TEST_ASSERT_EQUAL(ERR_FN_POINTER_NULL, ex->errorCode);
     }
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////AVL Delete node////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////Avl Delete without Rotate//////////////////////////////////////////////////
 /**
@@ -1210,7 +1210,7 @@ void test_avlDelete_given_RightChildOnly_WO_80_30_10_60_90_70_99_remove30(void){
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///AVL Delete node with right children that has left children ////////////////////////////////////////
+///AVL Delete node with right children that has left children ///////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -1251,11 +1251,10 @@ void test_avlDelete_given_RightLEFTChild_WO_80_30_10_60_65_90_50_99_remove_30(vo
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///avlGetReplacer /////////////////////////////////////////////////////////////////////
+///avlGetReplacer //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Replace first right then left until the end
-//avlGetReplacer (rightroot,heightChange,replacedNode)
-
+//avlGetReplacer is the function that find the node to replace the deletedNode
 
 void test_avlGetReplacer_given_root_is_NULL(void){
     initIntNode(&node10,NULL,NULL,0);
@@ -1267,7 +1266,15 @@ void test_avlGetReplacer_given_root_is_NULL(void){
     root=avlGetReplacer(NULL,&heightDec,&replacedNode);
     TEST_ASSERT_NULL(root);
 }
-
+/**
+*    30(1)
+*   /     \
+* 10(0)   60(0)
+*          /   \
+*         50(0) 65(0)
+*
+*
+**/
 void test_avlGetReplacer_given_heightDec_NULL(void){
     initIntNode(&node10,NULL,NULL,0);
     initIntNode(&node50,NULL,NULL,0);
@@ -1277,7 +1284,7 @@ void test_avlGetReplacer_given_heightDec_NULL(void){
     root=avlGetReplacer((Node*)&node60,NULL,&replacedNode);
     TEST_ASSERT_EQUAL_PTR(&node60,root);
     TEST_ASSERT_NULL(replacedNode);
-    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node50,&node65,0);;
+    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node50,&node65,0);
     TEST_ASSERT_EQUAL_INT_NODE(&node65,NULL,NULL,0);
     TEST_ASSERT_EQUAL_INT_NODE(&node50,NULL,NULL,0);
 }
@@ -1298,7 +1305,7 @@ void test_avlGetReplacer_given_root_is_replacedNode_pointer_is_NULL(void){
     initIntNode(&node30,&node10,&node60,1);
     root=avlGetReplacer((Node*)&node60,&heightDec,NULL);
     TEST_ASSERT_EQUAL_PTR(&node60,root);
-    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node50,&node65,0);;
+    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node50,&node65,0);
     TEST_ASSERT_EQUAL_INT_NODE(&node65,NULL,NULL,0);
     TEST_ASSERT_EQUAL_INT_NODE(&node50,NULL,NULL,0);
 }
@@ -1895,6 +1902,7 @@ void test_rotateLeftAndReBalanceForDelete_15_30_20(void){
 ////////////////////////////////////////////////////////////////////////////////
 ///node Remove and Replace//////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+//This function is to remove the node and find replacer for the deletedNode
 
 void test_nodeRemoveAndReplace_input_root_NULL(void){
     initIntNode(&node5,NULL,NULL,0);
@@ -2303,6 +2311,9 @@ void test_nodeSearchRightForDeleteNode_tree_is_NULL(void){
 ////////////////////////////////////////////////////////////////////////////////
 ///rotateBalanceAndGetHeightChangeForDelete////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+//This function is used to determine how the tree should rotate (left or right or no need)
+// and determine should the tree reduce its balance factor for mother root
+
 /**
 *       40(-1)
 *       /    \             no rotation
@@ -2426,7 +2437,7 @@ void test_rotateBalanceAndGetHeightChangeForDelete_root_NULL(void){
 ////////////////////////////////////////////////////////////////////////////////
 ///findSmallestNode/////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-
+//This function is used to find the smallestNode inside the root tree
 /**
 *    10(2)
 *       \
@@ -2476,46 +2487,6 @@ void test_findSmallestNode_40_50_30_45_55(void){
 void test_findSmallestNode_root_NULL(void){
     Try{
         root=findSmallestNode(NULL);
-        TEST_ASSERT_NULL(root);
-    }Catch(ex) {
-        dumpException(ex);
-        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
-    }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-///avlRemoveSmallest////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-/**
-*       40(1)                    50(-1)
-*       /    \                  /    \
-*     30(0)  50(0)   --->     40(1)  55(0)
-*           /    \             \
-*         45(0)  55(0)         45(0)
-*
-**/
-
-void test_avlRemoveSmallest_40_50_30_45_55(void){
-    initIntNode(&node45,NULL,NULL,0);
-    initIntNode(&node30,NULL,NULL,0);
-    initIntNode(&node55,NULL,NULL,0);
-    initIntNode(&node50,&node45,&node55,0);
-    initIntNode(&node40,&node30,&node50,1);
-    Try{
-        root=avlRemoveSmallest((Node*)&node40,(Compare)intCompareForAvlDelete);
-        TEST_ASSERT_EQUAL_PTR(&node30,root);
-        TEST_ASSERT_EQUAL_INT_NODE(&node50,&node40,&node55,-1);
-        TEST_ASSERT_EQUAL_INT_NODE(&node40,NULL,&node45,1);
-        TEST_ASSERT_EQUAL_INT_NODE(&node55,NULL,NULL,0);
-    }Catch(ex) {
-        dumpException(ex);
-        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
-    }
-}
-
-void test_avlRemoveSmallest_root_NULL(void){
-    Try{
-        root=avlRemoveSmallest(NULL,(Compare)intCompareForAvlDelete);
         TEST_ASSERT_NULL(root);
     }Catch(ex) {
         dumpException(ex);
