@@ -8,7 +8,7 @@
 #include "Rotate.h"
 #include "Balance.h"
 #include "Exception.h"
-#include "Error.h"
+#include "AvlError.h"
 #include "CException.h"
 
 CEXCEPTION_T ex;

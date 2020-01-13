@@ -6,7 +6,7 @@
 #include "Balance.h"
 #include "Rotate.h"
 #include "Node.h"
-#include "Error.h"
+#include "AvlError.h"
 #include "Exception.h"
 #include "CException.h"
 #include "CustomAssert.h"

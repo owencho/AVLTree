@@ -1,5 +1,5 @@
-#ifndef _ERROR_H
-#define _ERROR_H
+#ifndef _AVLERROR_H
+#define _AVLERROR_H
 
 #define ERR_SAME_NODE 1
 #define ERR_NODE_NOT_FOUND 2
@@ -7,4 +7,4 @@
 #define ERR_NODE_ADD_NULL 4
 #define ERR_HEIGHT_INC_DEC_NULL 5
 #define ERR_DELETE_VALUE_NULL 6
-#endif // _EXCEPTION_H
+#endif // _AVLERROR_H

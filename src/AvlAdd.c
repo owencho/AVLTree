@@ -1,7 +1,7 @@
 #include "AvlAdd.h"
 #include "Rotate.h"
 #include "Balance.h"
-#include "Error.h"
+#include "AvlError.h"
 #include "Exception.h"
 #include "CException.h"
 #include <stdlib.h>

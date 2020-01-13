@@ -3,7 +3,7 @@
 #include "Node.h"
 #include "CustomAssert.h"
 #include "Exception.h"
-#include "Error.h"
+#include "AvlError.h"
 #include "CException.h"
 #include "IntNode.h"
 #include "IntCompare.h"

@@ -15,7 +15,7 @@
 #include "CustomAssert.h"
 #include "Rotate.h"
 #include "Exception.h"
-#include "Error.h"
+#include "AvlError.h"
 #include "CException.h"
 
 CEXCEPTION_T ex;
