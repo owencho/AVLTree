@@ -31,7 +31,7 @@ Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc,Compare compare){
 Node* nodeSearchAndAddNode(Node* root,Node * nodeAdd,int * heightInc,Compare compare){
     int size;
     if(root == NULL || heightInc ==NULL || nodeAdd ==NULL ||compare ==NULL )
-      return root;
+        return root;
     size = compare(root,nodeAdd);
     if(!size)
         throwException(ERR_SAME_NODE,"same node value detected");
@@ -47,7 +47,7 @@ Node* nodeSearchAndAddNodeForRight(Node* root,Node * nodeAdd,int * heightInc,Com
     Node * child;
     int heightChange=0;
     if(root == NULL || heightInc ==NULL || nodeAdd ==NULL ||compare ==NULL )
-      return root;
+        return root;
     child = root->right;
     if(child == NULL){
         root->bFactor++;
@@ -65,7 +65,7 @@ Node* nodeSearchAndAddNodeForLeft(Node* root,Node * nodeAdd,int * heightInc,Comp
     Node * child;
     int heightChange=0;
     if(root == NULL || heightInc ==NULL || nodeAdd ==NULL ||compare ==NULL )
-      return root;
+        return root;
     child = root->left;
     if(child == NULL){
         root->bFactor --;
@@ -81,15 +81,15 @@ Node* nodeSearchAndAddNodeForLeft(Node* root,Node * nodeAdd,int * heightInc,Comp
 
 Node * rotateBalanceAndGetHeightChangeForAdd(Node* root,int * heightInc){
     if(root == NULL || heightInc ==NULL )
-      return root;
+        return root;
     if(root->bFactor == 0 ){
-      *heightInc =0;
+        *heightInc =0;
     }else if(root->bFactor >= 2){
-      root = rotateLeftAndReBalanceForAdd(root);
-      *heightInc =0;
+        root = rotateLeftAndReBalanceForAdd(root);
+        *heightInc =0;
     }else if(root->bFactor <= -2){
-      root = rotateRightAndReBalanceForAdd(root);
-      *heightInc =0;
+        root = rotateRightAndReBalanceForAdd(root);
+        *heightInc =0;
     }
     return root;
 }

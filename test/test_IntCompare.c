@@ -31,6 +31,9 @@ void initIntNode(IntNode * node,  IntNode * left ,IntNode * right,int balanceFac
     node->right = right;
     node->bFactor = balanceFactor;
 }
+//This function is used to compare the int node inside the AVL tree
+// to determine the node to be added on the left or right depends on the size
+// of the int value
 // IntCompare return 1 when when root > nodeAdd
 // IntCompare return -1 when when root < nodeAdd
 // IntCompare return 0 when when root == nodeAdd

@@ -2493,3 +2493,53 @@ void test_findSmallestNode_root_NULL(void){
         TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
     }
 }
+
+////////////////////////////////////////////////////////////////////////////////
+///avlRemoveSmallest////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/**
+*       40(1)                    50(-1)
+*       /    \                  /    \
+*     30(0)  50(0)   --->     40(1)  55(0)
+*           /    \             \
+*         45(0)  55(0)         45(0)
+*
+**/
+
+void test_avlRemoveSmallest_40_50_30_45_55(void){
+    initIntNode(&node45,NULL,NULL,0);
+    initIntNode(&node30,NULL,NULL,0);
+    initIntNode(&node55,NULL,NULL,0);
+    initIntNode(&node50,&node45,&node55,0);
+    initIntNode(&node40,&node30,&node50,1);
+    Try{
+        root=avlRemoveSmallest((Node*)&node40,(Compare)intCompareForAvlDelete);
+        TEST_ASSERT_EQUAL_PTR(&node30,root);
+        TEST_ASSERT_EQUAL_INT_NODE(&node50,&node40,&node55,-1);
+        TEST_ASSERT_EQUAL_INT_NODE(&node40,NULL,&node45,1);
+        TEST_ASSERT_EQUAL_INT_NODE(&node55,NULL,NULL,0);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
+
+void test_avlRemoveSmallest_root_NULL(void){
+    Try{
+        root=avlRemoveSmallest(NULL,(Compare)intCompareForAvlDelete);
+        TEST_ASSERT_NULL(root);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
+
+void test_avlRemoveSmallest_compare_NULL(void){
+    Try{
+        root=avlRemoveSmallest((Node*)&node40,NULL);
+        TEST_ASSERT_NULL(root);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}

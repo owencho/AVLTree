@@ -124,7 +124,7 @@ Node* avlGetReplacer(Node * root ,int * heightDec,Node ** replacedNode){
     Node * child;
 
     if(root == NULL || heightDec ==NULL || replacedNode ==NULL)
-       return root;
+        return root;
 
     if(root->left != NULL){
         child = avlGetReplacer(root->left ,&heightChange,&newNode);
@@ -192,4 +192,19 @@ Node * findSmallestNode(Node*root){
         root = findSmallestNode(leftNode);
     }
     return root;
+}
+
+Node * avlRemoveSmallest(Node*root,Compare compare){
+    if(root == NULL)
+       return NULL;
+    Node* smallestNode;
+    void* value;
+    if(root==NULL || compare == NULL)
+        return NULL;
+    smallestNode = findSmallestNode(root);
+    if(smallestNode == NULL)
+        return NULL;
+    value = smallestNode->value;
+    smallestNode = avlDelete(&root,value,compare);
+    return smallestNode;
 }

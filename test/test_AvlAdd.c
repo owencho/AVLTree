@@ -861,7 +861,9 @@ void test_rotateLeftAndReBalanceForAdd_15_30_20(void){
 ////////////////////////////////////////////////////////////////////////////////
 ///rotateBalanceAndGetHeightChangeForadd////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-
+//This function is used to determine is the tree requires to rotate
+// and this function was also used to determine the height change if any Rotation
+// is done
 void test_rotateBalanceAndGetHeightChangeForAdd_NULL_tree(void){
     initIntNode(&node20,NULL,NULL,0);
     initIntNode(&node50,NULL,NULL,0);
@@ -983,6 +985,10 @@ void test_rotateBalanceAndGetHeightChangeForAdd_10_30_35(void){
 ////////////////////////////////////////////////////////////////////////////////
 ///nodeSearchAndAddNode////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+//This function is used to search where the node should be added by comparing the size
+// of the node
+// this function can be used on different type eg string , int and struct node
+// by inserting the function ptr that used to compare the node
 ///////Exception testing for adding same value node
 /**
 *            50(-1)
@@ -1212,6 +1218,9 @@ void test_nodeSearchAndAddNode_given_50_30_20_40_60_add_35(void){
 ////////////////////////////////////////////////////////////////////////////////
 ///nodeSearchAndAddNodeForLeft/////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+//This function is used on nodeSearchAndAddNode to search left when the
+// function ptr that compares the node is smaller than the current node
+// this function will be called to continue search for suitable place to be added
 void test_nodeSearchAndAddNodeForLeft_given_root_NULL(void){
     initIntNode(&node30,NULL,NULL,0);
     initIntNode(&node50,NULL,NULL,0);
@@ -1283,6 +1292,9 @@ void test_nodeSearchAndAddNodeForLeft_given_50_40_add_30(void){
 ////////////////////////////////////////////////////////////////////////////////
 ///nodeSearchAndAddNodeForRight/////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+//This function is used on nodeSearchAndAddNode to search right when the
+// function ptr that compares the node is larger than the current node
+// this function will be called to continue search for suitable place to be added
 void test_nodeSearchAndAddNodeForRight_given_root_NULL(void){
     initIntNode(&node30,NULL,NULL,0);
     initIntNode(&node50,NULL,NULL,0);

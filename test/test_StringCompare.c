@@ -27,7 +27,10 @@ void initStringNode(StringNode * node,  StringNode * left ,StringNode * right,in
     node->right = right;
     node->bFactor = balanceFactor;
 }
-// stringCompare return 1 when when root > nodeAdd
+//This function is used to compare the string node inside the AVL tree
+// to determine the node to be added on the left or right depends on the size
+// of the string using strcmp
+// stringCompare return 1 when when root  > nodeAdd
 // stringCompare return -1 when when root < nodeAdd
 // stringCompare return 0 when when root == nodeAdd
 void test_StringCompareForAvlDelete_smaller_root_oelon_return_neg1(void){

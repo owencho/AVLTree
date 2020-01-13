@@ -13,4 +13,5 @@ Node* nodeSearchRightForDeleteNode(Node* root,void * nodeDelete,Node ** deletedN
 Node* nodeSearchLeftForDeleteNode(Node* root,void * nodeDelete,Node ** deletedNode,int * heightDec,Compare compare);
 Node* nodeSearchAndReplaceForDeleteNode(Node* root,void * nodeDelete,Node ** deletedNode,int * heightDec,Compare compare);
 Node * rotateBalanceAndGetHeightChangeForDelete(Node* root,int * heightDec);
+Node * avlRemoveSmallest(Node*root,Compare compare);
 #endif // _AVLDELETE_H

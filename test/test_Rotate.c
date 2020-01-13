@@ -28,7 +28,9 @@ void initIntNode(IntNode * node,  IntNode * left ,IntNode * right,int balanceFac
     node->bFactor = balanceFactor;
 }
 ////Rotate Right///
-
+// Rotate right is used to rotate the whole tree to leftRight or right rotation
+// depends on its position of child node when the balanceFactor of root is smaller
+// than -2
 void test_rotateRightNode_input_NULL(void){
     initIntNode(&node10,  NULL ,NULL,0);
     initIntNode(&node20,  &node10 ,NULL,0);
@@ -85,62 +87,6 @@ void test_rotateRightComplexNode(void){
     TEST_ASSERT_EQUAL_INT_NODE(&node40,NULL,NULL,0);
     TEST_ASSERT_EQUAL_INT_NODE(&node60,NULL,NULL,0);
     TEST_ASSERT_EQUAL_INT_NODE(&node10,NULL,NULL,0);
-}
-///////////////////////////Rotate Left///////////////////////
-
-void test_rotateLeftNode_input_NULL(void){
-    initIntNode(&node10,  NULL ,NULL,0);
-    initIntNode(&node20,  &node10 ,NULL,0);
-    initIntNode(&node30,  &node20 ,NULL,0);
-
-    root = rotateLeftNode(NULL);
-    TEST_ASSERT_NULL(root);
-}
-/**
-*         20                           50
-*          \        rotate           /   \
-*           50       ----->         20    70
-*            \      LEFT
-*             70
-*
-**/
-void test_rotateLeftNode(void){
-    initIntNode(&node70,  NULL ,NULL,0);
-    initIntNode(&node50,  NULL,&node70,0);
-    initIntNode(&node20,  NULL ,&node50,0);
-
-    root=rotateLeftNode((Node*)&node20);
-    TEST_ASSERT_EQUAL(root,&node50);
-    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node20,&node70,0);
-    TEST_ASSERT_EQUAL_INT_NODE(&node20,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_INT_NODE(&node70,NULL,NULL,0);
-}
-/**
-*         20                            40
-*        /  \        rotate           /   \
-*      10   40       ----->         20    50
-*          / \        LEFT         /  \     \
-*        30   50                 10   30    60
-*              \
-*              60
-**/
-
-void test_rotateLeftComplexNode(void){
-    initIntNode(&node10,  NULL ,NULL,0);
-    initIntNode(&node30,  NULL ,NULL,0);
-    initIntNode(&node60,  NULL ,NULL,0);
-    initIntNode(&node50, NULL, &node60 ,0);
-    initIntNode(&node40,  &node30 ,&node50,0);
-    initIntNode(&node20,  &node10 ,&node40,0);
-
-    root=rotateLeftNode((Node*)&node20);
-    TEST_ASSERT_EQUAL(root,&node40);
-    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node20,&node50,0);
-    TEST_ASSERT_EQUAL_INT_NODE(&node20,&node10,&node30,0);
-    TEST_ASSERT_EQUAL_INT_NODE(&node50,NULL,&node60,0);
-    TEST_ASSERT_EQUAL_INT_NODE(&node10,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_INT_NODE(&node30,NULL,NULL,0);
-    TEST_ASSERT_EQUAL_INT_NODE(&node60,NULL,NULL,0);
 }
 ///////////////////////////Rotate Left Right///////////////////////
 
@@ -200,6 +146,65 @@ void test_rotateLeftRightComplexNode(void){
     TEST_ASSERT_EQUAL_INT_NODE(&node80,NULL,NULL,0);
     TEST_ASSERT_EQUAL_INT_NODE(&node99,NULL,NULL,0);
 }
+///////////////////////////Rotate Left//////////////////////////////////////////
+// Rotate left is used to rotate the whole tree to Rightleft or left rotation
+// depends on its position of child node when the balanceFactor of root is larger
+// than 2
+void test_rotateLeftNode_input_NULL(void){
+    initIntNode(&node10,  NULL ,NULL,0);
+    initIntNode(&node20,  &node10 ,NULL,0);
+    initIntNode(&node30,  &node20 ,NULL,0);
+
+    root = rotateLeftNode(NULL);
+    TEST_ASSERT_NULL(root);
+}
+/**
+*         20                           50
+*          \        rotate           /   \
+*           50       ----->         20    70
+*            \      LEFT
+*             70
+*
+**/
+void test_rotateLeftNode(void){
+    initIntNode(&node70,  NULL ,NULL,0);
+    initIntNode(&node50,  NULL,&node70,0);
+    initIntNode(&node20,  NULL ,&node50,0);
+
+    root=rotateLeftNode((Node*)&node20);
+    TEST_ASSERT_EQUAL(root,&node50);
+    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node20,&node70,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node20,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node70,NULL,NULL,0);
+}
+/**
+*         20                            40
+*        /  \        rotate           /   \
+*      10   40       ----->         20    50
+*          / \        LEFT         /  \     \
+*        30   50                 10   30    60
+*              \
+*              60
+**/
+
+void test_rotateLeftComplexNode(void){
+    initIntNode(&node10,  NULL ,NULL,0);
+    initIntNode(&node30,  NULL ,NULL,0);
+    initIntNode(&node60,  NULL ,NULL,0);
+    initIntNode(&node50, NULL, &node60 ,0);
+    initIntNode(&node40,  &node30 ,&node50,0);
+    initIntNode(&node20,  &node10 ,&node40,0);
+
+    root=rotateLeftNode((Node*)&node20);
+    TEST_ASSERT_EQUAL(root,&node40);
+    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node20,&node50,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node20,&node10,&node30,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node50,NULL,&node60,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node10,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node30,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node60,NULL,NULL,0);
+}
+
 
 ///////////////////////////Rotate Right Left///////////////////////
 
