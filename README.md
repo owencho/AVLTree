@@ -42,10 +42,10 @@ You can refer to here <!--link to rotation-->
 **Remarks** : there is no height increment when rotation is required to rotate the node. 
 ## 3.3 Balancing for Avl Add
 ### 3.3.1 For right left and left right rotation on Avl add
-refer to here <!--sauce--> \
+refer to here. <!--sauce--> \
 Balancing on Avl Tree is only different on Avl Add(insertion) and Avl delete (deletion) for single rotation (rotate left and right).
 ### 3.3.2 For left single rotation on Avl add
-When the **balanceFactor is 2 and right child node has balance Factor ==1**
+When the **balanceFactor is 2 and right child node has balance Factor of 1 **
 left rotation and rebalance will execute after the node has been added.
 
                35(2)                           50(0)
@@ -137,5 +137,55 @@ eg :
 deletedNode=avlDelete(&root,(void*)&deleteValue,(Compare)intCompareForAvlDelete);
 ```
 ## 4.2 Rotation for Avl Delete
-You can refer to here <!--link to rotation-->
+You can refer to here. <!--link to rotation--> \
 **Remarks** : there is no height decrement when rotation is required to rotate the node for balancing. 
+### 3.3.2 For left single rotation on Avl Delete
+When the **balanceFactor is 2 and root right node has balance Factor ==1 and 0 **
+left rotation and rebalance will execute after the node has been deleted .
+```
+When root right node has balance factor of 1 
+
+              35(2)                           50(0)
+              /  \           rotate           /   \
+         20(0)   50(1)       ----->       35(0)    60(1)
+                /  \          LEFT         /  \     \
+            40(0) 60(1)     rebalance   20(0) 40(0) 70(0)
+                      \
+                     70(0)
+
+
+               25(2)                             40(0)
+               /  \            rotate            /   \
+           10(0)   40(1)       ----->        25(0)   50(1)
+                   /  \         LEFT          /  \     \
+                30(0) 60(-1)    rebalance    10(0) 30(0) 60(0)
+                       /
+                     50(0)
+
+
+         20(2)                           50(0)
+          \           rotate             /   \
+           50(1)       ----->         20(0)  70(0)
+            \           LEFT
+             70(0)      rebalance
+
+When root right node has balance factor of 0 
+
+        30(2)                                 70(-1)
+       /   \              rotate              /   \
+     5(0)   70(0)            ----->         30(1)  75(1)
+           /    \           LEFT            /   \     \
+       65(-1)  75(1)                    5(0)  65(-1)  80(0)
+          /       \                             /
+       60(0)    80(0)                        60(0)
+
+
+      30(2)                                70(-1)
+        \              rotate             /   \
+        70(0)            ----->         30(1)  75(0)
+       /    \           LEFT              \
+     65(0) 75(0)                         65(0)
+
+      
+```
+
