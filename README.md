@@ -16,17 +16,17 @@ For example, \
 ![unbalanced](https://user-images.githubusercontent.com/51066670/72324322-99904100-36e5-11ea-8b28-cf1c8a906d22.png)
 <!-- photo of non balance tree put here -->
 # 2.0 Advantage of AVL tree
-## 2.1 faster execution speed
+## 2.1 Faster execution speed
 As AVL trees are self-balancing binary tree , insertion (add node) , search and deletion (delete node) has lower time complexity compares to normal Binary search tree . on usual case binary search tree takes O(logn) but worst case will takes up to O(n) time to run compares to AVL tree which on any cases will always takes O(logn) time as AVL tree is always balanced.
 ![advantage](https://user-images.githubusercontent.com/51066670/72323767-6bf6c800-36e4-11ea-9514-a4381b37b0d8.png)
-## 2.2 supports different variable and structure for the AVL tree
+## 2.2 Supports different variable and structure for the AVL tree
 This AVL trees also support **different type of variable and structure** such as int , string , and any kind of structure depending on the user requirement. This AVL tree function just need to add in your own comparision function pointers for different kind of structure by using dependancy injection from one of the S.O.L.I.D principles.
 ![diffstruct](https://user-images.githubusercontent.com/51066670/72325212-9302c900-36e7-11ea-8250-0b2c3f71de78.png)
 
 For example , [ShortestPath](https://github.com/owencho/ShortestPath "Shortest Path Github repo by owencho") that was also implemented this AVLTree project for finding the shortestPath by sorting with cost and name.
 
 # 3.0 AVL Add
-Avl add is one parts of the AVL tree which performs the task of insertion of nodes into the binary tree and perform rebalancing task if the tree is unbalanced after node insertion into the AVL tree.
+Avl add is one parts of the AVL tree which performs the task of insertion of nodes into the binary tree and perform rebalancing task if the tree is unbalanced after node insertion into the AVL tree. AVL add function will compare using the function pointer to find where the node should be added into the tree.
 ![add](https://user-images.githubusercontent.com/51066670/72326901-0bb75480-36eb-11ea-95da-0df9e2f8ebb3.png)
 ## 3.1 Adding the node into Tree
 Avl add will perform the task to add the node into the root by passing in the root , node to add and the function pointers for comparision.
@@ -38,19 +38,20 @@ root=avlAdd((Node*)&node80,(Node*)&node55,(Compare)intCompareForAvlAdd);
 ```
 This function will return the tree after executing it.
 ## 3.2 Rotation for Avl Add
-You can refer to here <!--link to rotation-->
+You can refer to here <!--link to rotation--> \
 **Remarks** : there is no height increment when rotation is required to rotate the node. 
+<!-- put example here -->
 ## 3.3 Balancing for Avl Add
 ### 3.3.1 For right left and left right rotation on Avl add
 refer to here. <!--sauce--> \
 Balancing on Avl Tree is only different on Avl Add(insertion) and Avl delete (deletion) for single rotation (rotate left and right).
 ### 3.3.2 For left single rotation on Avl add
-When the **balanceFactor is 2 and right child node has balance Factor of 1 **
+When the **balanceFactor is 2 and right child node has balance Factor of 1**
 left rotation and rebalance will execute after the node has been added.
 
                35(2)                           50(0)
-               /  \           rotate           /   \
-          20(0)   50(1)       ----->       35(0)    60(1)
+               /  \            rotate          /   \
+          20(0)   50(1)        ----->       35(0)    60(1)
                  /  \          LEFT         /  \     \
              40(0) *60(1)*     rebalance   20(0) 40(0) 70(0)
                        \
@@ -59,13 +60,13 @@ left rotation and rebalance will execute after the node has been added.
                25(2)                               40(0)
                /  \             rotate            /    \
            10(0)   40(1)        ----->        25(0)     60(-1)
-                  /   \          LEFT          /   \       /
-               30(0) *60(-1)*  rebalance    10(0) 30(0) 50(0)
+                  /   \         LEFT           /   \       /
+               30(0) *60(-1)*   rebalance    10(0) 30(0) 50(0)
                        /
                      50(0)
 
                20(2)                             50(0)
-                  \           rotate             /   \
+                  \            rotate            /   \
                  50(1)         ----->         20(0)  70(0)
                    \           LEFT
                   *70(0)*      rebalance
@@ -127,9 +128,10 @@ how balance factor the root and its left and right child root will behave.
 
 ```
 # 4.0 AVL Delete
-Avl add is another part of the AVL tree which performs the task of removal (delete) of nodes from the binary tree and perform rebalancing task if the tree is unbalanced after node was deleted from the AVL tree.
-## 4.1 removing the node into Tree
-Avl add will perform the task to remove the node from the root by passing value to delete the selected node.
+Avl Delete is another part of the AVL tree project which performs the task of removal (delete) of nodes from the binary tree and perform rebalancing task if the tree is unbalanced after node was deleted from the AVL tree.
+AVL Delete function will compare using the function pointer to find where the node should be delete inside the tree and find the replacer to replace the deleted node.
+## 4.1 Removing the node into Tree
+Avl Delete will perform the task to remove the node from the root by passing value to delete the selected node.
 ```
 Node *avlDelete(Node ** root,void * nodeDelete,Compare compare);
 
@@ -139,53 +141,255 @@ deletedNode=avlDelete(&root,(void*)&deleteValue,(Compare)intCompareForAvlDelete)
 ## 4.2 Rotation for Avl Delete
 You can refer to here. <!--link to rotation--> \
 **Remarks** : there is no height decrement when rotation is required to rotate the node for balancing. 
-### 3.3.2 For left single rotation on Avl Delete
-When the **balanceFactor is 2 and root right node has balance Factor ==1 and 0**
+<!-- put example here -->
+## 4.3 Balancing for Avl Delete
+### 4.3.1 For right left and left right rotation on Avl delete
+refer to here. <!--sauce--> \
+Balancing on Avl Tree is only different on Avl Add(insertion) and Avl delete (deletion) for single rotation (rotate left and right).
+### 4.3.2 For left single rotation on Avl Delete
+When the **balanceFactor is 2 and root right node has balance Factor of 1 and 0**
 left rotation and rebalance will execute after the node has been deleted .
 ```
 When root right node has balance factor of 1 
 
               35(2)                           50(0)
-              /  \           rotate           /   \
-         20(0)   50(1)       ----->       35(0)    60(1)
+              /  \            rotate          /   \
+         20(0)   50(1)        ----->      35(0)    60(1)
                 /  \          LEFT         /  \     \
-            40(0) 60(1)     rebalance   20(0) 40(0) 70(0)
+            40(0) *60(1)*     rebalance   20(0) 40(0) 70(0)
                       \
                      70(0)
 
 
-               25(2)                             40(0)
-               /  \            rotate            /   \
-           10(0)   40(1)       ----->        25(0)   50(1)
-                   /  \         LEFT          /  \     \
-                30(0) 60(-1)    rebalance    10(0) 30(0) 60(0)
+               25(2)                                40(0)
+               /  \               rotate            /    \
+           10(0)   40(1)          ----->        25(0)     60(-1)
+                   /  \           LEFT           /  \       /
+                30(0) *60(-1)*    rebalance    10(0) 30(0) 50(0)
                        /
                      50(0)
 
 
-         20(2)                           50(0)
-          \           rotate             /   \
-           50(1)       ----->         20(0)  70(0)
+         20(2)                             50(0)
+          \             rotate             /   \
+           50(1)        ----->          20(0)  70(0)
             \           LEFT
-             70(0)      rebalance
+           *70(0)*      rebalance
+```             
+When the remarked node has balance factor of certain value it has a pattern 
+how balance factor the root and its left and right child root will behave.
+```
+    balance factor of remarked node for left rotation Avl Delete 
+    when balance factor root right is 1 
+      (-1)              (0)              (1)
+      
+       (0)               (0)              (0)
+      /   \             /   \            /   \ 
+   (0)    (-1)        (0)    (0)       (0)    (1)
 
+``` 
 When root right node has balance factor of 0 
+```
 
         30(2)                                 70(-1)
        /   \              rotate              /   \
-     5(0)   70(0)            ----->         30(1)  75(1)
-           /    \           LEFT            /   \     \
-       65(-1)  75(1)                    5(0)  65(-1)  80(0)
+     5(0)   70(0)         ----->           30(1)  75(1)
+           /    \         LEFT             /   \     \
+       65(-1)  75(1)      rebalance      5(0)  65(-1)  80(0)
           /       \                             /
        60(0)    80(0)                        60(0)
 
 
+        30(2)                                   70(-1)
+       /   \              rotate              /       \
+     5(0)   70(0)         ----->          30(1)     80(-1)
+           /    \         LEFT            /   \       /
+       65(-1)  80(-1)     rebalance    5(0)  65(-1) 75(0)
+          /      /                              /
+       60(0)   75(0)                        60(0)
+
+
       30(2)                                70(-1)
-        \              rotate             /   \
-        70(0)            ----->         30(1)  75(0)
+        \               rotate             /   \
+        70(0)           ----->          30(1)  75(0)
        /    \           LEFT              \
-     65(0) 75(0)                         65(0)
+     65(0) 75(0)        rebalance         65(0)
 
+     
+    balance factor of remarked node for left rotation Avl Delete 
+    when balance factor root right is 0
+      (-1)                (0)              (1)
       
-```
+       (-1)               (-1)              (-1)
+      /    \             /   \             /   \ 
+   (1)     (1)         (1)    (-1)       (1)    (0)
 
+``` 
+### 4.3.3 For right single rotation Avl delete
+When the **balanceFactor is -2 and left child node has balance Factor of -1 or 0**
+right rotation and rebalance for AVL delete will execute after the node has been added.
+```
+           30(-2)                            20(0)
+         /              rotate             /      \
+       20(-1)           ----->           10(0)    30(0)
+     /                  RIGHT
+   *10(0)*
+ 
+
+             60(-2)                            40(0)
+            /   \         rotate              /   \
+          40(-1)  70(0)   ----->           30(-1)  60(0)
+         /  \             RIGHT            /     /     \
+   *30(-1)*  50(0)        rebalance       20(0)  50(0)  70(0)
+       /
+   20(0)
+
+
+             40(-2)                            30(0)
+            /   \        rotate               /     \
+          30(-1) 50(0)   ----->            15(1)    40(0)
+         /   \           RIGHT              \        /   \
+     *15(1)* 35(0)       rebalance         20(0)     35(0) 50(0)
+         \
+       20(0)
+```             
+When the remarked node has balance factor of certain value it has a pattern 
+how balance factor the root and its left and right child root will behave.
+```
+    balance factor of remarked node for right rotation Avl Delete 
+    when balance factor root left is -1 
+      (-1)              (0)              (1)
+      
+       (0)               (0)              (0)
+      /   \             /   \            /   \ 
+   (-1)    (0)        (0)    (0)       (1)    (0)
+
+``` 
+When root left node has balance factor of 0 
+```
+        60(-2)                              40(1)
+          /              rotate             /   \
+       40(0)            ----->         30(0)   60(-1)
+      /     \           RIGHT                     /
+    *30(0)*  55(0)                              55(0)
+
+
+       85(-2)                                70(1)
+        /   \              rotate             /   \
+     70(0)   90(0)         ----->         65(-1)  85(-1)
+      /    \                 RIGHT          /      /    \
+  *65(-1)* 75(1)                         60(0)  75(1)  90(0)
+    /       \                                      \
+   60(0)    80(0)                                  80(0)
+
+
+      85(-2)                                  70(1)
+        /   \              rotate             /   \
+     70(0)   90(0)         ----->         60(1)  85(-1)
+      /    \                 RIGHT          \      /    \
+  *60(1)* 75(1)                            65(0)  75(1)  90(0)
+     \       \                                      \
+   65(0)    80(0)                                  80(0)
+
+    balance factor of remarked node for right rotation Avl Delete 
+    when balance factor root left is 0 
+      (-1)              (0)              (1)
+      
+       (1)               (0)               (1)
+      /   \             /   \             /   \ 
+   (-1)    (-1)        (0)   (-1)       (1)    (-1)
+
+```
+## 4.3 Finding replacer after the node deleted
+This AVL will automatically find the node to replace when a node got deleted. It will select the node that is located at the smallest node starts from its right child node to replace the original node.<!-- add example here -->
+
+# 5.0 Rotation
+There's 4 type of rotation for AVL tree which is rotate left , rotate right , rotate right then left and rotate left then right.
+
+## 5.1 Left Rotation
+
+         20                           50
+          \        Rotate           /   \
+           50      ----->          20    70
+            \      LEFT
+             70
+
+## 5.2 Right Rotation
+```
+        30                                  20
+        /              Rotate              /   \
+      20               ----->            10     30
+    /                  RIGHT
+  10
+```  
+## 5.3 Right Left Rotation
+
+       10                    10
+        \       Rotate        \         Rotate        20
+        30      ----->         20        ---->       /  \
+       /        RIGHT           \        LEFT      10    30
+      20                         30
+      
+## 5.4 Left Right Rotation
+
+        80                         80
+       /           Rotate          /      Rotate       50
+     20            ----->        50       ---->       /  \
+      \            LEFT         /         RIGHT     20    80
+       50                     20
+
+# 5.0 Balancing for double rotation
+## 5.1 Left right rotation balancing 
+When the **balanceFactor is -2 and left child node has balance Factor of 1**
+```
+      80(-2)                             60(0)
+     /     \          Rotate           /       \
+    30(1)  90(0)      ---->         30(-1)   80(0)
+   /     \            LEFTRIGHT     /        /    \
+  10(0)  60(1)                     10(0)     70(0)  90(0)
+             \
+            70(0)
+
+
+      80(-2)                             60(0)
+     /     \          Rotate           /       \
+    30(1)  90(0)      ---->         30(0)    80(1)
+   /     \            LEFTRIGHT     /    \       \
+  10(0)  60(-1)                     10(0) 55(0)  90(0)
+           /
+        55(0)
+
+
+      60(-2)                            55(0)
+       /           rotate             /      \
+   50(1)           ----->           50(0)    60(0)
+     \           LEFT RIGHT
+    55(0)
+```
+## 5.2 Right left rotation balancing 
+When the **balanceFactor is 2 and left child node has balance Factor of -1**
+```
+    50(2)                               55(0)
+       \           rotate             /      \
+     60(-1)         ----->         50(0)    60(0)
+     /           RIGHT LEFT
+    55(0)
+
+
+
+            25(2)                                     35(0)
+           /   \                  rotate             /     \
+         20(0)  40(-1)           ----->         25(0)     40(1)
+                /  \              RIGHT         /   \        \
+             35(-1) 50(0)          LEFT       20(0) 30(0)   50(0)
+               /
+             30(0)
+
+            25(2)                                     30(0)
+           /   \                  rotate             /     \
+         20(0)  40(-1)           ----->         25(-1)   40(0)
+                /  \              RIGHT         /        /  \
+             30(1) 50(0)          LEFT       20(0)    35(0) 50(0)
+                \
+                 35(0)
+```
