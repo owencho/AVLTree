@@ -7,12 +7,12 @@ This AVL project separate into two parts which is **AVL Add** and **AVL Delete**
 ## 1.1 What is AVL Tree
 This AVL tree technique of balancing the tree height was developed by three person which is Adelson , Velskii and Landi. \
 This AVL tree will sort left sub-tree as smaller node size and right sub-tree as larger node size. \
-The height difference between left part of root tree and right part of subroot tree are as known as the **balanceFactor** and the balanceFactor cannot be more than one node .\
-The tree is height balanced if the height between left and right part of the root tree are same or height difference between both  
-is 1 . For example the picture of balanced tree below .
+The height difference between left part of root tree and right part of subroot tree are as known as the **balanceFactor** and the balanceFactor cannot be more than one node .
+The tree is height balanced if the height between left and right part of the root tree are same or height difference between both is 1. For example,
 <!-- photo of balance tree put here -->
 ![balanced](https://user-images.githubusercontent.com/51066670/72324141-369eaa00-36e5-11ea-8fe4-593438b71dbc.png) \
-If the height difference between both is **larger than 1 , then the tree is considered as not balanced**. For example the picture of unbalanced tree below . \
+If the height difference between both is **larger than 1 , then the tree is considered as not balanced**. 
+For example, \
 ![unbalanced](https://user-images.githubusercontent.com/51066670/72324322-99904100-36e5-11ea-8b28-cf1c8a906d22.png)
 <!-- photo of non balance tree put here -->
 # 2.0 Advantage of AVL tree
@@ -25,4 +25,98 @@ This AVL trees also support **different type of variable and structure** such as
 
 For example , [ShortestPath](https://github.com/owencho/ShortestPath "Shortest Path Github repo by owencho") that was also implemented this AVLTree project for finding the shortestPath by sorting with cost and name.
 
+# 3.0 AVL Add
+Avl add is one parts of the AVL tree which performs the task of insertion of nodes into the binary tree and perform rebalancing task if the tree is unbalanced after node insertion into the AVL tree.
+![add](https://user-images.githubusercontent.com/51066670/72326901-0bb75480-36eb-11ea-95da-0df9e2f8ebb3.png)
+## 3.1 Adding the node into Tree
+Avl add will perform the task to add the node into the root by passing in the root , node to add and the function pointers for comparision.
+```
+Node *avlAdd(Node *root,Node * nodeAdd,Compare compare);
+```
+## 3.2 Rotation for Avl Add
+You can refer to here <!--link to rotation-->
 
+## 3.3 Balancing for Avl Add
+### For right left and left right rotation on Avl add
+refer to here <!--sauce-->
+Balancing on Avl Tree is different on Avl Add(insertion) and Avl delete (deletion) for single rotation (rotate left and right).
+### For left single rotation on Avl add
+When the **balanceFactor is 2 and right child node has balance Factor ==1**
+left rotation and rebalance will execute after the node has been added.
+
+               35(2)                           50(0)
+               /  \           rotate           /   \
+          20(0)   50(1)       ----->       35(0)    60(1)
+                 /  \          LEFT         /  \     \
+             40(0) *60(1)*     rebalance   20(0) 40(0) 70(0)
+                       \
+                      70(0)
+
+                   25(2)                               40(0)
+                   /  \             rotate            /    \
+               10(0)   40(1)        ----->        25(0)     60(-1)
+                      /  \          LEFT          /   \       /
+                    30(0) *60(-1)*  rebalance    10(0) 30(0) 50(0)
+                           /
+                        50(0)
+
+               20(2)                             50(0)
+                  \           rotate             /   \
+                 50(1)         ----->         20(0)  70(0)
+                   \           LEFT
+                  *70(0)*      rebalance
+  
+You can notice that there remark node (root->right-> right for left rotation) and it has a pattern for AVL ADD where the remarked node that determine the balanceFactor after rotation and rebalance.
+Which can be simplified to the table below.
+```
+When the remarked node has balance factor of certain value it has a pattern how balance factor the root and its left and right child root will behave.
+
+    balance factor of remarked node 
+      (-1)              (0)              (1)
+      
+       (0)              (0)              (0)
+      /   \            /   \            /   \ 
+   (0)   (-1)        (0)    (0)       (0)    (1)
+
+```
+### For right single rotation Avl add
+When the **balanceFactor is -2 and left child node has balance Factor of -1**
+right rotation and rebalance will execute after the node has been added.
+```
+           30(-2)                            20(0)
+         /              rotate             /      \
+       20(-1)           ----->           10(0)    30(0)
+     /                  RIGHT
+   *10(0)*
+ 
+
+             60(-2)                            40(0)
+            /   \          rotate             /   \
+          40(-1)  70(0)   ----->          30(-1)  60(0)
+         /  \             RIGHT           /     /     \
+   *30(-1)*  50(0)      rebalance       20(0)  50(0)  70(0)
+       /
+   20(0)
+
+
+             40(-2)                            30(0)
+            /   \          rotate             /     \
+          30(-1) 50(0)   ----->           15(1)    40(0)
+         /   \             RIGHT            \        /   \
+     *15(1)* 35(0)      rebalance         20(0)     35(0) 50(0)
+         \
+       20(0)
+```
+You can notice that there remark node (root->left-> left for right rotation) and it has a pattern for AVL ADD where the remarked node that determine the balanceFactor after rotation and rebalance.
+Which can be simplified to the table below.
+```
+When the remarked node has balance factor of certain value it has a pattern how balance factor the root and its left and right child root will behave.
+
+    balance factor of remarked node for right Avl Add
+      (-1)              (0)              (1)
+      
+       (0)              (0)              (0)
+      /   \            /   \            /   \ 
+   (-1)   (0)        (0)    (0)       (1)    (0)
+
+```
