@@ -37,10 +37,10 @@ Node *avlAdd(Node *root,Node * nodeAdd,Compare compare);
 You can refer to here <!--link to rotation-->
 
 ## 3.3 Balancing for Avl Add
-### For right left and left right rotation on Avl add
-refer to here <!--sauce-->
+### 3.3.1 For right left and left right rotation on Avl add
+refer to here <!--sauce--> \
 Balancing on Avl Tree is different on Avl Add(insertion) and Avl delete (deletion) for single rotation (rotate left and right).
-### For left single rotation on Avl add
+### 3.3.2 For left single rotation on Avl add
 When the **balanceFactor is 2 and right child node has balance Factor ==1**
 left rotation and rebalance will execute after the node has been added.
 
@@ -52,13 +52,13 @@ left rotation and rebalance will execute after the node has been added.
                        \
                       70(0)
 
-                   25(2)                               40(0)
-                   /  \             rotate            /    \
-               10(0)   40(1)        ----->        25(0)     60(-1)
-                      /  \          LEFT          /   \       /
-                    30(0) *60(-1)*  rebalance    10(0) 30(0) 50(0)
-                           /
-                        50(0)
+               25(2)                               40(0)
+               /  \             rotate            /    \
+           10(0)   40(1)        ----->        25(0)     60(-1)
+                  /   \          LEFT          /   \       /
+               30(0) *60(-1)*  rebalance    10(0) 30(0) 50(0)
+                       /
+                     50(0)
 
                20(2)                             50(0)
                   \           rotate             /   \
@@ -69,9 +69,10 @@ left rotation and rebalance will execute after the node has been added.
 You can notice that there remark node (root->right-> right for left rotation) and it has a pattern for AVL ADD where the remarked node that determine the balanceFactor after rotation and rebalance.
 Which can be simplified to the table below.
 ```
-When the remarked node has balance factor of certain value it has a pattern how balance factor the root and its left and right child root will behave.
+When the remarked node has balance factor of certain value it has a pattern 
+how balance factor the root and its left and right child root will behave.
 
-    balance factor of remarked node 
+    balance factor of remarked node for left rotation Avl Add
       (-1)              (0)              (1)
       
        (0)              (0)              (0)
@@ -79,7 +80,7 @@ When the remarked node has balance factor of certain value it has a pattern how 
    (0)   (-1)        (0)    (0)       (0)    (1)
 
 ```
-### For right single rotation Avl add
+### 3.3.3 For right single rotation Avl add
 When the **balanceFactor is -2 and left child node has balance Factor of -1**
 right rotation and rebalance will execute after the node has been added.
 ```
@@ -110,9 +111,10 @@ right rotation and rebalance will execute after the node has been added.
 You can notice that there remark node (root->left-> left for right rotation) and it has a pattern for AVL ADD where the remarked node that determine the balanceFactor after rotation and rebalance.
 Which can be simplified to the table below.
 ```
-When the remarked node has balance factor of certain value it has a pattern how balance factor the root and its left and right child root will behave.
+When the remarked node has balance factor of certain value it has a pattern 
+how balance factor the root and its left and right child root will behave.
 
-    balance factor of remarked node for right Avl Add
+    balance factor of remarked node for right rotation Avl Add
       (-1)              (0)              (1)
       
        (0)              (0)              (0)
