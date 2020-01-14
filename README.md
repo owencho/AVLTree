@@ -20,7 +20,7 @@ For example, \
 As AVL trees are self-balancing binary tree , insertion (add node) , search and deletion (delete node) has lower time complexity compares to normal Binary search tree . on usual case binary search tree takes O(logn) but worst case will takes up to O(n) time to run compares to AVL tree which on any cases will always takes O(logn) time as AVL tree is always balanced.
 ![advantage](https://user-images.githubusercontent.com/51066670/72323767-6bf6c800-36e4-11ea-9514-a4381b37b0d8.png)
 ## 2.2 supports different variable and structure for the AVL tree
-This AVL trees also support **different type of variable and structure** such as int , string , and any kind of structure that user wants. This AVL tree function just need to add in your own comparision function pointers for different kind of structure by using dependancy injection from one of the S.O.L.I.D principles.
+This AVL trees also support **different type of variable and structure** such as int , string , and any kind of structure depending on the user requirement. This AVL tree function just need to add in your own comparision function pointers for different kind of structure by using dependancy injection from one of the S.O.L.I.D principles.
 ![diffstruct](https://user-images.githubusercontent.com/51066670/72325212-9302c900-36e7-11ea-8250-0b2c3f71de78.png)
 
 For example , [ShortestPath](https://github.com/owencho/ShortestPath "Shortest Path Github repo by owencho") that was also implemented this AVLTree project for finding the shortestPath by sorting with cost and name.
@@ -32,14 +32,18 @@ Avl add is one parts of the AVL tree which performs the task of insertion of nod
 Avl add will perform the task to add the node into the root by passing in the root , node to add and the function pointers for comparision.
 ```
 Node *avlAdd(Node *root,Node * nodeAdd,Compare compare);
+
+eg :
+root=avlAdd((Node*)&node80,(Node*)&node55,(Compare)intCompareForAvlAdd);
 ```
+This function will return the tree after executing it.
 ## 3.2 Rotation for Avl Add
 You can refer to here <!--link to rotation-->
-
+**Remarks** : there is no height increment when rotation is required to rotate the node. 
 ## 3.3 Balancing for Avl Add
 ### 3.3.1 For right left and left right rotation on Avl add
 refer to here <!--sauce--> \
-Balancing on Avl Tree is different on Avl Add(insertion) and Avl delete (deletion) for single rotation (rotate left and right).
+Balancing on Avl Tree is only different on Avl Add(insertion) and Avl delete (deletion) for single rotation (rotate left and right).
 ### 3.3.2 For left single rotation on Avl add
 When the **balanceFactor is 2 and right child node has balance Factor ==1**
 left rotation and rebalance will execute after the node has been added.
@@ -122,3 +126,16 @@ how balance factor the root and its left and right child root will behave.
    (-1)   (0)        (0)    (0)       (1)    (0)
 
 ```
+# 4.0 AVL Delete
+Avl add is another part of the AVL tree which performs the task of removal (delete) of nodes from the binary tree and perform rebalancing task if the tree is unbalanced after node was deleted from the AVL tree.
+## 4.1 removing the node into Tree
+Avl add will perform the task to remove the node from the root by passing value to delete the selected node.
+```
+Node *avlDelete(Node ** root,void * nodeDelete,Compare compare);
+
+eg :
+deletedNode=avlDelete(&root,(void*)&deleteValue,(Compare)intCompareForAvlDelete);
+```
+## 4.2 Rotation for Avl Delete
+You can refer to here <!--link to rotation-->
+**Remarks** : there is no height decrement when rotation is required to rotate the node for balancing. 
