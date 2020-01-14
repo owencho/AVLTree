@@ -38,7 +38,8 @@ root=avlAdd((Node*)&node80,(Node*)&node55,(Compare)intCompareForAvlAdd);
 ```
 This function will return the tree after executing it.
 ## 3.2 Rotation for Avl Add
-You can refer to here <!--link to rotation--> \
+https://github.com/owencho/AVLTree/blob/master/README.md#50-balancing-for-double-rotation
+You can refer to [here](https://github.com/owencho/AVLTree/blob/master/README.md#50-balancing-for-double-rotation "balancing for double rotation") .\
 **Remarks** : there is no height increment when rotation is required to rotate the node. 
 <!-- put example here -->
 ## 3.3 Balancing for Avl Add
@@ -144,7 +145,7 @@ You can refer to here. <!--link to rotation--> \
 <!-- put example here -->
 ## 4.3 Balancing for Avl Delete
 ### 4.3.1 For right left and left right rotation on Avl delete
-refer to here. <!--sauce--> \
+refer to [here](https://github.com/owencho/AVLTree/blob/master/README.md#50-balancing-for-double-rotation "balancing for double rotation") .\
 Balancing on Avl Tree is only different on Avl Add(insertion) and Avl delete (deletion) for single rotation (rotate left and right).
 ### 4.3.2 For left single rotation on Avl Delete
 When the **balanceFactor is 2 and root right node has balance Factor of 1 and 0**
