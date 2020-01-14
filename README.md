@@ -140,7 +140,7 @@ deletedNode=avlDelete(&root,(void*)&deleteValue,(Compare)intCompareForAvlDelete)
 You can refer to here. <!--link to rotation--> \
 **Remarks** : there is no height decrement when rotation is required to rotate the node for balancing. 
 ### 3.3.2 For left single rotation on Avl Delete
-When the **balanceFactor is 2 and root right node has balance Factor ==1 and 0 **
+When the **balanceFactor is 2 and root right node has balance Factor ==1 and 0**
 left rotation and rebalance will execute after the node has been deleted .
 ```
 When root right node has balance factor of 1 
