@@ -404,9 +404,9 @@ When the **balanceFactor is 2 and right child node has balance Factor of -1**
 The node can be compared by inserting the function pointer that compares for the node to go left and right.
 The function will take in two node (one from root and one to be added) for comparision for AVL add and the function will take in one node and one variable with value (to delete from node) to compare for Avl Delete.
 
-For same value it will return 0
-For node to be added > root will return -1
-For node to be added < root will return 1
+For same value it will return 0 \
+For node to be added > root it will return -1 \
+For node to be added < root it will return 1  \
 
 # 7.0 Source file
 - For Source Code details [click here](https://github.com/owencho/AVLTree/tree/master/src)
