@@ -9,12 +9,10 @@ This AVL tree technique of balancing the tree height was developed by three pers
 This AVL tree will sort left sub-tree as smaller node size and right sub-tree as larger node size. \
 The height difference between left part of root tree and right part of subroot tree are as known as the **balanceFactor** and the balanceFactor cannot be more than one node .
 The tree is height balanced if the height between left and right part of the root tree are same or height difference between both is 1. For example,
-<!-- photo of balance tree put here -->
 ![balanced](https://user-images.githubusercontent.com/51066670/72324141-369eaa00-36e5-11ea-8fe4-593438b71dbc.png) \
 If the height difference between both is **larger than 1 , then the tree is considered as not balanced**. 
 For example, \
 ![unbalanced](https://user-images.githubusercontent.com/51066670/72324322-99904100-36e5-11ea-8b28-cf1c8a906d22.png)
-<!-- photo of non balance tree put here -->
 # 2.0 Advantage of AVL tree
 ## 2.1 Faster execution speed
 As AVL trees are self-balancing binary tree , insertion (add node) , search and deletion (delete node) has lower time complexity compares to normal Binary search tree . on usual case binary search tree takes O(logn) but worst case will takes up to O(n) time to run compares to AVL tree which on any cases will always takes O(logn) time as AVL tree is always balanced.
@@ -38,12 +36,11 @@ root=avlAdd((Node*)&node80,(Node*)&node55,(Compare)intCompareForAvlAdd);
 ```
 This function will return the tree after executing it.
 ## 3.2 Rotation for Avl Add
-You can refer to [here](https://github.com/owencho/AVLTree/blob/master/README.md#50-balancing-for-double-rotation "balancing for double rotation") .\
-Balancing on Avl Tree is only different on Avl Add(insertion) and Avl delete (deletion) for single rotation (rotate left and rotate right). 
-<!-- put example here -->
+You can refer to [here](https://github.com/owencho/AVLTree/blob/master/README.md#50-rotation") . 
+
 ## 3.3 Balancing for Avl Add
 ### 3.3.1 For right left and left right rotation on Avl add
-refer to here. <!--sauce--> \
+refer [here](https://github.com/owencho/AVLTree/blob/master/README.md#50-balancing-for-double-rotation "balancing for double rotation") .
 Balancing on Avl Tree is only different on Avl Add(insertion) and Avl delete (deletion) for single rotation (rotate left and right).
 ### 3.3.2 For left single rotation on Avl add
 When the **balanceFactor is 2 and right child node has balance Factor of 1**
@@ -139,9 +136,7 @@ eg :
 deletedNode=avlDelete(&root,(void*)&deleteValue,(Compare)intCompareForAvlDelete);
 ```
 ## 4.2 Rotation for Avl Delete
-You can refer to here. <!--link to rotation--> \
-**Remarks** : there is no height decrement when rotation is required to rotate the node for balancing. 
-<!-- put example here -->
+You can refer to [here](https://github.com/owencho/AVLTree/blob/master/README.md#50-rotation") .
 ## 4.3 Balancing for Avl Delete
 ### 4.3.1 For right left and left right rotation on Avl delete
 You can refer to [here](https://github.com/owencho/AVLTree/blob/master/README.md#50-balancing-for-double-rotation "balancing for double rotation") .\
@@ -413,6 +408,6 @@ For same value it will return 0
 For node to be added > root will return -1
 For node to be added < root will return 1
 
-# 7.0 Source file:
+# 7.0 Source file
 - For Source Code details [click here](https://github.com/owencho/AVLTree/tree/master/src)
 - For Test Code details [click here](https://github.com/owencho/AVLTree/tree/master/test)
