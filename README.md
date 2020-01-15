@@ -25,7 +25,7 @@ For example , [ShortestPath](https://github.com/owencho/ShortestPath "Shortest P
 
 # 3.0 AVL Add
 Avl add is one parts of the AVL tree which performs the task of insertion of nodes into the binary tree and perform rebalancing task if the tree is unbalanced after node insertion into the AVL tree. AVL add function will compare using the function pointer to find where the node should be added into the tree.
-![add](https://user-images.githubusercontent.com/51066670/72326901-0bb75480-36eb-11ea-95da-0df9e2f8ebb3.png)
+![add](https://user-images.githubusercontent.com/51066670/72413011-c4dc6400-37a9-11ea-9697-b799cbe0b423.png)
 ## 3.1 Adding the node into Tree
 Avl add will perform the task to add the node into the root by passing in the root , node to add and the function pointers for comparision.
 ```
@@ -127,6 +127,7 @@ how balance factor the root and its left and right child root will behave.
 # 4.0 AVL Delete
 Avl Delete is another part of the AVL tree project which performs the task of removal (delete) of nodes from the binary tree and perform rebalancing task if the tree is unbalanced after node was deleted from the AVL tree.
 AVL Delete function will compare using the function pointer to find where the node should be delete inside the tree and find the replacer to replace the deleted node.
+![delete](https://user-images.githubusercontent.com/51066670/72413010-c443cd80-37a9-11ea-9230-c5e031170044.png)
 ## 4.1 Removing the node into Tree
 Avl Delete will perform the task to remove the node from the root by passing value to delete the selected node.
 ```
