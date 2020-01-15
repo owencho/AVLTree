@@ -11,15 +11,16 @@
 
 Node *avlAdd(Node *root,Node * nodeAdd,Compare compare){
     int heightInc;
-    if(root == NULL)
-        return NULL;
-    else if (nodeAdd == NULL)
+    if (nodeAdd == NULL)
         throwException(ERR_NODE_ADD_NULL," node could not added inside the tree as it points to NULL");
-    else if (compare==NULL )
-        throwException(ERR_FN_POINTER_NULL," the function pointer for compare is NULL");
     nodeAdd->left = NULL;
     nodeAdd->right = NULL;
     nodeAdd->bFactor =0;
+    if(root == NULL)
+        return nodeAdd;
+    else if (compare==NULL)
+        throwException(ERR_FN_POINTER_NULL," the function pointer for compare is NULL");
+
     return _avlAdd(root,nodeAdd,&heightInc,compare);
 }
 Node *_avlAdd(Node *root,Node * nodeAdd,int * heightInc,Compare compare){
