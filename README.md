@@ -296,7 +296,21 @@ When root left node has balance factor of 0
 
 ```
 ## 4.3 Finding replacer after the node deleted
-This AVL will automatically find the node to replace when a node got deleted. It will select the node that is located at the smallest node starts from its right child node to replace the original node.<!-- add example here -->
+This AVL will automatically find the node to replace when a node got deleted. It will select the node that is located at the smallest node starts from its right child node to replace the original node.
+
+There's 4 scenario where it could happened when finding the replacer
+### 4.3.1 When there is no left node on the right of deleted node
+The right of the deleted node will replace the original node as left of (deletedNode ->right ) is empty.
+![replacement1](https://user-images.githubusercontent.com/51066670/72412500-6c589700-37a8-11ea-8fe4-946581145a92.png)
+### 4.3.2 When the deletedNode does not have right child node 
+The left of the deleted node will replace the original node as right child of deletedNode is empty.
+![replacement2](https://user-images.githubusercontent.com/51066670/72412473-5c40b780-37a8-11ea-81e3-d1f059b595f3.png)
+### 4.3.3 When there is left node on the right of deleted node
+The smallest node from the right child node of deleted node will replace the deleted node
+![replacement3](https://user-images.githubusercontent.com/51066670/72412474-5c40b780-37a8-11ea-8b47-110d2ce44016.png)
+### 4.3.4 When the smallest node on the right of deleted node has child node
+The smallest node from the right child node of deleted node will replace the deleted node and its child will remain at same location as it replace the smallest node 
+![replacement4](https://user-images.githubusercontent.com/51066670/72412470-5ba82100-37a8-11ea-8b51-c530f271f53e.png)
 
 # 5.0 Rotation
 There's 4 type of rotation for AVL tree which is rotate left , rotate right , rotate right then left and rotate left then right.
@@ -406,7 +420,7 @@ The function will take in two node (one from root and one to be added) for compa
 
 For same value it will return 0 \
 For node to be added > root it will return -1 \
-For node to be added < root it will return 1  \
+For node to be added < root it will return 1  
 
 # 7.0 Source file
 - For Source Code details [click here](https://github.com/owencho/AVLTree/tree/master/src)
