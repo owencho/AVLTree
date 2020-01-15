@@ -36,11 +36,11 @@ root=avlAdd((Node*)&node80,(Node*)&node55,(Compare)intCompareForAvlAdd);
 ```
 This function will return the tree after executing it.
 ## 3.2 Rotation for Avl Add
-You can refer to [here](https://github.com/owencho/AVLTree/blob/master/README.md#50-rotation") . 
+You can refer to [here](https://github.com/owencho/AVLTree#50-rotation) . 
 
 ## 3.3 Balancing for Avl Add
 ### 3.3.1 For right left and left right rotation on Avl add
-refer [here](https://github.com/owencho/AVLTree/blob/master/README.md#50-balancing-for-double-rotation "balancing for double rotation"). \
+refer [here](https://github.com/owencho/AVLTree#43-balancing-for-avl-delete "balancing for double rotation"). \
 Balancing on Avl Tree is only different on Avl Add(insertion) and Avl delete (deletion) for single rotation (rotate left and right).
 ### 3.3.2 For left single rotation on Avl add
 When the **balanceFactor is 2 and right child node has balance Factor of 1**
@@ -137,10 +137,10 @@ eg :
 deletedNode=avlDelete(&root,(void*)&deleteValue,(Compare)intCompareForAvlDelete);
 ```
 ## 4.2 Rotation for Avl Delete
-You can refer to [here](https://github.com/owencho/AVLTree/blob/master/README.md#50-rotation") .
+You can refer to [here](https://github.com/owencho/AVLTree#50-rotation) .
 ## 4.3 Balancing for Avl Delete
 ### 4.3.1 For right left and left right rotation on Avl delete
-You can refer to [here](https://github.com/owencho/AVLTree/blob/master/README.md#50-balancing-for-double-rotation "balancing for double rotation") .\
+You can refer to [here](https://github.com/owencho/AVLTree#43-balancing-for-avl-delete "balancing for double rotation") .\
 Balancing on Avl Tree is only different on Avl Add(insertion) and Avl delete (deletion) for single rotation (rotate left and right).
 ### 4.3.2 For left single rotation on Avl Delete
 When the **balanceFactor is 2 and root right node has balance Factor of 1 and 0**
@@ -296,20 +296,20 @@ When root left node has balance factor of 0
    (-1)    (-1)        (0)   (-1)       (1)    (-1)
 
 ```
-## 4.3 Finding replacer after the node deleted
+## 4.4 Finding replacer after the node deleted
 This AVL will automatically find the node to replace when a node got deleted. It will select the node that is located at the smallest node starts from its right child node to replace the original node.
 
 There's 4 scenario where it could happened when finding the replacer
-### 4.3.1 When there is no left node on the right of deleted node
+### 4.4.1 When there is no left node on the right of deleted node
 The right of the deleted node will replace the original node as left of (deletedNode ->right ) is empty.
 ![replacement1](https://user-images.githubusercontent.com/51066670/72412500-6c589700-37a8-11ea-8fe4-946581145a92.png)
-### 4.3.2 When the deletedNode does not have right child node 
+### 4.4.2 When the deletedNode does not have right child node 
 The left of the deleted node will replace the original node as right child of deletedNode is empty.
 ![replacement2](https://user-images.githubusercontent.com/51066670/72412473-5c40b780-37a8-11ea-81e3-d1f059b595f3.png)
-### 4.3.3 When there is left node on the right of deleted node
+### 4.4.3 When there is left node on the right of deleted node
 The smallest node from the right child node of deleted node will replace the deleted node
 ![replacement3](https://user-images.githubusercontent.com/51066670/72412474-5c40b780-37a8-11ea-8b47-110d2ce44016.png)
-### 4.3.4 When the smallest node on the right of deleted node has child node
+### 4.4.4 When the smallest node on the right of deleted node has child node
 The smallest node from the right child node of deleted node will replace the deleted node and its child will remain at same location as it replace the smallest node 
 ![replacement4](https://user-images.githubusercontent.com/51066670/72412470-5ba82100-37a8-11ea-8b51-c530f271f53e.png)
 
@@ -348,8 +348,8 @@ There's 4 type of rotation for AVL tree which is rotate left , rotate right , ro
       \            LEFT         /         RIGHT     20    80
        50                     20
 
-# 5.0 Balancing for double rotation
-## 5.1 Left right rotation balancing 
+# 6.0 Balancing for double rotation
+## 6.1 Left right rotation balancing 
 When the **balanceFactor is -2 and left child node has balance Factor of 1**
 ```
       80(-2)                             60(0)
@@ -383,7 +383,7 @@ When the **balanceFactor is -2 and left child node has balance Factor of 1**
       /   \             /   \             /   \ 
    (-1)    (0)        (0)   (0)        (0)    (1)
 ```   
-## 5.2 Right left rotation balancing 
+## 6.2 Right left rotation balancing 
 When the **balanceFactor is 2 and right child node has balance Factor of -1**
 ```
     50(2)                               55(0)
@@ -415,7 +415,7 @@ When the **balanceFactor is 2 and right child node has balance Factor of -1**
       /   \             /   \             /   \ 
    (0)    (1)        (0)   (0)         (-1)    (0)
 ```   
-# 6.0 Node comparision
+# 7.0 Node comparision
 The node can be compared by inserting the function pointer that compares for the node to go left and right.
 The function will take in two node (one from root and one to be added) for comparision for AVL add and the function will take in one node and one variable with value (to delete from node) to compare for Avl Delete.
 
@@ -423,6 +423,6 @@ For same value it will return 0 \
 For node to be added > root it will return -1 \
 For node to be added < root it will return 1  
 
-# 7.0 Source file
+# 8.0 Source file
 - For Source Code details [click here](https://github.com/owencho/AVLTree/tree/master/src)
 - For Test Code details [click here](https://github.com/owencho/AVLTree/tree/master/test)
