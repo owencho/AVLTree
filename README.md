@@ -40,7 +40,7 @@ You can refer to [here](https://github.com/owencho/AVLTree#50-rotation) .
 
 ## 3.3 Balancing for Avl Add
 ### 3.3.1 For right left and left right rotation on Avl add
-refer [here](https://github.com/owencho/AVLTree#43-balancing-for-avl-delete "balancing for double rotation"). \
+refer [here](https://github.com/owencho/AVLTree#60-balancing-for-double-rotation "balancing for double rotation"). \
 Balancing on Avl Tree is only different on Avl Add(insertion) and Avl delete (deletion) for single rotation (rotate left and right).
 ### 3.3.2 For left single rotation on Avl add
 When the **balanceFactor is 2 and right child node has balance Factor of 1**
@@ -140,7 +140,7 @@ deletedNode=avlDelete(&root,(void*)&deleteValue,(Compare)intCompareForAvlDelete)
 You can refer to [here](https://github.com/owencho/AVLTree#50-rotation) .
 ## 4.3 Balancing for Avl Delete
 ### 4.3.1 For right left and left right rotation on Avl delete
-You can refer to [here](https://github.com/owencho/AVLTree#43-balancing-for-avl-delete "balancing for double rotation") .\
+You can refer to [here](https://github.com/owencho/AVLTree#60-balancing-for-double-rotation "balancing for double rotation") .\
 Balancing on Avl Tree is only different on Avl Add(insertion) and Avl delete (deletion) for single rotation (rotate left and right).
 ### 4.3.2 For left single rotation on Avl Delete
 When the **balanceFactor is 2 and root right node has balance Factor of 1 and 0**
