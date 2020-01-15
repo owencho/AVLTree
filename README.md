@@ -40,7 +40,7 @@ You can refer to [here](https://github.com/owencho/AVLTree/blob/master/README.md
 
 ## 3.3 Balancing for Avl Add
 ### 3.3.1 For right left and left right rotation on Avl add
-refer [here](https://github.com/owencho/AVLTree/blob/master/README.md#50-balancing-for-double-rotation "balancing for double rotation") .
+refer [here](https://github.com/owencho/AVLTree/blob/master/README.md#50-balancing-for-double-rotation "balancing for double rotation"). \
 Balancing on Avl Tree is only different on Avl Add(insertion) and Avl delete (deletion) for single rotation (rotate left and right).
 ### 3.3.2 For left single rotation on Avl add
 When the **balanceFactor is 2 and right child node has balance Factor of 1**
