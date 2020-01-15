@@ -346,7 +346,7 @@ When the **balanceFactor is -2 and left child node has balance Factor of 1**
      /     \          Rotate           /       \
     30(1)  90(0)      ---->         30(-1)   80(0)
    /     \            LEFTRIGHT     /        /    \
-  10(0)  60(1)                     10(0)     70(0)  90(0)
+  10(0)  *60(1)*                     10(0)     70(0)  90(0)
              \
             70(0)
 
@@ -355,7 +355,7 @@ When the **balanceFactor is -2 and left child node has balance Factor of 1**
      /     \          Rotate           /       \
     30(1)  90(0)      ---->         30(0)    80(1)
    /     \            LEFTRIGHT     /    \       \
-  10(0)  60(-1)                     10(0) 55(0)  90(0)
+  10(0)  *60(-1)*                     10(0) 55(0)  90(0)
            /
         55(0)
 
@@ -364,30 +364,44 @@ When the **balanceFactor is -2 and left child node has balance Factor of 1**
        /           rotate             /      \
    50(1)           ----->           50(0)    60(0)
      \           LEFT RIGHT
-    55(0)
-```
+    *55(0)*
+
+    balance factor of remarked node for left right rotation 
+      (-1)              (0)              (1)
+      
+       (0)               (0)               (0)
+      /   \             /   \             /   \ 
+   (-1)    (0)        (0)   (0)        (0)    (1)
+```   
 ## 5.2 Right left rotation balancing 
-When the **balanceFactor is 2 and left child node has balance Factor of -1**
+When the **balanceFactor is 2 and right child node has balance Factor of -1**
 ```
     50(2)                               55(0)
        \           rotate             /      \
      60(-1)         ----->         50(0)    60(0)
      /           RIGHT LEFT
-    55(0)
-
-        25(2)                                   35(0)
-       /   \                rotate             /     \
-     20(0)  40(-1)          ----->         25(0)     40(1)
-            /  \            RIGHT         /   \        \
-         35(-1) 50(0)       LEFT       20(0) 30(0)   50(0)
-            /
-         30(0)
+    *55(0)*
+ 
+        25(2)                                    35(0)
+       /   \                 rotate             /     \
+     20(0)  40(-1)           ----->         25(0)     40(1)
+            /   \            RIGHT          /   \        \
+       *35(-1)*  50(0)       LEFT        20(0) 30(0)   50(0)
+          /
+       30(0)
 
         25(2)                                   30(0)
        /   \                rotate             /     \
     20(0)  40(-1)           ----->         25(-1)   40(0)
-            /  \            RIGHT         /         /  \
-         30(1) 50(0)        LEFT       20(0)     35(0) 50(0)
-                \
+            /   \            RIGHT         /         /  \
+       *30(1)*  50(0)        LEFT       20(0)     35(0) 50(0)
+                  \
                  35(0)
-```
+                 
+    balance factor of remarked node for right left rotation 
+      (-1)              (0)              (1)
+      
+       (0)               (0)               (0)
+      /   \             /   \             /   \ 
+   (0)    (1)        (0)   (0)         (-1)    (0)
+```   
