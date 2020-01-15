@@ -8,9 +8,9 @@
 #include "IntCompare.h"
 #include "IntNode.h"
 #include "Balance.h"
-#include "AvlAdd.h"
+#include "Avl.h"
+#include "AVLProcessor.h"
 #include "Balance.h"
-#include "AvlDelete.h"
 #include "Node.h"
 #include "CustomAssert.h"
 #include "Rotate.h"
@@ -22,6 +22,9 @@ CEXCEPTION_T ex;
 void setUp(void){}
 void tearDown(void){}
 
+void freeNodeInTree(Node* root){
+    freeNode(root);
+}
 Node * createNode(uint32_t value){
     IntNode * node = malloc(sizeof(IntNode));
     node->value = value ;
@@ -100,7 +103,7 @@ void test_verify_AVL_tree(void){
         }
         TEST_VERIFY_AVL_TREE((IntNode*)root, max-i+1);
     }
-    freeAllNodesInTree(root);
+    visitPostOrder(root,(AVLProcessor)freeNodeInTree);
 }
 
 //Automated Test for checking AVL add and delete function
@@ -135,5 +138,5 @@ void test_verify_add_delete_AVL_tree(void){
           }
           TEST_VERIFY_AVL_TREE((IntNode*)root, max-i);
       }
-      freeAllNodesInTree(root);
+      visitPostOrder(root,(AVLProcessor)freeNodeInTree);
 }

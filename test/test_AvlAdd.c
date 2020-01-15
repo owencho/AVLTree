@@ -1,6 +1,5 @@
 #include "unity.h"
-#include "AvlAdd.h"
-#include "AvlAdd.h"
+#include "Avl.h"
 #include "Node.h"
 #include "IntNode.h"
 #include "IntCompare.h"

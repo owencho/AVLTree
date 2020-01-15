@@ -1,6 +1,5 @@
 #include "unity.h"
-#include "AvlAdd.h"
-#include "AvlDelete.h"
+#include "Avl.h"
 #include "Node.h"
 #include "IntNode.h"
 #include "IntCompare.h"
@@ -2432,66 +2431,6 @@ void test_rotateBalanceAndGetHeightChangeForDelete_root_NULL(void){
 
     root=rotateBalanceAndGetHeightChangeForDelete(NULL,&heightDec);
     TEST_ASSERT_NULL(root);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-///findSmallestNode/////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-//This function is used to find the smallestNode inside the root tree
-/**
-*    10(2)
-*       \
-*     30(0)
-*    /    \
-*  20(0)  35(0)
-*
-**/
-
-void test_findSmallestNode_10_30_20_35(void){
-    initIntNode(&node20,NULL,NULL,0);
-    initIntNode(&node35,NULL,NULL,0);
-    initIntNode(&node30,&node20,&node35,0);
-    initIntNode(&node10,NULL,&node30,2);
-    Try{
-        root=findSmallestNode((Node*)&node10);
-        TEST_ASSERT_EQUAL_PTR(&node10,root);
-    }Catch(ex){
-        dumpException(ex);
-        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
-    }
-}
-/**
-*       40(1)
-*       /    \
-*     30(0)  50(0)
-*           /    \
-*         45(0)  55(0)
-*
-**/
-
-void test_findSmallestNode_40_50_30_45_55(void){
-    initIntNode(&node45,NULL,NULL,0);
-    initIntNode(&node30,NULL,NULL,0);
-    initIntNode(&node55,NULL,NULL,0);
-    initIntNode(&node50,&node45,&node55,0);
-    initIntNode(&node40,&node30,&node50,1);
-    Try{
-        root=findSmallestNode((Node*)&node40);
-        TEST_ASSERT_EQUAL_PTR(&node30,root);
-    }Catch(ex) {
-        dumpException(ex);
-        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
-    }
-}
-
-void test_findSmallestNode_root_NULL(void){
-    Try{
-        root=findSmallestNode(NULL);
-        TEST_ASSERT_NULL(root);
-    }Catch(ex) {
-        dumpException(ex);
-        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
-    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
