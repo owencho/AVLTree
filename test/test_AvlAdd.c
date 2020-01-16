@@ -1032,6 +1032,45 @@ void test_nodeSearchAndAddNode_given_50_30_20_40_60_add_30_expected_error(void){
     }
 
 }
+
+void test_nodeSearchAndAddNode_given_null_tree(void){
+    Try{
+        root=nodeSearchAndAddNode(NULL,(Node*)&node80,&heightInc,(Compare)intCompareForAvlAdd);
+        TEST_ASSERT_NULL(root);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
+
+void test_nodeSearchAndAddNode_given_null_in_Node(void){
+    Try{
+        root=nodeSearchAndAddNode((Node*)&node80,NULL,&heightInc,(Compare)intCompareForAvlAdd);
+        TEST_ASSERT_EQUAL((Node*)&node80,root);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
+
+void test_nodeSearchAndAddNode_given_null_heightInc(void){
+    Try{
+        root=nodeSearchAndAddNode((Node*)&node80,(Node*)&node70,NULL,(Compare)intCompareForAvlAdd);
+        TEST_ASSERT_EQUAL((Node*)&node80,root);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
+void test_nodeSearchAndAddNode_given_null_fn_pointers(void){
+    Try{
+        root=nodeSearchAndAddNode((Node*)&node80,(Node*)&node70,&heightInc,NULL);
+        TEST_ASSERT_EQUAL((Node*)&node80,root);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
 /**
 *            50(-1)                     50(0)
 *           /   \                       /   \ (height increase 1 here)
@@ -1249,6 +1288,35 @@ void test_nodeSearchAndAddNodeForLeft_given_root_NULL(void){
         TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
     }
 }
+
+void test_nodeSearchAndAddNodeForLeft_given_null_in_Node(void){
+    Try{
+        root=nodeSearchAndAddNodeForLeft((Node*)&node80,NULL,&heightInc,(Compare)intCompareForAvlAdd);
+        TEST_ASSERT_EQUAL((Node*)&node80,root);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
+
+void test_nodeSearchAndAddNodeForLeft_given_null_heightInc(void){
+    Try{
+        root=nodeSearchAndAddNodeForLeft((Node*)&node80,(Node*)&node70,NULL,(Compare)intCompareForAvlAdd);
+        TEST_ASSERT_EQUAL((Node*)&node80,root);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
+void test_nodeSearchAndAddNodeForLeft_given_null_fn_pointers(void){
+    Try{
+        root=nodeSearchAndAddNodeForLeft((Node*)&node80,(Node*)&node70,&heightInc,NULL);
+        TEST_ASSERT_EQUAL((Node*)&node80,root);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
 /**
 *            50(0)                                 50(-1)
 *                                                   /
@@ -1318,6 +1386,34 @@ void test_nodeSearchAndAddNodeForRight_given_root_NULL(void){
     Try{
         root=nodeSearchAndAddNodeForRight(NULL,(Node*)&node30,&heightInc,(Compare)intCompareForAvlAdd);
         TEST_ASSERT_NULL(root);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
+void test_nodeSearchAndAddNodeForRight_given_null_in_Node(void){
+    Try{
+        root=nodeSearchAndAddNodeForRight((Node*)&node80,NULL,&heightInc,(Compare)intCompareForAvlAdd);
+        TEST_ASSERT_EQUAL((Node*)&node80,root);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
+
+void test_nodeSearchAndAddNodeForRight_given_null_heightInc(void){
+    Try{
+        root=nodeSearchAndAddNodeForRight((Node*)&node80,(Node*)&node70,NULL,(Compare)intCompareForAvlAdd);
+        TEST_ASSERT_EQUAL((Node*)&node80,root);
+    }Catch(ex) {
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
+void test_nodeSearchAndAddNodeForRight_given_null_fn_pointers(void){
+    Try{
+        root=nodeSearchAndAddNodeForRight((Node*)&node80,(Node*)&node70,&heightInc,NULL);
+        TEST_ASSERT_EQUAL((Node*)&node80,root);
     }Catch(ex) {
         dumpException(ex);
         TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");

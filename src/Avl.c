@@ -10,7 +10,7 @@
 
 Node *avlAdd(Node *root,Node * nodeAdd,Compare compare){
     int heightInc;
-    if (nodeAdd == NULL)
+    if(nodeAdd == NULL)
         throwException(ERR_NODE_ADD_NULL," node could not added inside the tree as it points to NULL");
     nodeAdd->left = NULL;
     nodeAdd->right = NULL;
@@ -172,7 +172,7 @@ Node * rotateBalanceAndGetHeightChangeForDelete(Node* root,int * heightDec){
 }
 
 Node* nodeSearchAndReplaceForDeleteNode(Node* root,void * nodeDelete,Node ** deletedNode,int * heightDec,Compare compare){
-    if(root == NULL || heightDec ==NULL || deletedNode ==NULL || nodeDelete==NULL )
+    if(root == NULL || heightDec ==NULL || deletedNode ==NULL || nodeDelete==NULL || compare == NULL)
         return root;
     int size = compare(root,nodeDelete);
     if(!size){
@@ -189,7 +189,7 @@ Node* nodeSearchAndReplaceForDeleteNode(Node* root,void * nodeDelete,Node ** del
 Node* nodeSearchRightForDeleteNode(Node* root,void * nodeDelete,Node ** deletedNode,int * heightDec,Compare compare){
     Node * child;
     int heightChange = 0;
-    if(root == NULL || heightDec ==NULL || deletedNode ==NULL || nodeDelete==NULL )
+    if(root == NULL || heightDec ==NULL || deletedNode ==NULL || nodeDelete==NULL || compare == NULL )
         return root;
     child = root->right;
     if(child != NULL){
@@ -203,7 +203,7 @@ Node* nodeSearchRightForDeleteNode(Node* root,void * nodeDelete,Node ** deletedN
 Node* nodeSearchLeftForDeleteNode(Node* root,void * nodeDelete,Node ** deletedNode,int * heightDec,Compare compare){
     Node * child;
     int heightChange = 0;
-    if(root == NULL || heightDec ==NULL || deletedNode ==NULL || nodeDelete==NULL)
+    if(root == NULL || heightDec ==NULL || deletedNode ==NULL || nodeDelete==NULL || compare == NULL)
         return root;
     child = root->left;
     if(child != NULL){
@@ -336,7 +336,7 @@ void visitPostOrder(Node *root, AVLProcessor processor){
     if(root->left != NULL){
         visitPostOrder(root->left,processor);
     }
-    if (root->right != NULL){
+    if(root->right != NULL){
         visitPostOrder(root->right,processor);
     }
     processor(root);

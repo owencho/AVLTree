@@ -1265,6 +1265,8 @@ void test_avlGetReplacer_given_root_is_NULL(void){
     root=avlGetReplacer(NULL,&heightDec,&replacedNode);
     TEST_ASSERT_NULL(root);
 }
+
+
 /**
 *    30(1)
 *   /     \
@@ -1308,6 +1310,7 @@ void test_avlGetReplacer_given_root_is_replacedNode_pointer_is_NULL(void){
     TEST_ASSERT_EQUAL_INT_NODE(&node65,NULL,NULL,0);
     TEST_ASSERT_EQUAL_INT_NODE(&node50,NULL,NULL,0);
 }
+
 /**
 *    30(1)                                     50(1)
 *   /     \                                   /   \
@@ -2133,8 +2136,53 @@ void test_nodeSearchAndReplaceForDeleteNode_15_30_20_35(void){
     TEST_ASSERT_EQUAL_INT_NODE(&node35,NULL,NULL,0);
     TEST_ASSERT_EQUAL_INT_NODE(&node50,NULL,NULL,0);
 }
-
 void test_nodeSearchAndReplaceForDeleteNode_NULL_root(void){
+    initIntNode(&node20,NULL,NULL,0);
+    initIntNode(&node50,NULL,NULL,0);
+    initIntNode(&node35,NULL,NULL,0);
+    initIntNode(&node30,&node20,&node35,0);
+    initIntNode(&node40,&node30,&node50,-1);
+    deleteValue =30;
+
+    root=nodeSearchAndReplaceForDeleteNode(NULL,(void*)&deleteValue,&deletedNode,
+                                          &heightDec,(Compare)intCompareForAvlDelete);
+    TEST_ASSERT_NULL(root);
+}
+void test_nodeSearchAndReplaceForDeleteNode_NULL_del_value(void){
+    initIntNode(&node20,NULL,NULL,0);
+    initIntNode(&node50,NULL,NULL,0);
+    initIntNode(&node35,NULL,NULL,0);
+    initIntNode(&node30,&node20,&node35,0);
+    initIntNode(&node40,&node30,&node50,-1);
+    deleteValue =30;
+
+    root=nodeSearchAndReplaceForDeleteNode((Node*)&node40,NULL,&deletedNode,
+                                          &heightDec,(Compare)intCompareForAvlDelete);
+    TEST_ASSERT_EQUAL_PTR(&node40,root);
+    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node30,&node50,-1);
+    TEST_ASSERT_EQUAL_INT_NODE(&node30,&node20,&node35,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node20,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node35,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node50,NULL,NULL,0);
+}
+void test_nodeSearchAndReplaceForDeleteNode_NULL_deleted_Node(void){
+    initIntNode(&node20,NULL,NULL,0);
+    initIntNode(&node50,NULL,NULL,0);
+    initIntNode(&node35,NULL,NULL,0);
+    initIntNode(&node30,&node20,&node35,0);
+    initIntNode(&node40,&node30,&node50,-1);
+    deleteValue =30;
+
+    root=nodeSearchAndReplaceForDeleteNode((Node*)&node40,(void*)&deleteValue,NULL,
+                                          &heightDec,(Compare)intCompareForAvlDelete);
+    TEST_ASSERT_EQUAL_PTR(&node40,root);
+    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node30,&node50,-1);
+    TEST_ASSERT_EQUAL_INT_NODE(&node30,&node20,&node35,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node20,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node35,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node50,NULL,NULL,0);
+}
+void test_nodeSearchAndReplaceForDeleteNode_NULL_height_Dec(void){
     initIntNode(&node20,NULL,NULL,0);
     initIntNode(&node10,NULL,NULL,0);
     initIntNode(&node35,NULL,NULL,0);
@@ -2142,10 +2190,34 @@ void test_nodeSearchAndReplaceForDeleteNode_NULL_root(void){
     initIntNode(&node15,&node10,&node30,1);
     deleteValue =30;
 
-    root=nodeSearchAndReplaceForDeleteNode(NULL,(void*)&deleteValue,&deletedNode,
-                                          &heightDec,(Compare)intCompareForAvlDelete);
-    TEST_ASSERT_NULL(root);
+    root=nodeSearchAndReplaceForDeleteNode((Node*)&node40,(void*)&deleteValue,&deletedNode,
+                                          NULL,(Compare)intCompareForAvlDelete);
+
+    TEST_ASSERT_EQUAL_PTR(&node40,root);
+    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node30,&node50,-1);
+    TEST_ASSERT_EQUAL_INT_NODE(&node30,&node20,&node35,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node20,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node35,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node50,NULL,NULL,0);
 }
+void test_nodeSearchAndReplaceForDeleteNode_NULL_fn_pointer(void){
+    initIntNode(&node20,NULL,NULL,0);
+    initIntNode(&node10,NULL,NULL,0);
+    initIntNode(&node35,NULL,NULL,0);
+    initIntNode(&node30,&node20,&node35,0);
+    initIntNode(&node15,&node10,&node30,1);
+    deleteValue =30;
+
+    root=nodeSearchAndReplaceForDeleteNode((Node*)&node40,(void*)&deleteValue,&deletedNode,
+                                          &heightDec,NULL);
+    TEST_ASSERT_EQUAL_PTR(&node40,root);
+    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node30,&node50,-1);
+    TEST_ASSERT_EQUAL_INT_NODE(&node30,&node20,&node35,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node20,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node35,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node50,NULL,NULL,0);
+}
+
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2223,6 +2295,76 @@ void test_nodeSearchLeftForDeleteNode_tree_is_NULL(void){
     root=nodeSearchLeftForDeleteNode(NULL,(void*)&deleteValue,&deletedNode,
                                           &heightDec,(Compare)intCompareForAvlDelete);
     TEST_ASSERT_NULL(root);
+}
+
+void test_nodeSearchLeftForDeleteNode_NULL_del_value(void){
+    initIntNode(&node20,NULL,NULL,0);
+    initIntNode(&node50,NULL,NULL,0);
+    initIntNode(&node35,NULL,NULL,0);
+    initIntNode(&node30,&node20,&node35,0);
+    initIntNode(&node40,&node30,&node50,-1);
+    deleteValue =30;
+
+    root=nodeSearchLeftForDeleteNode((Node*)&node40,NULL,&deletedNode,
+                                          &heightDec,(Compare)intCompareForAvlDelete);
+    TEST_ASSERT_EQUAL_PTR(&node40,root);
+    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node30,&node50,-1);
+    TEST_ASSERT_EQUAL_INT_NODE(&node30,&node20,&node35,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node20,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node35,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node50,NULL,NULL,0);
+}
+void test_nodeSearchLeftForDeleteNode_NULL_deleted_Node(void){
+    initIntNode(&node20,NULL,NULL,0);
+    initIntNode(&node50,NULL,NULL,0);
+    initIntNode(&node35,NULL,NULL,0);
+    initIntNode(&node30,&node20,&node35,0);
+    initIntNode(&node40,&node30,&node50,-1);
+    deleteValue =30;
+
+    root=nodeSearchLeftForDeleteNode((Node*)&node40,(void*)&deleteValue,NULL,
+                                          &heightDec,(Compare)intCompareForAvlDelete);
+    TEST_ASSERT_EQUAL_PTR(&node40,root);
+    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node30,&node50,-1);
+    TEST_ASSERT_EQUAL_INT_NODE(&node30,&node20,&node35,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node20,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node35,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node50,NULL,NULL,0);
+}
+void test_nodeSearchLeftForDeleteNode_NULL_height_Dec(void){
+    initIntNode(&node20,NULL,NULL,0);
+    initIntNode(&node10,NULL,NULL,0);
+    initIntNode(&node35,NULL,NULL,0);
+    initIntNode(&node30,&node20,&node35,0);
+    initIntNode(&node15,&node10,&node30,1);
+    deleteValue =30;
+
+    root=nodeSearchLeftForDeleteNode((Node*)&node40,(void*)&deleteValue,&deletedNode,
+                                          NULL,(Compare)intCompareForAvlDelete);
+
+    TEST_ASSERT_EQUAL_PTR(&node40,root);
+    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node30,&node50,-1);
+    TEST_ASSERT_EQUAL_INT_NODE(&node30,&node20,&node35,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node20,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node35,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node50,NULL,NULL,0);
+}
+void test_nodeSearchLeftForDeleteNode_NULL_fn_pointer(void){
+    initIntNode(&node20,NULL,NULL,0);
+    initIntNode(&node10,NULL,NULL,0);
+    initIntNode(&node35,NULL,NULL,0);
+    initIntNode(&node30,&node20,&node35,0);
+    initIntNode(&node15,&node10,&node30,1);
+    deleteValue =30;
+
+    root=nodeSearchLeftForDeleteNode((Node*)&node40,(void*)&deleteValue,&deletedNode,
+                                          &heightDec,NULL);
+    TEST_ASSERT_EQUAL_PTR(&node40,root);
+    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node30,&node50,-1);
+    TEST_ASSERT_EQUAL_INT_NODE(&node30,&node20,&node35,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node20,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node35,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node50,NULL,NULL,0);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2306,6 +2448,76 @@ void test_nodeSearchRightForDeleteNode_tree_is_NULL(void){
     root=nodeSearchRightForDeleteNode(NULL,(void*)&deleteValue,&deletedNode,
                                           &heightDec,(Compare)intCompareForAvlDelete);
     TEST_ASSERT_NULL(root);
+}
+
+void test_nodeSearchRightForDeleteNode_NULL_del_value(void){
+    initIntNode(&node20,NULL,NULL,0);
+    initIntNode(&node50,NULL,NULL,0);
+    initIntNode(&node35,NULL,NULL,0);
+    initIntNode(&node30,&node20,&node35,0);
+    initIntNode(&node40,&node30,&node50,-1);
+    deleteValue =30;
+
+    root=nodeSearchRightForDeleteNode((Node*)&node40,NULL,&deletedNode,
+                                          &heightDec,(Compare)intCompareForAvlDelete);
+    TEST_ASSERT_EQUAL_PTR(&node40,root);
+    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node30,&node50,-1);
+    TEST_ASSERT_EQUAL_INT_NODE(&node30,&node20,&node35,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node20,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node35,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node50,NULL,NULL,0);
+}
+void test_nodeSearchRightForDeleteNode_NULL_deleted_Node(void){
+    initIntNode(&node20,NULL,NULL,0);
+    initIntNode(&node50,NULL,NULL,0);
+    initIntNode(&node35,NULL,NULL,0);
+    initIntNode(&node30,&node20,&node35,0);
+    initIntNode(&node40,&node30,&node50,-1);
+    deleteValue =30;
+
+    root=nodeSearchRightForDeleteNode((Node*)&node40,(void*)&deleteValue,NULL,
+                                          &heightDec,(Compare)intCompareForAvlDelete);
+    TEST_ASSERT_EQUAL_PTR(&node40,root);
+    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node30,&node50,-1);
+    TEST_ASSERT_EQUAL_INT_NODE(&node30,&node20,&node35,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node20,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node35,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node50,NULL,NULL,0);
+}
+void test_nodeSearchRightForDeleteNode_NULL_height_Dec(void){
+    initIntNode(&node20,NULL,NULL,0);
+    initIntNode(&node10,NULL,NULL,0);
+    initIntNode(&node35,NULL,NULL,0);
+    initIntNode(&node30,&node20,&node35,0);
+    initIntNode(&node15,&node10,&node30,1);
+    deleteValue =30;
+
+    root=nodeSearchRightForDeleteNode((Node*)&node40,(void*)&deleteValue,&deletedNode,
+                                          NULL,(Compare)intCompareForAvlDelete);
+
+    TEST_ASSERT_EQUAL_PTR(&node40,root);
+    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node30,&node50,-1);
+    TEST_ASSERT_EQUAL_INT_NODE(&node30,&node20,&node35,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node20,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node35,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node50,NULL,NULL,0);
+}
+void test_nodeSearchRightForDeleteNode_NULL_fn_pointer(void){
+    initIntNode(&node20,NULL,NULL,0);
+    initIntNode(&node10,NULL,NULL,0);
+    initIntNode(&node35,NULL,NULL,0);
+    initIntNode(&node30,&node20,&node35,0);
+    initIntNode(&node15,&node10,&node30,1);
+    deleteValue =30;
+
+    root=nodeSearchRightForDeleteNode((Node*)&node40,(void*)&deleteValue,&deletedNode,
+                                          &heightDec,NULL);
+    TEST_ASSERT_EQUAL_PTR(&node40,root);
+    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,&node30,&node50,-1);
+    TEST_ASSERT_EQUAL_INT_NODE(&node30,&node20,&node35,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node20,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node35,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node50,NULL,NULL,0);
 }
 ////////////////////////////////////////////////////////////////////////////////
 ///rotateBalanceAndGetHeightChangeForDelete////////////////////////////////////
@@ -2431,6 +2643,21 @@ void test_rotateBalanceAndGetHeightChangeForDelete_root_NULL(void){
 
     root=rotateBalanceAndGetHeightChangeForDelete(NULL,&heightDec);
     TEST_ASSERT_NULL(root);
+}
+
+void test_rotateBalanceAndGetHeightChangeForDelete_heightDec_NULL(void){
+
+    initIntNode(&node20,NULL,NULL,0);
+    initIntNode(&node35,NULL,NULL,0);
+    initIntNode(&node30,&node20,&node35,0);
+    initIntNode(&node10,NULL,&node30,2);
+    heightDec = 1; // set heightDec to 1 to check
+
+    root=rotateBalanceAndGetHeightChangeForDelete((Node*)&node10,NULL);
+    TEST_ASSERT_EQUAL_INT_NODE((IntNode*)root,NULL,&node30,2);
+    TEST_ASSERT_EQUAL_INT_NODE(&node30,&node20,&node35,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node20,NULL,NULL,0);
+    TEST_ASSERT_EQUAL_INT_NODE(&node35,NULL,NULL,0);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

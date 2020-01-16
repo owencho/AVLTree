@@ -12,8 +12,8 @@ void dumpExceptionString(Exception *ex,UNITY_LINE_TYPE lineNumber){
 }
 
 void freeException(Exception *ex){
-  if(ex)
-    free(ex);
+    if(ex)
+        free(ex);
 }
 
 void throwException(uint32_t errorCode,char *errorMessage,...){
@@ -29,8 +29,8 @@ void throwException(uint32_t errorCode,char *errorMessage,...){
     vsnprintf(buffer,actualLength + 1, errorMessage, arg);
     va_end(arg);
 
-  exceptionPtr = malloc(sizeof(Exception));
-  exceptionPtr -> errorCode = errorCode;
-  exceptionPtr -> errorMessage = buffer;
-  Throw(exceptionPtr);
+    exceptionPtr = malloc(sizeof(Exception));
+    exceptionPtr -> errorCode = errorCode;
+    exceptionPtr -> errorMessage = buffer;
+    Throw(exceptionPtr);
 }

@@ -78,7 +78,7 @@ void test_StringCompareForAvlAdd_same_root_return_0(void){
 *
 **/
 
-void test_AvlAdd_given_string(void){
+void test_AvlAdd_with_string_compare_given_string(void){
     initStringNode(&nodeMenon,NULL,NULL,0);
     initStringNode(&nodeMelon,NULL,NULL,0);
 

@@ -6,11 +6,12 @@ int lineNo;
 void verifyAvl(IntNode * root,int expectedNumOfElement,UNITY_LINE_TYPE lineNumber){
     uint32_t count =0;
     int height =0;
-    if (!root) return ;
+    if (!root)
+        return ;
     lineNo = lineNumber;
     height = _verifyAvl(root, &count);
     if(expectedNumOfElement != count){
-      testReportFailure(lineNumber,"height is not the same at %d",count);
+        testReportFailure(lineNumber,"height is not the same at %d",count);
     }
 
 }
