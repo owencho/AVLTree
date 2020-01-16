@@ -7,10 +7,10 @@
 #include <stdarg.h>
 
 void assertEqualIntNode (const IntNode * actualNode,
-                      const IntNode * leftNode,
-                      const IntNode * rightNode,
-                      const int balanceFactor,
-                      const UNITY_LINE_TYPE lineNumber){
+                         const IntNode * leftNode,
+                         const IntNode * rightNode,
+                         const int balanceFactor,
+                         const UNITY_LINE_TYPE lineNumber){
 
     char msg[1024];
     int length;

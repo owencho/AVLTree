@@ -5,10 +5,10 @@
 #include "IntNode.h"
 
 void assertEqualIntNode (const IntNode * actualNode,
-                       const IntNode * leftNode,
-                       const IntNode * rightNode,
-                       const int balanceFactor,
-                      const UNITY_LINE_TYPE lineNumber);
+                         const IntNode * leftNode,
+                         const IntNode * rightNode,
+                         const int balanceFactor,
+                         const UNITY_LINE_TYPE lineNumber);
 
 void testReportFailure (const UNITY_LINE_TYPE lineNumber,char* message ,...);
 
