@@ -341,3 +341,17 @@ void visitPostOrder(Node *root, AVLProcessor processor){
     }
     processor(root);
 }
+
+Node* avlFindNode(Node* root,void * nodeToFind,Compare compare){
+    if(root == NULL || nodeToFind==NULL || compare == NULL)
+        return root;
+    int size = compare(root,nodeToFind);
+    if(!size){
+		return root;
+    }
+    else if(size == -1)
+        root = avlFindNode(root->right,nodeToFind,compare);
+    else
+        root = avlFindNode(root->left,nodeToFind,compare);
+    return root;
+}

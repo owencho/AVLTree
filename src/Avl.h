@@ -28,5 +28,5 @@ Node * avlRemoveSmallest(Node*root,Compare compare);
 //Common function
 Node * findSmallestNode(Node*root);
 void visitPostOrder(Node *root, AVLProcessor processor);
-
+Node* avlFindNode(Node* root,void * nodeToFind,Compare compare);
 #endif // _AVL_H

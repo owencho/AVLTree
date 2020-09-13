@@ -32,6 +32,77 @@ void initIntNode(IntNode * node,  IntNode * left ,IntNode * right,int balanceFac
     node->bFactor = balanceFactor;
 }
 
+/**
+*    10(2)
+*       \
+*     30(0)
+*    /    \
+*  20(0)  35(0)
+*
+**/
+
+void test_findNode_10_30_20_35(void){
+    initIntNode(&node20,NULL,NULL,0);
+    initIntNode(&node35,NULL,NULL,0);
+    initIntNode(&node30,&node20,&node35,0);
+    initIntNode(&node10,NULL,&node30,2);
+	int deleteValue = 20;
+    Try{
+        root=avlFindNode((Node*)&node10,(void*)&deleteValue,(Compare)intCompareForAvlDelete);
+        TEST_ASSERT_EQUAL_PTR(&node20,root);
+    }Catch(ex){
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
+
+/**
+*    10(2)
+*       \
+*     30(0)
+*    /    \
+*  20(0)  35(0)
+*
+**/
+
+void test_findNode_10_30_20_35_find_35(void){
+    initIntNode(&node20,NULL,NULL,0);
+    initIntNode(&node35,NULL,NULL,0);
+    initIntNode(&node30,&node20,&node35,0);
+    initIntNode(&node10,NULL,&node30,2);
+	int deleteValue = 35;
+    Try{
+        root=avlFindNode((Node*)&node10,(void*)&deleteValue,(Compare)intCompareForAvlDelete);
+        TEST_ASSERT_EQUAL_PTR(&node35,root);
+    }Catch(ex){
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
+
+/**
+*    10(2)
+*       \
+*     30(0)
+*    /    \
+*  20(0)  35(0)
+*
+**/
+
+void test_findNode_10_30_20_35_find_5(void){
+    initIntNode(&node20,NULL,NULL,0);
+    initIntNode(&node35,NULL,NULL,0);
+    initIntNode(&node30,&node20,&node35,0);
+    initIntNode(&node10,NULL,&node30,2);
+	int deleteValue = 5;
+    Try{
+        root=avlFindNode((Node*)&node10,(void*)&deleteValue,(Compare)intCompareForAvlDelete);
+        TEST_ASSERT_NULL(root);
+    }Catch(ex){
+        dumpException(ex);
+        TEST_FAIL_MESSAGE("Do not expect any exception to be thrown");
+    }
+}
 ////////////////////////////////////////////////////////////////////////////////
 ///findSmallestNode/////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
